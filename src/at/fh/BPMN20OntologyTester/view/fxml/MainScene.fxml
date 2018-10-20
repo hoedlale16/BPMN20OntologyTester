@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="mainBorder" prefHeight="540.0" prefWidth="752.0" styleClass="bg_game" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fh.BPMN20OntologyTester.view.fxcontroller.MainSceneFxController">
+    <right>
+
+
+    </right>
+    <top>
+        <Label fx:id="lbHeader" contentDisplay="CENTER" styleClass="lb_header" text="BPMN2.0 - Ontology Tester" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" BorderPane.alignment="BOTTOM_CENTER">
+            <font>
+                <Font size="27.0" />
+            </font>
+        </Label>
+    </top>
+   <bottom>
+      <TextArea fx:id="taLog" editable="false" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </bottom>
+   <center>
+      <Button fx:id="btLoadBPMN" defaultButton="true" mnemonicParsing="false" onAction="#onLoadBPMN" text="Load BPMN" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
