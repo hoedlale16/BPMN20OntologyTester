@@ -16,14 +16,14 @@ public class MainScene extends Application {
 	@Override
 	public void init() {
 		//Path to FXML which represents the scene
-		String fxml = "fxml/MainScene.fxml";
+		String fxml = "/jfx/MainScene.fxml";
  
 		try {		
 			System.out.println(BPMN20OntologyTester.class);
 			//Try to load scene from fxml
 			scene = new Scene( FXMLLoader.load(getClass().getResource(fxml)));
 			scene.getStylesheets().clear();
-			scene.getStylesheets().add("/resource/jfx/OntologyTesterfx.css");
+			scene.getStylesheets().add("/jfx/OntologyTesterfx.css");
 			
 		} catch (IOException e) {
 			System.out.println("Error while loading Scene <" +fxml + ">");
@@ -44,9 +44,4 @@ public class MainScene extends Application {
 	@Override
 	public void stop() {
 	}
-/*
-	public static void main(String[] parameters) {
-		launch(parameters);
-	}
-*/
 }

@@ -2,20 +2,18 @@ package at.fh.BPMN20OntologyTester.view.fxcontroller;
 
 import java.io.File;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.camunda.bpm.model.bpmn.instance.EndEvent;
 import org.camunda.bpm.model.bpmn.instance.ExtensionElements;
 import org.camunda.bpm.model.bpmn.instance.Participant;
 import org.camunda.bpm.model.bpmn.instance.Process;
 import org.camunda.bpm.model.bpmn.instance.StartEvent;
-import org.semanticweb.owlapi.model.AxiomType;
-import org.semanticweb.owlapi.model.OWLAxiom;
-import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLEntity;
 
 import at.fh.BPMN20OntologyTester.controller.BPMNModelHandler;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
 import at.fh.BPMN20OntologyTester.model.BPMNModel;
+import at.fh.BPMN20OntologyTester.model.OWLModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -38,17 +36,22 @@ public class MainSceneFxController {
 	{       
 		appendText("=== Read and initialize Ontology: ===");
 		try {
-			OWLOntology ontology = OntologyHandler.getInstance().getBpmn20Ontology();
-			appendText("  Ontology-Size: " +ontology.getAxiomCount());
-	        List<OWLAxiom> classes = ontology.axioms().filter(ax -> ax.getAxiomType() == AxiomType.CLASS_ASSERTION).collect(Collectors.toList());	
-	        appendText("  Ontology-Classes: " +classes.size());
-	        for(OWLAxiom a: classes)
-	        {
-	        	appendText(a.toString());
-	        }
+			OWLModel ontology = OntologyHandler.getInstance().getBpmn20Ontology();
+			appendText("  Ontology-Size: " +ontology.getAllEntities().size());		
+			appendText("  Ontology-Size Set: " +ontology.getAllEntitiesAsSet().size());					
+
+	        appendText("  Ontology-Classes: " +ontology.getClasses().size());
+	        appendText("  Object-Properties: " +ontology.getObjectProperties().size());
+	        appendText("  Data-Properties: " +ontology.getDataProperties().size());
+	        
+	        OWLEntity activity = ontology.getEntityByName("Activity");
+	        System.out.println(ontology.getCommentOfEntity(activity));
+	        
 		} catch (Exception e) {
 			appendText("Error while loading Ontology: " + e.getMessage());
 		}		
+		
+		
 	}
 	
 	@FXML

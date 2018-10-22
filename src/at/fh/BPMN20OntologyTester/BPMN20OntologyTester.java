@@ -1,25 +1,7 @@
 package at.fh.BPMN20OntologyTester;
-
-import java.io.File;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.camunda.bpm.model.bpmn.instance.EndEvent;
-import org.camunda.bpm.model.bpmn.instance.ExtensionElements;
-import org.camunda.bpm.model.bpmn.instance.Participant;
-import org.camunda.bpm.model.bpmn.instance.Process;
-import org.camunda.bpm.model.bpmn.instance.StartEvent;
-import org.semanticweb.owlapi.model.AxiomType;
-import org.semanticweb.owlapi.model.OWLAxiom;
-import org.semanticweb.owlapi.model.OWLOntology;
-
 import com.sun.javafx.application.LauncherImpl;
 
-import at.fh.BPMN20OntologyTester.controller.BPMNModelHandler;
-import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
-import at.fh.BPMN20OntologyTester.model.BPMNModel;
 import at.fh.BPMN20OntologyTester.view.MainScene;
-import at.fh.BPMN20OntologyTester.view.fxcontroller.MainSceneFxController;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
