@@ -12,6 +12,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	    <maven.compiler.source>1.8</maven.compiler.source>
+    	<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
 	<dependencies>
@@ -66,15 +68,37 @@
 		</dependency>
 	</dependencies>
 
-<!-- 
+	<!-- -->
 	<build>
 		<resources>
-      		<resource>
-        		<directory>resource</directory>
-        	</resource>
-        </resources>
-	
+			<resource>
+				<directory>resource</directory>
+				<targetPath>resource</targetPath>
+			</resource>
+		</resources>
+
 		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
@@ -83,6 +107,7 @@
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
+
 					<archive>
 						<manifest>
 							<mainClass>at.fh.BPMN20OntologyTester.BPMN20OntologyTester</mainClass>
@@ -100,5 +125,5 @@
 			</plugin>
 		</plugins>
 	</build>
- -->
+	<!-- -->
 </project>
