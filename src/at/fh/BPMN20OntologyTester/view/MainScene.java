@@ -19,7 +19,6 @@ public class MainScene extends Application {
 		String fxml = "/jfx/MainScene.fxml";
  
 		try {		
-			System.out.println(BPMN20OntologyTester.class);
 			//Try to load scene from fxml
 			scene = new Scene( FXMLLoader.load(getClass().getResource(fxml)));
 			scene.getStylesheets().clear();

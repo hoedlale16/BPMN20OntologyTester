@@ -1,58 +1,132 @@
 package at.fh.BPMN20OntologyTester.view.fxcontroller;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.camunda.bpm.model.bpmn.instance.EndEvent;
 import org.camunda.bpm.model.bpmn.instance.ExtensionElements;
 import org.camunda.bpm.model.bpmn.instance.Participant;
 import org.camunda.bpm.model.bpmn.instance.Process;
 import org.camunda.bpm.model.bpmn.instance.StartEvent;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLClassAxiom;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import at.fh.BPMN20OntologyTester.controller.BPMNModelHandler;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
 import at.fh.BPMN20OntologyTester.model.BPMNModel;
 import at.fh.BPMN20OntologyTester.model.OWLModel;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
 public class MainSceneFxController {
 	
-	@FXML private TextArea taLog;
+	//GUI Elements from Ontology Tab
+	@FXML private Label lbClasses;
+	@FXML private Label lbObjProperties;
+	@FXML private Label lbDataProperties;
+	@FXML private Label lbDescUndocEntities;
+	@FXML private ListView<String> lstUnDocumentedEntities;
+	@FXML private ChoiceBox<String> cbDocumentedEnties;
+	@FXML private TextArea taOntDescription;
+	
+	
+	//GUI Elements from "Test OWL" Tab
 	@FXML private Button btLoadBPMN;
 	
 	
+	//Logging required variables
+	@FXML private TextArea taLog;
+	private final SimpleDateFormat dateFormater;
+	
+	//Get initialized on startup of application
+	private OWLModel ontology;
+
+	
 	public MainSceneFxController() {
-		// TODO Auto-generated constructor stub
+		dateFormater = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	}
 	
 	
 	@FXML
 	private void initialize()
-	{       
-		appendText("=== Read and initialize Ontology: ===");
+	{   
 		try {
-			OWLModel ontology = OntologyHandler.getInstance().getBpmn20Ontology();
-			appendText("  Ontology-Size: " +ontology.getAllEntities().size());		
-			appendText("  Ontology-Size Set: " +ontology.getAllEntitiesAsSet().size());					
+			appendLog("Read and initialize BPMN2.0 Ontology");
+			ontology = OntologyHandler.getInstance().getBpmn20Ontology();
+			
+			//Show results on GUI
+			showInitializedOntology();
 
-	        appendText("  Ontology-Classes: " +ontology.getClasses().size());
-	        appendText("  Object-Properties: " +ontology.getObjectProperties().size());
-	        appendText("  Data-Properties: " +ontology.getDataProperties().size());
-	        
-	        OWLEntity activity = ontology.getEntityByName("Activity");
-	        System.out.println(ontology.getCommentOfEntity(activity));
-	        
 		} catch (Exception e) {
-			appendText("Error while loading Ontology: " + e.getMessage());
+			appendLog("Error while loading Ontology: " + e.getMessage());
+			e.printStackTrace();
 		}		
 		
 		
 	}
+	
+	private void showInitializedOntology() {
+		lbClasses.setText("" + ontology.getClasses().size() );
+		lbObjProperties.setText("" + ontology.getObjectProperties().size());
+		lbDataProperties.setText("" + ontology.getDataProperties().size());
+		
+		//show Classes without rdfs:comment annotation
+		ObservableList<String> undocItems =FXCollections.observableArrayList();
+        for(OWLEntity e : ontology.getUnDocumentedEntities()) {
+        	undocItems.add(e.getIRI().getShortForm());
+        }
+        lbDescUndocEntities.setText("Undocumented Entities (" + undocItems.size() + ")");
+        lstUnDocumentedEntities.setItems(undocItems);
+        
+        //Show entities which rdfs:comment annotation
+        ObservableList<String> docItems =FXCollections.observableArrayList();
+        for(OWLEntity e : ontology.getDocumentedEntities()) {
+        	docItems.add(e.getIRI().getShortForm());
+        }
+        cbDocumentedEnties.setItems(docItems);
+        
+
+        
+        //TESTING AREA
+       OWLClass activity = (OWLClass) ontology.getEntityByName("Activity");
+       Set<OWLClassAxiom> rest = ontology.getRestrictionsOfClass(activity);
+       for(OWLClassAxiom r: rest) {
+    	   System.out.println(r);
+       }
+       
+        
+       
+       if(ontology.isEntityOWLClass(activity)) {
+    	   System.out.println("A OWLClass");
+    	   //System.out.println(ontology.getCommentOfEntity(activity)); 
+       } else {
+    	   System.out.println("Not a OWLClass");
+       }
+
+	}
+	
+	
+	@FXML
+	private void onShowOntologyEntityDescription() {
+		String strSelItem = cbDocumentedEnties.getSelectionModel().getSelectedItem();
+		if( ! strSelItem.isEmpty() ) {
+			OWLEntity entity = ontology.getEntityByName(strSelItem);
+			taOntDescription.setText(ontology.getCommentOfEntity(entity));
+		}
+	}
+	
 	
 	@FXML
 	private void onLoadBPMN() {
@@ -73,43 +147,42 @@ public class MainSceneFxController {
 				BPMNModelHandler bpmnModelHandler = new BPMNModelHandler();
 				BPMNModel model = bpmnModelHandler.readModelFromFile(selectedFile);
 
-				appendText("=== Read BPMN-File <" + selectedFile.getAbsolutePath() + "> ===");
+				appendLog("=== Read BPMN-File <" + selectedFile.getAbsolutePath() + "> ===");
 				
 		        //Show Collaboration-Infos
 		        ExtensionElements e = model.getCollaboration().getExtensionElements();
-		        appendText(" - Extension-Elements: " + e.getElements().size());
+		        appendLog(" - Extension-Elements: " + e.getElements().size());
 		        for(Participant p : model.getCollaboration().getParticipants())
 		        {
-		        	appendText(" - Participant: " +p.getName());
+		        	appendLog(" - Participant: " +p.getName());
 		        }
 		        		        
 		        //Show processes of model
 		        List<Process> procList = model.getProcesses();            
-		        appendText("Found Processes in Model (" + procList.size()+ "):");            
+		        appendLog("Found Processes in Model (" + procList.size()+ "):");            
 		        for(int i = 0; i < procList.size(); i++)
 		        {
 		        	Process p = procList.get(i);
-		        	appendText("Process (" + (i+1) +")");
-		        	appendText("  Name: " +p.getName());
+		        	appendLog("Process (" + (i+1) +")");
+		        	appendLog("  Name: " +p.getName());
 		        	List<StartEvent> starts = (List<StartEvent>) p.getChildElementsByType(StartEvent.class);
 		        	List<EndEvent> ends = (List<EndEvent>) p.getChildElementsByType(EndEvent.class);
-		        	appendText("  Elements in Prozess:" + p.getDomElement().getChildElements().size());
-		        	appendText("  Start: " + starts.get(0).getName());
-		        	appendText("  End(s): " +ends.toString());
+		        	appendLog("  Elements in Prozess:" + p.getDomElement().getChildElements().size());
+		        	appendLog("  Start: " + starts.get(0).getName());
+		        	appendLog("  End(s): " +ends.toString());
 		
 		        	if( !(i == procList.size()-1) )
-		        		appendText("-----");
+		        		appendLog("-----");
 		        }
 			}
 		} catch(Exception e) 
 		{
-			appendText("ERROR - Failed to load File");
+			appendLog("ERROR - Failed to load File");
 		}
 	}
 	 
-	public void appendText(String text) {
-		//TODO: Aktuelles Datum hinzufuegen
-		taLog.appendText(text+"\n");
+	public void appendLog(String text) {
+		taLog.appendText(dateFormater.format(new Date()) +":\t" + text + "\n");
 	}
 
 }

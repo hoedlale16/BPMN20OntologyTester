@@ -1,4 +1,5 @@
 package at.fh.BPMN20OntologyTester;
+
 import com.sun.javafx.application.LauncherImpl;
 
 import at.fh.BPMN20OntologyTester.view.MainScene;
@@ -36,8 +37,9 @@ public class BPMN20OntologyTester
 		else {
 			stage.setScene(scene);
 			stage.show();
-		}
 			
+		}
+			 
 	}
 	
 	

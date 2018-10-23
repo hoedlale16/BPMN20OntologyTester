@@ -1,13 +1,14 @@
 package at.fh.BPMN20OntologyTester.model;
 
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.OWLAnnotation;
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAnnotationValue;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassAxiom;
@@ -16,6 +17,7 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLRestriction;
 import org.semanticweb.owlapi.search.EntitySearcher;
 
 public class OWLModel {
@@ -56,10 +58,11 @@ public class OWLModel {
 	public Set<OWLDataProperty> getDataProperties() {
 		Set<OWLDataProperty> dataProperties = new HashSet<OWLDataProperty>();
 
-		
 		// Read all Data-Properties from ontology and store in Set
 		ontology.dataPropertiesInSignature().forEach(o -> dataProperties.add(o));
 
+		
+		
 		return dataProperties;
 	}
 
@@ -117,10 +120,9 @@ public class OWLModel {
 	 */
 	public String getCommentOfEntity(OWLEntity entity) {
 		StringBuilder sb = new StringBuilder();
+		OWLAnnotationProperty prop = OWLManager.getOWLDataFactory().getRDFSComment();
 
-		OWLClass clc = entity.asOWLClass();
-		List<OWLAnnotation> annotations = EntitySearcher
-				.getAnnotations(clc, ontology, OWLManager.getOWLDataFactory().getRDFSComment())
+		List<OWLAnnotation> annotations = EntitySearcher.getAnnotations(entity, ontology, prop)
 				.collect(Collectors.toList());
 		for (OWLAnnotation a : annotations) {
 			OWLAnnotationValue val = a.getValue();
@@ -129,7 +131,43 @@ public class OWLModel {
 			}
 		}
 		return sb.toString();
+	}
 
+	/**
+	 * Returns a list of Entities which does not have a 'rdfs:comment' annotation
+	 * 
+	 * @return
+	 */
+	public Set<OWLEntity> getUnDocumentedEntities() {
+		Set<OWLEntity> undocumentedEntities = new HashSet<OWLEntity>();
+
+		for (OWLEntity e : getAllEntities()) {
+			if (this.getCommentOfEntity(e).isEmpty()) {
+				undocumentedEntities.add(e);
+			}
+		}
+
+		return undocumentedEntities;
+	}
+	
+	/**
+	 * Return all Entities which have a documentation (rdfs:comment annotation)
+	 * @return
+	 */
+	public Set<OWLEntity> getDocumentedEntities() {
+		Set<OWLEntity> documentedEntities = getAllEntities();		
+		documentedEntities.removeAll(getUnDocumentedEntities());
+		
+		return documentedEntities;
+	}
+	
+	/**
+	 * Tetermines if an given Entity is from a specific type
+	 * @param entity
+	 * @return
+	 */
+	public boolean isEntityOWLClass(OWLEntity entity) {
+		return entity.isOWLClass();
 	}
 
 	/**
@@ -140,6 +178,7 @@ public class OWLModel {
 	 */
 	public Set<OWLClassAxiom> getRestrictionsOfClass(OWLClass owlClass) {
 		// Read restrictions
+		//TODO: zusammenfassen auf eine OWLRestriction mit min/max usw
 		Set<OWLClassAxiom> restrictions = ontology.axioms(owlClass).collect(Collectors.toSet());
 
 		return restrictions;
