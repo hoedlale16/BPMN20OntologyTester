@@ -6,7 +6,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAnnotationValue;
@@ -17,7 +16,6 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLOntology;
-import org.semanticweb.owlapi.model.OWLRestriction;
 import org.semanticweb.owlapi.search.EntitySearcher;
 
 public class OWLModel {
@@ -109,6 +107,20 @@ public class OWLModel {
 
 		return null;
 	}
+	
+	/**
+	 * Checks if an Entity with given name exsits or not
+	 * @param name
+	 * @return
+	 */
+	public boolean existsEntity(String name) {
+		for(OWLEntity e: this.getAllEntities()) {
+			//in Model the names might be in lower case, so ignore case sensitive
+			if (e.getIRI().getShortForm().equalsIgnoreCase(name))
+				return true;
+		}
+		return false;
+	}
 
 	/**
 	 * Returns the description of the requested entity. If the Entity has a
@@ -127,7 +139,7 @@ public class OWLModel {
 		for (OWLAnnotation a : annotations) {
 			OWLAnnotationValue val = a.getValue();
 			if (val instanceof OWLLiteral) {
-				sb.append(val);
+				sb.append(((OWLLiteral) val).getLiteral());
 			}
 		}
 		return sb.toString();
@@ -183,5 +195,17 @@ public class OWLModel {
 
 		return restrictions;
 	}
-
+	
+	
+	public Set<String> testElementsExsistInOntology(BPMNModel model) {
+		Set<String> notFoundInOWL = new HashSet<String>();
+		
+		Set<String> elements = model.getAllElementsOfModel();
+		for (String s : elements) {
+			// System.out.println(s);
+			if (!existsEntity(s))
+				notFoundInOWL.add(s);
+		}
+		return notFoundInOWL;
+	}
 }

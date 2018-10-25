@@ -2,11 +2,8 @@ package at.fh.BPMN20OntologyTester.controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 
-import org.apache.commons.io.FileUtils;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -43,7 +40,7 @@ public class OntologyHandler {
 	 * @return Ontology as object
 	 * @throws OWLOntologyCreationException
 	 */
-	private OWLModel loadBPMN20Ontology(File file) throws OWLOntologyCreationException {
+	public OWLModel loadBPMN20Ontology(File file) throws OWLOntologyCreationException {
 		OWLOntology ontology = OWLManager.createOWLOntologyManager().loadOntologyFromOntologyDocument(file);
 		return new OWLModel(ontology);
 	}

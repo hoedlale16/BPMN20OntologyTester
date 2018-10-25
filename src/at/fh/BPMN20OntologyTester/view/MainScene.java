@@ -6,6 +6,7 @@ import at.fh.BPMN20OntologyTester.BPMN20OntologyTester;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class MainScene extends Application {
@@ -35,6 +36,7 @@ public class MainScene extends Application {
 		
 		stage.setTitle("BPMN2.0 Ontology Tester");
 		stage.setResizable(false);
+		stage.getIcons().add(new Image(getClass().getResource("/resource/pics/logo.jpg").toString()));
 		
 		BPMN20OntologyTester.setRootStage(stage);
 		BPMN20OntologyTester.showScene(scene, stage);		
