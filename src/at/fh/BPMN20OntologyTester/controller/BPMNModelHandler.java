@@ -11,10 +11,17 @@ import com.google.common.base.VerifyException;
 
 import at.fh.BPMN20OntologyTester.model.BPMNModel;
 
+/**
+ * Handler to create a create a new BPMN2.0 Model object 
+ * 
+ * @author Alexander Hödl
+ * IMA16 - Information Management
+ * University of applied Sciences FH JOANNEUM
+ *
+ */
 public class BPMNModelHandler {
 	
 	public BPMNModelHandler() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**

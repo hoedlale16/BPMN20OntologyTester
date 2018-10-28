@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="bpmn2owlPane" prefHeight="768.0" prefWidth="1024.0" styleClass="bg_game" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fh.BPMN20OntologyTester.view.fxcontroller.BPMN2OWLTabFxController">
+    <right>
+
+
+    </right>
+   <left>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <BorderPane prefWidth="260.0">
+               <padding>
+                  <Insets bottom="15.0" />
+               </padding>
+               <top>
+                  <Label alignment="TOP_LEFT" styleClass="lb_boxHeader" text="BPMN Model Key Aspects" BorderPane.alignment="TOP_LEFT" />
+               </top>
+               <center>
+                  <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" BorderPane.alignment="TOP_LEFT">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Model-Name" />
+                        <Label text="Processes" GridPane.rowIndex="1" />
+                        <Label fx:id="lbBPMN2OWLModelName" text="n/a" GridPane.columnIndex="1" />
+                        <Label fx:id="lbBPMN2OWLProcessAmount" text="n/a" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     </children>
+                     <BorderPane.margin>
+                        <Insets left="15.0" />
+                     </BorderPane.margin>
+                  </GridPane>
+               </center>
+            </BorderPane>
+            <BorderPane>
+               <center>
+                  <TreeView fx:id="treeBPMN20OWL" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+               </center>
+               <top>
+                  <Label alignment="TOP_LEFT" styleClass="lb_boxHeader" text="Model Overview:" BorderPane.alignment="TOP_LEFT" />
+               </top>
+            </BorderPane>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <BorderPane>
+               <top>
+                  <Label alignment="TOP_LEFT" styleClass="lb_boxHeader" text="Elements not found in OWL" BorderPane.alignment="TOP_LEFT" />
+               </top>
+               <center>
+                  <ListView fx:id="lstBPMN2OWLNotFoundInOWL" prefWidth="250.0" BorderPane.alignment="TOP_LEFT">
+                     <BorderPane.margin>
+                        <Insets />
+                     </BorderPane.margin>
+                  </ListView>
+               </center>
+            </BorderPane>
+            <BorderPane layoutX="30.0" layoutY="10.0">
+               <top>
+                  <Label alignment="TOP_LEFT" styleClass="lb_boxHeader" text="Elements fail OWL-Restrictions" BorderPane.alignment="TOP_LEFT" />
+               </top>
+               <center>
+                  <ListView fx:id="lstBPMN2OWLElementsFailedRestrictions" prefWidth="250.0" BorderPane.alignment="TOP_LEFT">
+                     <BorderPane.margin>
+                        <Insets />
+                     </BorderPane.margin>
+                  </ListView>
+               </center>
+            </BorderPane>
+         </children>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </HBox>
+   </center>
+   <bottom>
+      <HBox alignment="BOTTOM_RIGHT" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#onGenerateReport" styleClass="buttons" text="Generate Report" />
+            <Button alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#onBPMN2OWL" styleClass="buttons" text="Convert to OWL" />
+         </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </HBox>
+   </bottom>
+   <top>
+      <BorderPane BorderPane.alignment="CENTER">
+         <center>
+            <Button mnemonicParsing="false" onAction="#onLoadBPMN" styleClass="buttons" text="Load BPMN" BorderPane.alignment="CENTER" />
+         </center>
+         <padding>
+            <Insets bottom="10.0" />
+         </padding>
+      </BorderPane>
+   </top>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+   <padding>
+      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+   </padding>
+</BorderPane>

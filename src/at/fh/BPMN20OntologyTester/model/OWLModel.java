@@ -18,6 +18,14 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.search.EntitySearcher;
 
+/**
+ * Representation of an .owl File(XML) (Ontology)
+ * 
+ * @author Alexander Hödl
+ * IMA16 - Information Management
+ * University of applied Sciences FH JOANNEUM
+ *
+ */
 public class OWLModel {
 
 	private final OWLOntology ontology;
@@ -193,6 +201,9 @@ public class OWLModel {
 		//TODO: zusammenfassen auf eine OWLRestriction mit min/max usw
 		Set<OWLClassAxiom> restrictions = ontology.axioms(owlClass).collect(Collectors.toSet());
 
+		for(OWLClassAxiom r: restrictions) {
+			//TODO
+		}
 		return restrictions;
 	}
 	

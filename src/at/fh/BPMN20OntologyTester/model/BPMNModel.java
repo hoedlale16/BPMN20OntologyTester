@@ -17,9 +17,11 @@ import org.camunda.bpm.model.xml.instance.DomDocument;
 import org.camunda.bpm.model.xml.instance.DomElement;
 
 /**
- * A BPMNModel is the objectional representation of a .bpmn File(XML)
+ * Representation of an .bpmn File(XML) (BPMN-Model)
  * 
- * @author Alexander Hoedl
+ * @author Alexander Hödl
+ * IMA16 - Information Management
+ * University of applied Sciences FH JOANNEUM
  *
  */
 public class BPMNModel {

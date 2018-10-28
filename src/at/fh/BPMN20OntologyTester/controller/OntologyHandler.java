@@ -10,8 +10,23 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 
 import at.fh.BPMN20OntologyTester.model.OWLModel;
 
+/**
+ * Handler to deal with an Ontology(create out of file, ...) 
+ * 
+ * @author Alexander Hödl
+ * IMA16 - Information Management
+ * University of applied Sciences FH JOANNEUM
+ *
+ */
 public class OntologyHandler {
 
+	// This Object represents the famous BPMN20Ontology
+	private OWLModel bpmn20Ontology = null;
+	
+	
+
+	//Design-Pattern Singleton:
+	//Take care that only one instance of the Ontology exists in the whole application
 	private static OntologyHandler theInstance = null;
 
 	public static OntologyHandler getInstance() throws OWLOntologyCreationException, FileNotFoundException {
@@ -20,20 +35,15 @@ public class OntologyHandler {
 		return theInstance;
 	}
 
-	// This Object represents the famous BPMN20Ontology
-	private final OWLModel bpmn20Ontology;
 
 	private OntologyHandler() throws OWLOntologyCreationException, FileNotFoundException {
-		
-		//https://www.mkyong.com/java/java-read-a-file-from-resources-folder/		
-		bpmn20Ontology = loadBPMN20Ontology(getClass().getResourceAsStream("/resource/bpmn/BPMN20.owl"));
-		
-		// Initialize Ontology object with file.
-		//bpmn20Ontology = loadBPMN20Ontology(file);		
+		//Create Ontology reading from resource File as Stream
+		//This is the initial initializiation of the ontology on startup!
+		setBpmn20Ontology(loadBPMN20Ontology(getClass().getResourceAsStream("/resource/bpmn/BPMN20.owl")));
 	}
 
 	/**
-	 * Method to load and initialize the BPMN20 Ontology
+	 * Method to load and initialize the BPMN20 Ontology from given file
 	 * 
 	 * @param file
 	 *            - OWL-File to load which represents the BPMN20 Ontology
@@ -45,11 +55,26 @@ public class OntologyHandler {
 		return new OWLModel(ontology);
 	}
 	
+	/**
+	 * Method to load and initialize the BPMN20 Ontology from an input stream.
+	 * 
+	 * @param stream - OWL to load from stream which represents the BPMN20 Ontology
+	 * @return Ontology as object
+	 * @throws OWLOntologyCreationException
+	 */
 	private OWLModel loadBPMN20Ontology(InputStream stream) throws OWLOntologyCreationException {
 		OWLOntology ontology = OWLManager.createOWLOntologyManager().loadOntologyFromOntologyDocument(stream);
 		return new OWLModel(ontology);
 	}
 
+	/**
+	 * Sets a new Ontology for the application
+	 * @param newOntology
+	 */
+	public void setBpmn20Ontology(OWLModel newOntology) {
+		this.bpmn20Ontology = newOntology;
+	}
+	
 	/**
 	 * Return the BPMN20Ontology Object which is initialized on creation of this
 	 * Handler
