@@ -49,7 +49,6 @@
 			<groupId>org.camunda.bpm</groupId>
 			<artifactId>camunda-engine</artifactId>
 			<version>7.10.0-alpha4</version>
-			<scope>provided</scope>
 		</dependency>
 
 		<!-- Apache Commons IO -->
