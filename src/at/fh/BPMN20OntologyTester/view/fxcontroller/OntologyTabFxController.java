@@ -1,7 +1,11 @@
 package at.fh.BPMN20OntologyTester.view.fxcontroller;
 
 import java.util.Collections;
+import java.util.Set;
 
+import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLClassAxiom;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
@@ -48,12 +52,20 @@ public class OntologyTabFxController {
 
 			// Show results on GUI
 			showInitializedOntology(ontology);
+			
+			//TODO: remove
+			testMethod();
 
 		} catch (Exception e) {
 			appendLog("Error while loading Ontology: " + e.getMessage());
 			e.printStackTrace();
 		}
 
+	}
+	
+	private void testMethod() {
+		OWLClass owlClass = (OWLClass) ontology.getEntityByName("SubProcess");
+		ontology.getRestrictionsOfClass(owlClass);
 	}
 
 	private void appendLog(String text) {
