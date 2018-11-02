@@ -1,11 +1,18 @@
 package at.fh.BPMN20OntologyTester.model;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.semanticweb.HermiT.ReasonerFactory;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.ClassExpressionType;
@@ -21,8 +28,17 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLProperty;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
+import org.semanticweb.owlapi.reasoner.OWLReasoner;
+import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 import org.semanticweb.owlapi.search.EntitySearcher;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
  * Representation of an .owl File(XML) (Ontology)
@@ -33,10 +49,37 @@ import org.semanticweb.owlapi.search.EntitySearcher;
  */
 public class OWLModel {
 
+	// Represent the Ontology as OWL-API Object
 	private final OWLOntology ontology;
 
-	public OWLModel(OWLOntology ontology) {
-		this.ontology = ontology;
+	// Represents the File from which the OWL-API Object was create out
+	private final Document ontologyAsDOMDocument;
+
+	public OWLModel(OWLOntology ontology, File ontologyFile) throws OWLOntologyCreationException {
+		try {
+			this.ontology = ontology;
+			this.ontologyAsDOMDocument = praseXMlFile(ontologyFile);
+		} catch (Exception e) {
+			// Simplify Exception Handling
+			throw new OWLOntologyCreationException(e);
+		}
+	}
+
+	/**
+	 * Parses given XML-File and creates an DOM-Document out of it
+	 * 
+	 * @param file
+	 * @return
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 * @throws IOException
+	 */
+	private Document praseXMlFile(File file) throws ParserConfigurationException, SAXException, IOException {
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = factory.newDocumentBuilder();
+
+		Document doc = builder.parse(file);
+		return doc;
 	}
 
 	/**
@@ -48,6 +91,31 @@ public class OWLModel {
 		return ontology;
 	}
 
+	/**
+	 * Returns ths Ontology as simple DOM Document
+	 * 
+	 * @return
+	 */
+	public Document getOntologyAsDOMDocument() {
+		return ontologyAsDOMDocument;
+	}
+
+	/**
+	 * Returns the Reasoner Object for the Ontolgy to query for sub-classes and
+	 * stuff
+	 * 
+	 * @return
+	 */
+	public OWLReasoner getOWLReasoner() {
+		OWLReasonerFactory rf = new ReasonerFactory();
+		return rf.createReasoner(ontology);
+	}
+
+	/**
+	 * Returns all avaliable Classes from Ontology
+	 * 
+	 * @return
+	 */
 	public Set<OWLClass> getClasses() {
 		Set<OWLClass> classes = new HashSet<OWLClass>();
 
@@ -75,25 +143,6 @@ public class OWLModel {
 		return dataProperties;
 	}
 
-	/**
-	 * Return the full bench of Axioms of the OWL. Axioms are the object which
-	 * contains all infomration about classes and properties
-	 * 
-	 * https://www.w3.org/TR/2002/WD-owl-semantics-20021108/syntax.html#2.3 The
-	 * biggest differences between OWL Lite and the full abstract syntax show up in
-	 * the axioms, which are used to provide information about classes and
-	 * properties. As it is the smaller language, OWL Lite axioms are given first,
-	 * and then the full abstract syntax is given as additions to OWL Lite.
-	 * 
-	 * Axioms are used to associate class and property IDs with either partial or
-	 * complete specifications of their characteristics, and to give other logical
-	 * information about classes and properties. Axioms used to be called
-	 * definitions, but they are not all definitions in the common sense of the
-	 * term, as has been made evident in several discussions in the WG, and thus a
-	 * more-neutral name has been chosen.
-	 * 
-	 * @return
-	 */
 	public Set<OWLEntity> getAllEntities() {
 		Set<OWLEntity> entities = new HashSet<OWLEntity>();
 
@@ -110,10 +159,42 @@ public class OWLModel {
 	 * @param name
 	 * @return
 	 */
-	public OWLEntity getEntityByName(String name) {
+	public OWLEntity getEntityByShortName(String name) {
 		for (OWLEntity a : getAllEntities()) {
 			if (a.getIRI().getShortForm().equals(name))
 				return a;
+		}
+
+		return null;
+	}
+	
+	/**
+	 * Returns an OWLEntity(Class or Property) for given IRI)
+	 * @param entityIRI
+	 * @return
+	 */
+	public OWLEntity getEntityByIRI(String entityIRI) {
+		for (OWLEntity a : getAllEntities()) {
+			if (entityIRI.equalsIgnoreCase(a.getIRI().toString()))
+				return a;
+		}
+
+		return null;
+	}
+	
+	/**
+	 * Returns an Data or ObjectProperty forgiven IRI
+	 * @param propertyIRI
+	 * @return
+	 */
+	public OWLProperty getPropertyByIRI(String propertyIRI) {
+		Set<OWLEntity> props = new HashSet<OWLEntity>();
+		props.addAll(getObjectProperties());
+		props.addAll(getDataProperties());
+		
+		for (OWLEntity a : props) {
+			if (propertyIRI.equalsIgnoreCase(a.getIRI().toString()))
+				return (OWLProperty)a;
 		}
 
 		return null;
@@ -187,7 +268,7 @@ public class OWLModel {
 	}
 
 	/**
-	 * Tetermines if an given Entity is from a specific type
+	 * Determines if an given Entity is a OWLClass
 	 * 
 	 * @param entity
 	 * @return
@@ -203,72 +284,83 @@ public class OWLModel {
 	 * @return
 	 */
 	// public Set<OWLClassAxiom> getRestrictionsOfClass(OWLClass owlClass) {
-	public void getRestrictionsOfClass(OWLClass owlClass) {
+	public void getAllRestrictionsOfClass(OWLClass owlClass) {
 
-		Set<OWLAxiom> restrictions = new HashSet<OWLAxiom>();
-		
-		//First add all restrictions of given class
-		restrictions.addAll(getRestrictionAxiomOfSingleClass(owlClass));
-		
-		//Second iterate over all sub classes and add restrictions which need to be fullfilled by class as well
-		//System.out.println("The real sub class of <" + owlClass.getIRI().getShortForm() + ">");
+		Set<OWLClassRestriction> restrictions = new HashSet<OWLClassRestriction>();
+
+		// First add all restrictions of given class
+		restrictions.addAll(getRestrictionsOfClass(owlClass));
+
+		// Second iterate over all sub classes and add restrictions which need to be
+		// fullfilled by class as well
 		for (OWLClass c : getSubClassOf(owlClass)) {
-			restrictions.addAll(getRestrictionAxiomOfSingleClass(c));
+			restrictions.addAll(getRestrictionsOfClass(c));
 		}
-		
-		//Now we have all restrictions:
-		System.out.println("Following restrictions required for class <" + owlClass.getIRI().getShortForm() + ">");
-		for(OWLAxiom rest: restrictions) {
-			System.out.println(rest);
+
+		// Now we have all restrictions:
+		System.out.println("Following restrictions required for class <" + owlClass.getIRI().getShortForm() + "> - <"
+				+ restrictions.size() + ">");
+		for (OWLClassRestriction rest : restrictions) {
+			System.out.println("  - " + rest);
 		}
 
 	}
 
 	/**
-	 * Helper method to return all Axioms which contains an owl:restriction in given Class 
+	 * Returns all restricitons which are directly assosiated with given class. no sub classes checked
 	 * @param owlClass
 	 * @return
 	 */
-	private Set<OWLAxiom> getRestrictionAxiomOfSingleClass(OWLClass owlClass) {
-		Set<OWLAxiom> restrictions = new HashSet<OWLAxiom>();
+	private List<OWLClassRestriction> getRestrictionsOfClass(OWLClass owlClass) {
+		List<OWLClassRestriction> restrictions = new ArrayList<OWLClassRestriction>();
 
-		// Iterate over all Axioms of Type SUBCLASS_OF of given Class
-		List<OWLClassAxiom> axioms = ontology.axioms(owlClass)
-				.filter(a -> a.getAxiomType().equals(AxiomType.SUBCLASS_OF)).collect(Collectors.toList());
-		for (OWLClassAxiom a : axioms) {
-			// Now just show restrictions which belongs directly to given class and not
-			// refer to an external one
-			for (OWLClassExpression nce : a.nestedClassExpressions()
-					.filter(x -> !x.getClassExpressionType().equals(ClassExpressionType.OWL_CLASS))
-					.collect(Collectors.toList())) {
-				
-				//TODO: Create a OWLClassRestriction Object depending on what it is
-				//	DataExcatCardinality => boolean vlaues
-				//	ObjectMin/Max => 
-				boolean isDataProperty = false; //(nce.dataPropertiesInSignature().collect(Collectors.toSet()).size() > 0);
-				boolean isObjProperty = false; //nce.getObjectPropertiesInSignature().size() > 0;
-				String affectedEntity = null;
-						
-				for(OWLDataProperty dp: nce.getDataPropertiesInSignature()) {
-					isDataProperty = true;
-					affectedEntity = dp.getIRI().getShortForm();
+		// Get all Elements of typ 'owl:Class'
+		NodeList nl = getOntologyAsDOMDocument().getElementsByTagName("owl:Class");
+
+		for (int i = 0; i < nl.getLength(); i++) {
+			Node node = nl.item(i);
+
+			// Filter on given className
+			if (node.getNodeType() == Node.ELEMENT_NODE
+					&& ((Element) node).getAttribute("rdf:about").equalsIgnoreCase(owlClass.getIRI() + "")) {
+
+				// Iterate over all subclassOf Nodes to get owl:Restriction childs
+				NodeList subClassOfNL = ((Element) node).getChildNodes();
+				for (int x = 0; x < subClassOfNL.getLength(); x++) {
+
+					Node subClassOfNode = subClassOfNL.item(x);
+					// We're just interested in Nodes wiht name owl:Restriction and which have
+					// childs
+					if (subClassOfNode.getNodeType() == Node.ELEMENT_NODE
+							&& "rdfs:subClassOf".equalsIgnoreCase(subClassOfNode.getNodeName())
+							&& subClassOfNode.hasChildNodes()) {
+
+						NodeList restrictionNL = subClassOfNode.getChildNodes();
+						for (int y = 0; y < restrictionNL.getLength(); y++) {
+							Node restrcitionNode = restrictionNL.item(y);
+							if (restrcitionNode.getNodeType() == Node.ELEMENT_NODE
+									&& "owl:Restriction".equalsIgnoreCase(restrcitionNode.getNodeName())
+									&& restrcitionNode.hasChildNodes()) {
+
+								// JIHAAA we've found an restriction
+								
+								OWLClassRestriction restriction = new OWLClassRestriction((Element) restrcitionNode);
+								restrictions.add(restriction);
+								
+							}
+						}
+
+					}
 				}
-				
-				for(OWLObjectProperty op: nce.getObjectPropertiesInSignature()) {
-					isObjProperty = true;
-					affectedEntity = op.getIRI().getShortForm();
-					
-				}
-				
-				
-				
-				System.out.println("Entity <"+  affectedEntity + "> DataProp <" + isDataProperty +"> - ObjProp <" + isObjProperty+"> - value <>");
-				restrictions.add(a);
 			}
+
 		}
 
 		return restrictions;
+
 	}
+
+	
 
 	/**
 	 * Return all Sub-Classes(rdfs:subClass) which are OWLClass of given Class
@@ -292,15 +384,4 @@ public class OWLModel {
 		return subClasses;
 	}
 
-	public Set<String> testElementsExsistInOntology(BPMNModel model) {
-		Set<String> notFoundInOWL = new HashSet<String>();
-
-		Set<String> elements = model.getAllElementsOfModel();
-		for (String s : elements) {
-			// System.out.println(s);
-			if (!existsEntity(s))
-				notFoundInOWL.add(s);
-		}
-		return notFoundInOWL;
-	}
 }

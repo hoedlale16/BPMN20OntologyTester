@@ -150,11 +150,11 @@ public class BPMNModel {
 	 * 
 	 * @return
 	 */
-	public Set<String> getAllElementsOfModel() {
+	public Set<String> getAllElementsOfModel(boolean ignoreFromExtensionElementsField) {
 		Set<String> elements = new HashSet<String>();
 
 		DomDocument doc = model.getDocument();
-		addElementToSet(doc.getRootElement(), elements);
+		addElementToSet(doc.getRootElement(), elements, ignoreFromExtensionElementsField);
 
 		return elements;
 	}
@@ -166,13 +166,23 @@ public class BPMNModel {
 	 * @param element
 	 * @param elementSet
 	 */
-	private void addElementToSet(DomElement element, Set<String> elementSet) {
+	private void addElementToSet(DomElement element, Set<String> elementSet,boolean ignoreExtenionElements) {
 		elementSet.add(element.getLocalName());
 
-		// Iterate over all Childs and add them now...
-		for (DomElement e : element.getChildElements()) {
-			// calls this method for all the children which is Element
-			addElementToSet(e, elementSet);
+		if(! "extensionElements".equals(element.getLocalName())) {
+			
+			// Iterate over all Childs and add them now...
+			for (DomElement e : element.getChildElements()) {
+				// calls this method for all recursivle to add all the children which is Element
+				addElementToSet(e, elementSet,ignoreExtenionElements);
+			}
+		} else {
+			//Check if we are allowed to add elemets from extensionElementsFiled as well
+			if (! ignoreExtenionElements) {
+				for (DomElement e : element.getChildElements()) {	
+					addElementToSet(e, elementSet,ignoreExtenionElements);
+				}
+			}
 		}
 	}
 }

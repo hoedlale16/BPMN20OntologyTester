@@ -52,9 +52,6 @@ public class OntologyTabFxController {
 
 			// Show results on GUI
 			showInitializedOntology(ontology);
-			
-			//TODO: remove
-			testMethod();
 
 		} catch (Exception e) {
 			appendLog("Error while loading Ontology: " + e.getMessage());
@@ -63,10 +60,7 @@ public class OntologyTabFxController {
 
 	}
 	
-	private void testMethod() {
-		OWLClass owlClass = (OWLClass) ontology.getEntityByName("SubProcess");
-		ontology.getRestrictionsOfClass(owlClass);
-	}
+	
 
 	private void appendLog(String text) {
 		MainSceneFxController.getInstance().appendLog(text);
@@ -107,7 +101,7 @@ public class OntologyTabFxController {
 	private void onShowOntologyEntityDescription() {
 		String strSelItem = cbDocumentedEnties.getSelectionModel().getSelectedItem();
 		if (strSelItem != null && !strSelItem.isEmpty()) {
-			OWLEntity entity = ontology.getEntityByName(strSelItem);
+			OWLEntity entity = ontology.getEntityByShortName(strSelItem);
 			taOntDescription.setText(ontology.getCommentOfEntity(entity));
 		}
 	}

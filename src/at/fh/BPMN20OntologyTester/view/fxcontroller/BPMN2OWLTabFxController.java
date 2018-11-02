@@ -7,12 +7,14 @@ import java.util.Collections;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 
 import at.fh.BPMN20OntologyTester.controller.BPMNModelHandler;
+import at.fh.BPMN20OntologyTester.controller.OWLTester;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
 import at.fh.BPMN20OntologyTester.model.BPMNModel;
 import at.fh.BPMN20OntologyTester.model.OWLModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TreeItem;
@@ -37,6 +39,8 @@ public class BPMN2OWLTabFxController {
 	private ListView<String> lstBPMN2OWLNotFoundInOWL, lstBPMN2OWLElementsFailedRestrictions;
 	@FXML
 	private TreeView<String> treeBPMN20OWL;
+	@FXML
+	private CheckBox chkIgnoreExtensionElements;
 
 	// Get initialized on startup of application
 	private BPMNModel bpmnModel = null;
@@ -61,7 +65,11 @@ public class BPMN2OWLTabFxController {
 		OWLModel ontology = OntologyHandler.getInstance().getBpmn20Ontology();
 		
 		ObservableList<String> elemNotFoundInOWL = FXCollections.observableArrayList();
-		ontology.testElementsExsistInOntology(model).forEach(s -> elemNotFoundInOWL.add(s));
+		
+		//Determine if Childs of ExteniosnElement shoud be ignored or not.
+		boolean ignoreExtensionElements = chkIgnoreExtensionElements.isSelected();
+		
+		OWLTester.testElementsExsistInOntology(ontology, model,ignoreExtensionElements).forEach(s -> elemNotFoundInOWL.add(s));
 		Collections.sort(elemNotFoundInOWL);
 		lstBPMN2OWLNotFoundInOWL.setItems(elemNotFoundInOWL);
 
@@ -120,6 +128,18 @@ public class BPMN2OWLTabFxController {
 		}
 	}
 
+	
+	@FXML
+	private void onIgnoreExtenionElements() {
+		try {
+			if(bpmnModel != null)
+				showInitializedBPMN(bpmnModel);
+		} catch (Exception e) {
+			appendLog("ERROR - Failed to load File <" + e.getMessage() + ">");
+			e.printStackTrace();
+		}
+	}
+	
 	@FXML
 	private void onBPMN2OWL() {
 		appendLog("TODO - Method onBPMN2OWL not implemented yet! (Tab BPMN2OWL)");

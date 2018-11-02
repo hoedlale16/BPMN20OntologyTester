@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TreeView?>
@@ -74,6 +75,9 @@
                      </BorderPane.margin>
                   </ListView>
                </center>
+               <bottom>
+                  <CheckBox fx:id="chkIgnoreExtensionElements" mnemonicParsing="false" onAction="#onIgnoreExtenionElements" text="Ignore Extensions-Elements" BorderPane.alignment="TOP_LEFT" />
+               </bottom>
             </BorderPane>
             <BorderPane layoutX="30.0" layoutY="10.0">
                <top>

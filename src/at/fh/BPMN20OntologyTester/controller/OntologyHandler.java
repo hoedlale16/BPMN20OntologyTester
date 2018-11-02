@@ -2,8 +2,14 @@ package at.fh.BPMN20OntologyTester.controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
+import org.apache.commons.io.IOUtils;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -52,7 +58,7 @@ public class OntologyHandler {
 	 */
 	public OWLModel loadBPMN20Ontology(File file) throws OWLOntologyCreationException {
 		OWLOntology ontology = OWLManager.createOWLOntologyManager().loadOntologyFromOntologyDocument(file);
-		return new OWLModel(ontology);
+		return new OWLModel(ontology,file);
 	}
 	
 	/**
@@ -63,8 +69,19 @@ public class OntologyHandler {
 	 * @throws OWLOntologyCreationException
 	 */
 	private OWLModel loadBPMN20Ontology(InputStream stream) throws OWLOntologyCreationException {
-		OWLOntology ontology = OWLManager.createOWLOntologyManager().loadOntologyFromOntologyDocument(stream);
-		return new OWLModel(ontology);
+		try {
+			//Parse content to a temporary File to store it for the DOM and parse it for the OWL Manager as well
+			File file = File.createTempFile("ontology", null);
+			file.deleteOnExit();
+			Files.copy(stream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);		
+			
+			OWLOntology ontology = OWLManager.createOWLOntologyManager().loadOntologyFromOntologyDocument(file);
+			//OWLOntology ontology = OWLManager.createOWLOntologyManager().loadOntologyFromOntologyDocument(stream);
+			
+			return new OWLModel(ontology,file);
+		} catch (Exception e) {
+			throw new OWLOntologyCreationException(e);
+		}
 	}
 
 	/**
