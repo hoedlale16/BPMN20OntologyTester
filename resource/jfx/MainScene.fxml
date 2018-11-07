@@ -20,12 +20,12 @@
         </Label>
     </top>
    <bottom>
-      <TextArea fx:id="taLog" editable="false" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <TextArea fx:id="taLog" editable="false" BorderPane.alignment="BOTTOM_CENTER">
          <opaqueInsets>
             <Insets />
          </opaqueInsets></TextArea>
    </bottom>
    <center>
-      <TabPane fx:id="mainTabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER" />
+      <TabPane fx:id="mainTabPane" minHeight="568.0" minWidth="1024.0" tabClosingPolicy="UNAVAILABLE" tabMinHeight="1.0" tabMinWidth="1.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

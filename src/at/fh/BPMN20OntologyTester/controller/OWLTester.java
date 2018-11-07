@@ -18,7 +18,7 @@ import at.fh.BPMN20OntologyTester.model.OWLModel;
 public class OWLTester {
 
 	/**
-	 * Simple test if given ontology contians all model elements
+	 * Simple test if given ontology contians all model elements as OWL Class
 	 * Returns a list of Elements which ontology does not understand.
 	 * 
 	 * @param ontology
@@ -26,7 +26,7 @@ public class OWLTester {
 	 * @param ignoreExtensionElements
 	 * @return
 	 */
-	public static Set<String> testElementsExsistInOntology(OWLModel ontology, BPMNModel model, boolean ignoreExtensionElements) {
+	public static Set<String> testBPMNElementsExsistAsOWLClasses(OWLModel ontology, BPMNModel model, boolean ignoreExtensionElements) {
 		Set<String> notFoundInOWL = new HashSet<String>();
 
 		Set<String> elements = model.getAllElementsOfModel(ignoreExtensionElements);

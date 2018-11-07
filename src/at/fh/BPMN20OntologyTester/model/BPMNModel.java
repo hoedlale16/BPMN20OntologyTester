@@ -67,29 +67,19 @@ public class BPMNModel {
 		return null;
 	}
 
-	public List<StartEvent> getAllStartEvents() {
-		List<StartEvent> starts = new ArrayList<StartEvent>();
-
-		for (Process p : getProcesses()) {
-			starts.addAll((List<StartEvent>) p.getChildElementsByType(StartEvent.class));
-		}
-
-		return starts;
-	}
-
+	/**
+	 * Returns a list of StartEvents forgiven Process
+	 * @return
+	 */
 	public List<StartEvent> getStartEventsForProcess(Process p) {
 		return (List<StartEvent>) p.getChildElementsByType(StartEvent.class);
 	}
-
-	public List<EndEvent> getAllEndEvents() {
-		List<EndEvent> ends = new ArrayList<EndEvent>();
-
-		for (Process p : getProcesses()) {
-			ends.addAll((List<EndEvent>) p.getChildElementsByType(EndEvent.class));
-		}
-		return ends;
-	}
 	
+	/**
+	 * Returns a list of EndEvents for given Process
+	 * @param p
+	 * @return
+	 */
 	public List<EndEvent> getEndEventsForProcess(Process p) {
 		return (List<EndEvent>) p.getChildElementsByType(EndEvent.class);
 	}

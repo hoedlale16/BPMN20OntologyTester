@@ -116,7 +116,7 @@ public class OWLModel {
 	 * 
 	 * @return
 	 */
-	public Set<OWLClass> getClasses() {
+	public Set<OWLClass> getOWLClasses() {
 		Set<OWLClass> classes = new HashSet<OWLClass>();
 
 		// Read all Classes from ontology and store in Set
@@ -143,10 +143,15 @@ public class OWLModel {
 		return dataProperties;
 	}
 
+	/**
+	 * Returns all OWLClasses, ObjectProperties and DataPropeties of the ontology
+	 * 
+	 * @return
+	 */
 	public Set<OWLEntity> getAllEntities() {
 		Set<OWLEntity> entities = new HashSet<OWLEntity>();
 
-		entities.addAll(this.getClasses());
+		entities.addAll(this.getOWLClasses());
 		entities.addAll(this.getObjectProperties());
 		entities.addAll(this.getDataProperties());
 
@@ -167,9 +172,10 @@ public class OWLModel {
 
 		return null;
 	}
-	
+
 	/**
 	 * Returns an OWLEntity(Class or Property) for given IRI)
+	 * 
 	 * @param entityIRI
 	 * @return
 	 */
@@ -181,9 +187,10 @@ public class OWLModel {
 
 		return null;
 	}
-	
+
 	/**
 	 * Returns an Data or ObjectProperty forgiven IRI
+	 * 
 	 * @param propertyIRI
 	 * @return
 	 */
@@ -191,10 +198,10 @@ public class OWLModel {
 		Set<OWLEntity> props = new HashSet<OWLEntity>();
 		props.addAll(getObjectProperties());
 		props.addAll(getDataProperties());
-		
+
 		for (OWLEntity a : props) {
 			if (propertyIRI.equalsIgnoreCase(a.getIRI().toString()))
-				return (OWLProperty)a;
+				return (OWLProperty) a;
 		}
 
 		return null;
@@ -208,6 +215,15 @@ public class OWLModel {
 	 */
 	public boolean existsEntity(String name) {
 		for (OWLEntity e : this.getAllEntities()) {
+			// in Model the names might be in lower case, so ignore case sensitive
+			if (e.getIRI().getShortForm().equalsIgnoreCase(name))
+				return true;
+		}
+		return false;
+	}
+
+	public boolean existsClassForEntity(String name) {
+		for (OWLEntity e : this.getOWLClasses()) {
 			// in Model the names might be in lower case, so ignore case sensitive
 			if (e.getIRI().getShortForm().equalsIgnoreCase(name))
 				return true;
@@ -281,39 +297,77 @@ public class OWLModel {
 	 * Returns the set of Restrictions which exists for the given OWL-Class
 	 * 
 	 * @param owlClass
+	 *            - Class
+	 * @param includeInheritedClasses
+	 *            - True if Restrictions of inherited classes should loaded as well
 	 * @return
 	 */
-	// public Set<OWLClassAxiom> getRestrictionsOfClass(OWLClass owlClass) {
-	public void getAllRestrictionsOfClass(OWLClass owlClass) {
+	public Set<OWLClassRestriction> getOWLClassRestrictionOfOWLClass(OWLClass owlClass,
+			boolean includeInheritedClasses) {
 
 		Set<OWLClassRestriction> restrictions = new HashSet<OWLClassRestriction>();
 
 		// First add all restrictions of given class
-		restrictions.addAll(getRestrictionsOfClass(owlClass));
+		restrictions.addAll(getDirectAssignedOWLRestrictions(owlClass));
 
-		// Second iterate over all sub classes and add restrictions which need to be
-		// fullfilled by class as well
-		for (OWLClass c : getSubClassOf(owlClass)) {
-			restrictions.addAll(getRestrictionsOfClass(c));
+		// Second iterate over all sub classes and add restrictions if required
+		if (includeInheritedClasses) {
+			for (OWLClass c : getSubClassOf(owlClass)) {
+				restrictions.addAll(getDirectAssignedOWLRestrictions(c));
+			}
 		}
 
-		// Now we have all restrictions:
-		System.out.println("Following restrictions required for class <" + owlClass.getIRI().getShortForm() + "> - <"
-				+ restrictions.size() + ">");
-		for (OWLClassRestriction rest : restrictions) {
-			System.out.println("  - " + rest);
+		return restrictions;
+	}
+
+	/**
+	 * Returns all restrictions which are directly associated with given class. no
+	 * sub classes checked
+	 * 
+	 * @param owlClass
+	 * @return
+	 */
+	private List<OWLClassRestriction> getDirectAssignedOWLRestrictions(OWLClass owlClass) {
+		List<OWLClassRestriction> restrictions = new ArrayList<OWLClassRestriction>();
+
+		// Retrieve the raw DOM Element of given OWL Class
+		Element owlClassElement = getDOMElementOfClass(owlClass);
+		if (owlClassElement != null) {
+
+			// Iterate over all subclassOf Nodes to get owl:Restriction childs
+			NodeList subClassOfNL = owlClassElement.getChildNodes();
+			for (int x = 0; x < subClassOfNL.getLength(); x++) {
+
+				// We're just interested in Nodes with name rdfs:subClassOf which contains the
+				// restrictions
+				if (isNodeElementAndHasNameAndChilds(subClassOfNL.item(x),"rdfs:subClassOf",true)) {
+					
+					NodeList restrictionNL = subClassOfNL.item(x).getChildNodes();
+					for (int y = 0; y < restrictionNL.getLength(); y++) {
+						Node restrcitionNode = restrictionNL.item(y);
+						// We're just interested in Child-Nodes with name owl:Restriction
+						if (isNodeElementAndHasNameAndChilds(restrcitionNode,"owl:Restriction",true)) {
+							// JIHAAA we've found an restriction - Create an OWLCLassRestriction Object
+							OWLClassRestriction restriction = new OWLClassRestriction((Element) restrcitionNode);
+							restrictions.add(restriction);
+
+						}
+					}
+				}
+			}
 		}
+
+		return restrictions;
 
 	}
 
 	/**
-	 * Returns all restricitons which are directly assosiated with given class. no sub classes checked
+	 * Returns the raw DOM-Element for given OWLClass
+	 * 
 	 * @param owlClass
 	 * @return
 	 */
-	private List<OWLClassRestriction> getRestrictionsOfClass(OWLClass owlClass) {
-		List<OWLClassRestriction> restrictions = new ArrayList<OWLClassRestriction>();
-
+	public Element getDOMElementOfClass(OWLClass owlClass) {
 		// Get all Elements of typ 'owl:Class'
 		NodeList nl = getOntologyAsDOMDocument().getElementsByTagName("owl:Class");
 
@@ -324,43 +378,31 @@ public class OWLModel {
 			if (node.getNodeType() == Node.ELEMENT_NODE
 					&& ((Element) node).getAttribute("rdf:about").equalsIgnoreCase(owlClass.getIRI() + "")) {
 
-				// Iterate over all subclassOf Nodes to get owl:Restriction childs
-				NodeList subClassOfNL = ((Element) node).getChildNodes();
-				for (int x = 0; x < subClassOfNL.getLength(); x++) {
-
-					Node subClassOfNode = subClassOfNL.item(x);
-					// We're just interested in Nodes wiht name owl:Restriction and which have
-					// childs
-					if (subClassOfNode.getNodeType() == Node.ELEMENT_NODE
-							&& "rdfs:subClassOf".equalsIgnoreCase(subClassOfNode.getNodeName())
-							&& subClassOfNode.hasChildNodes()) {
-
-						NodeList restrictionNL = subClassOfNode.getChildNodes();
-						for (int y = 0; y < restrictionNL.getLength(); y++) {
-							Node restrcitionNode = restrictionNL.item(y);
-							if (restrcitionNode.getNodeType() == Node.ELEMENT_NODE
-									&& "owl:Restriction".equalsIgnoreCase(restrcitionNode.getNodeName())
-									&& restrcitionNode.hasChildNodes()) {
-
-								// JIHAAA we've found an restriction
-								
-								OWLClassRestriction restriction = new OWLClassRestriction((Element) restrcitionNode);
-								restrictions.add(restriction);
-								
-							}
-						}
-
-					}
-				}
+				return (Element) node;
 			}
-
 		}
-
-		return restrictions;
-
+		return null;
 	}
 
-	
+	/**
+	 * Helper Method to determine if an given Node is from Type Element, contains
+	 * given name and optionally has child-Nodes
+	 * 
+	 * @param node
+	 * @param name
+	 * @param requireChilds
+	 * @return
+	 */
+	private boolean isNodeElementAndHasNameAndChilds(Node node, String name, boolean requireChilds) {
+
+		if (node.getNodeType() == Node.ELEMENT_NODE && name.equalsIgnoreCase(node.getNodeName())
+				&& (node.hasChildNodes() == requireChilds)) {
+			return true;
+		}
+
+		return false;
+
+	}
 
 	/**
 	 * Return all Sub-Classes(rdfs:subClass) which are OWLClass of given Class

@@ -49,7 +49,7 @@ public class OntologyHandler {
 	}
 
 	/**
-	 * Method to load and initialize the BPMN20 Ontology from given file
+	 * Method to load and create a BPMN20 Ontology from given file. Must set explizit via method 'setBpmn20Ontology' for usage
 	 * 
 	 * @param file
 	 *            - OWL-File to load which represents the BPMN20 Ontology

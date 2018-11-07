@@ -21,7 +21,7 @@ import at.fh.BPMN20OntologyTester.model.BPMNModel;
  */
 public class BPMNModelHandler {
 	
-	public BPMNModelHandler() {
+	private BPMNModelHandler() {
 	}
 	
 	/**
@@ -33,7 +33,7 @@ public class BPMNModelHandler {
 	 * @throws VerifyException -  Thrown if validation against xsd('resouce/BPMN20.xsd) failed
 	 * @throws BpmnModelException - Thrown if error occurred while reading process model
 	 */ 
-	public BPMNModel readModelFromFile(File modelFile) 
+	public static BPMNModel readModelFromFile(File modelFile) 
 	  throws VerifyException, BpmnModelException,ModelValidationException
 	  {
 		//Check if given File is valid to BPMN-XSD from https://www.omg.org/spec/BPMN/2.0/

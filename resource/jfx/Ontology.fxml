@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="ontologyPane" prefHeight="768.0" prefWidth="1024.0" styleClass="bg_game" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fh.BPMN20OntologyTester.view.fxcontroller.OntologyTabFxController">
+<BorderPane fx:id="ontologyPane" minHeight="500.0" minWidth="1024.0" styleClass="bg_game" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fh.BPMN20OntologyTester.view.fxcontroller.OntologyTabFxController">
     <right>
 
 
@@ -77,33 +77,57 @@
    </left>
    <center>
       <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <center>
-            <TextArea fx:id="taOntDescription" editable="false" BorderPane.alignment="CENTER">
-               <padding>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-               </padding>
-            </TextArea>
-         </center>
          <top>
             <BorderPane BorderPane.alignment="CENTER">
                <right>
-                  <Button mnemonicParsing="false" onAction="#onShowOntologyEntityDescription" styleClass="buttons" text="Show Description" BorderPane.alignment="CENTER" />
+                  <Button mnemonicParsing="false" onAction="#onShowOntologyEntityDetails" styleClass="buttons" text="Show Details" BorderPane.alignment="CENTER" />
                </right>
                <padding>
                   <Insets bottom="30.0" left="15.0" right="15.0" />
                </padding>
                <top>
-                  <Label fx:id="lbDescDocEntities" styleClass="lb_boxHeader" text="Documented Entities" BorderPane.alignment="TOP_LEFT">
+                  <Label styleClass="lb_boxHeader" text="OWL-Entities" BorderPane.alignment="TOP_LEFT">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
                </top>
-               <left>
-                  <ComboBox fx:id="cbDocumentedEnties" minHeight="-Infinity" minWidth="-Infinity" prefWidth="550.0" BorderPane.alignment="CENTER" />
-               </left>
+               <center>
+                  <ComboBox fx:id="cbOWLEntities" maxWidth="1.7976931348623157E308" minWidth="550.0" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets right="5.0" />
+                     </BorderPane.margin></ComboBox>
+               </center>
             </BorderPane>
          </top>
+         <center>
+            <VBox BorderPane.alignment="CENTER">
+               <children>
+                  <BorderPane layoutX="10.0" layoutY="347.0">
+                     <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </padding>
+                     <top>
+                        <Label styleClass="lb_boxHeader" text="Description" BorderPane.alignment="TOP_LEFT" />
+                     </top>
+                     <center>
+                        <TextArea fx:id="taOntDescription" editable="false" prefRowCount="25" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+                  <BorderPane>
+                     <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </padding>
+                     <top>
+                        <Label styleClass="lb_boxHeader" text="Restrictions" BorderPane.alignment="TOP_LEFT" />
+                     </top>
+                     <center>
+                        <ListView fx:id="lstRestrictions" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+               </children>
+            </VBox>
+         </center>
       </BorderPane>
    </center>
    <padding>

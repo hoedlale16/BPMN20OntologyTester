@@ -69,7 +69,7 @@ public class BPMN2OWLTabFxController {
 		//Determine if Childs of ExteniosnElement shoud be ignored or not.
 		boolean ignoreExtensionElements = chkIgnoreExtensionElements.isSelected();
 		
-		OWLTester.testElementsExsistInOntology(ontology, model,ignoreExtensionElements).forEach(s -> elemNotFoundInOWL.add(s));
+		OWLTester.testBPMNElementsExsistAsOWLClasses(ontology, model,ignoreExtensionElements).forEach(s -> elemNotFoundInOWL.add(s));
 		Collections.sort(elemNotFoundInOWL);
 		lstBPMN2OWLNotFoundInOWL.setItems(elemNotFoundInOWL);
 
@@ -111,12 +111,9 @@ public class BPMN2OWLTabFxController {
 
 			// Handle selected file
 			File selectedFile = chooser.showOpenDialog(null);
-			// TODO: Test:
-			// File selectedFile = new File("resource/ExampleProcessModel.bpmn")
 
 			if (selectedFile != null) {
-				BPMNModelHandler bpmnModelHandler = new BPMNModelHandler();
-				bpmnModel = bpmnModelHandler.readModelFromFile(selectedFile);
+				bpmnModel = BPMNModelHandler.readModelFromFile(selectedFile);
 
 				appendLog("Read BPMN-File <" + selectedFile.getAbsolutePath() + ">");
 

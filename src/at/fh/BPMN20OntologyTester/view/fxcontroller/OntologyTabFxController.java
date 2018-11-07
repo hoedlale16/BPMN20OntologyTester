@@ -1,14 +1,12 @@
 package at.fh.BPMN20OntologyTester.view.fxcontroller;
 
 import java.util.Collections;
-import java.util.Set;
 
-import org.semanticweb.owlapi.model.OWLAxiom;
-import org.semanticweb.owlapi.model.OWLClass;
-import org.semanticweb.owlapi.model.OWLClassAxiom;
+import org.apache.commons.codec.binary.StringUtils;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
+import at.fh.BPMN20OntologyTester.model.OWLClassRestriction;
 import at.fh.BPMN20OntologyTester.model.OWLModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,11 +28,11 @@ public class OntologyTabFxController {
 
 	// GUI Elements from Ontology Tab
 	@FXML
-	private Label lbClasses, lbObjProperties, lbDataProperties, lbDescUndocEntities, lbDescDocEntities;
+	private Label lbClasses, lbObjProperties, lbDataProperties, lbDescUndocEntities;
 	@FXML
-	private ListView<String> lstUnDocumentedEntities;
+	private ListView<String> lstUnDocumentedEntities, lstRestrictions;
 	@FXML
-	private ComboBox<String> cbDocumentedEnties;
+	private ComboBox<String> cbOWLEntities;
 	@FXML
 	private TextArea taOntDescription;
 
@@ -71,7 +69,7 @@ public class OntologyTabFxController {
 	 * changeable.
 	 */
 	private void showInitializedOntology(OWLModel ontology) {
-		lbClasses.setText("" + ontology.getClasses().size());
+		lbClasses.setText("" + ontology.getOWLClasses().size());
 		lbObjProperties.setText("" + ontology.getObjectProperties().size());
 		lbDataProperties.setText("" + ontology.getDataProperties().size());
 
@@ -85,24 +83,44 @@ public class OntologyTabFxController {
 		lstUnDocumentedEntities.setItems(undocItems);
 
 		// Show entities which rdfs:comment annotation
-		ObservableList<String> docItems = FXCollections.observableArrayList();
-		for (OWLEntity e : ontology.getDocumentedEntities()) {
-			docItems.add(e.getIRI().getShortForm());
+		ObservableList<String> entities= FXCollections.observableArrayList();
+		for (OWLEntity e : ontology.getAllEntities()) {
+			entities.add(e.getIRI().getShortForm());
 		}
-		lbDescDocEntities.setText("Documented Entities (" + docItems.size() + ")");
-		Collections.sort(docItems);
-		cbDocumentedEnties.setItems(docItems);
+		Collections.sort(entities);
+		cbOWLEntities.setItems(entities);
 	}
 
 	/**
 	 * Method called after button click on "Show Description" for element.
 	 */
 	@FXML
-	private void onShowOntologyEntityDescription() {
-		String strSelItem = cbDocumentedEnties.getSelectionModel().getSelectedItem();
+	private void onShowOntologyEntityDetails() {
+		String strSelItem = cbOWLEntities.getSelectionModel().getSelectedItem();
 		if (strSelItem != null && !strSelItem.isEmpty()) {
 			OWLEntity entity = ontology.getEntityByShortName(strSelItem);
-			taOntDescription.setText(ontology.getCommentOfEntity(entity));
+			
+			//Set description for selected Entity
+			String description = ontology.getCommentOfEntity(entity);
+			if(description == null || description.isEmpty())
+				description = "No Description for Entity available!";
+			taOntDescription.setText(description);
+			
+			//Show Restriction for class
+			if (entity.isOWLClass()) {
+			
+				ObservableList<String> restItems = FXCollections.observableArrayList();
+				for (OWLClassRestriction r : ontology.getOWLClassRestrictionOfOWLClass(entity.asOWLClass(), true)) {
+					restItems.add(r.toFormattedToString());
+				}
+				
+				if(restItems.isEmpty())
+					restItems.add("No Restrictions for Class found");
+			
+				Collections.sort(restItems);
+				lstRestrictions.setItems(restItems);
+			}
+			
 		}
 	}
 }

@@ -40,7 +40,7 @@ public class BPMN20OntologyTester extends Application {
 			// mainScene
 			addNewTab("Ontology", loadScene("/resource/jfx/Ontology.fxml"), mainScene);
 			addNewTab("BPMN2OWL", loadScene("/resource/jfx/BPMN2OWL.fxml"), mainScene);
-			addNewTab("Ontology Tests", loadScene("/resource/jfx/OntologyTests.fxml"), mainScene);
+			addNewTab("OWL Tests", loadScene("/resource/jfx/OntologyTests.fxml"), mainScene);
 		} catch (IOException e) {
 			System.out.println("Error initializing Application: "+e.getMessage() );
 			System.exit(1);
@@ -91,7 +91,10 @@ public class BPMN20OntologyTester extends Application {
 	public void start(Stage stage) {
 
 		stage.setTitle("BPMN2.0 Ontology Tester");
-		stage.setResizable(false);
+		stage.setMaximized(true);
+		stage.setMinWidth(1024);
+		stage.setMinHeight(768);
+		
 		stage.getIcons().add(new Image(getClass().getResource("/resource/pics/logo.jpg").toString()));
 
 		stage.setScene(mainScene);
