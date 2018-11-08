@@ -27,7 +27,7 @@ The main direcotries contain:
 
 ## Setup Project as Developer (Eclipse)
  - Clone this Respority to your local Eclispe workspace
- - Open Eclipse: File -> Import -> Select **Maven -> Ecisiting Maven Projects** -> Select local repository -> Finish
+ - Open Eclipse: File -> Import -> Select **Maven -> Exisiting Maven Projects** -> Select local repository -> Finish
  - After import, maven might need some time to download all required third party libraries
 
 ### Run Project in Eclipse
