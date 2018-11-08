@@ -10,6 +10,13 @@ Furthermore it includes the possibility to convert an BPMN-File (.bpmn) to an On
     -Eclipse with JavaFX and Maven Support (Tested with Eclipse Jee Oxygen)
        - JavaFX-Plugin: https://www.eclipse.org/efxclipse/install.html
 
+## Project Structure
+The project structure represents a MAVEN project which can be integrated immediatley in an IDE wich maven support.
+The main direcotries contain:
+ - bin: Contains the application in executable form to run it immediatly as user
+ - resource: Contains all required resources of the application (BPMN2.0-Ontology, pictures, ...)
+ - src: Contains the source code of the project
+
 ## Start Application as User
  - Download this Respository to your local workspace (https://github.com/hoedlale16/BPMN20OntologyTester/archive/master.zip)
  - Unzip project 
