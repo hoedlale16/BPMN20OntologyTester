@@ -42,6 +42,7 @@ public class BPMN20OntologyTester extends Application {
 			addNewTab("BPMN2OWL", loadScene("/resource/jfx/BPMN2OWL.fxml"), mainScene);
 			addNewTab("OWL Tests", loadScene("/resource/jfx/OntologyTests.fxml"), mainScene);
 		} catch (IOException e) {
+			e.printStackTrace();
 			System.out.println("Error initializing Application: "+e.getMessage() );
 			System.exit(1);
 		}

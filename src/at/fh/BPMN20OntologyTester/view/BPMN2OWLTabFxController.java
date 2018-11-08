@@ -1,4 +1,4 @@
-package at.fh.BPMN20OntologyTester.view.fxcontroller;
+package at.fh.BPMN20OntologyTester.view;
 
 import java.io.File;
 import java.io.FileNotFoundException;

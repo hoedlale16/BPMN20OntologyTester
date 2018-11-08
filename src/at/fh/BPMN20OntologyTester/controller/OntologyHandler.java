@@ -45,7 +45,7 @@ public class OntologyHandler {
 	private OntologyHandler() throws OWLOntologyCreationException, FileNotFoundException {
 		//Create Ontology reading from resource File as Stream
 		//This is the initial initializiation of the ontology on startup!
-		setBpmn20Ontology(loadBPMN20Ontology(getClass().getResourceAsStream("/resource/bpmn/BPMN20.owl")));
+		setBpmn20Ontology(loadBPMN20Ontology(getClass().getResourceAsStream("/resource/owl/BPMN20.owl")));
 	}
 
 	/**

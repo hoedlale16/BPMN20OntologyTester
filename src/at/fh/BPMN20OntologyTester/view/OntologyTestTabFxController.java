@@ -1,4 +1,4 @@
-package at.fh.BPMN20OntologyTester.view.fxcontroller;
+package at.fh.BPMN20OntologyTester.view;
 
 import at.fh.BPMN20OntologyTester.model.BPMNModel;
 import javafx.fxml.FXML;
