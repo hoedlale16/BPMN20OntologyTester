@@ -172,6 +172,20 @@ public class OWLModel {
 
 		return null;
 	}
+	
+	/**
+	 * Returns class for given name ignoring case sensitivity
+	 * @param name
+	 * @return
+	 */
+	public OWLClass getOWLClassByShortNameIgnoreCase(String name) {
+		for(OWLClass c: getOWLClasses()) {
+			if(c.getIRI().getShortForm().equalsIgnoreCase(name)) {
+				return c;
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * Returns an OWLEntity(Class or Property) for given IRI)
@@ -303,7 +317,7 @@ public class OWLModel {
 	 * @return
 	 */
 	public Set<OWLClassRestriction> getOWLClassRestrictionOfOWLClass(OWLClass owlClass,
-			boolean includeInheritedClasses) {
+			boolean includeInheritedClasses) throws Exception {
 
 		Set<OWLClassRestriction> restrictions = new HashSet<OWLClassRestriction>();
 
@@ -327,7 +341,7 @@ public class OWLModel {
 	 * @param owlClass
 	 * @return
 	 */
-	private List<OWLClassRestriction> getDirectAssignedOWLRestrictions(OWLClass owlClass) {
+	private List<OWLClassRestriction> getDirectAssignedOWLRestrictions(OWLClass owlClass) throws Exception{
 		List<OWLClassRestriction> restrictions = new ArrayList<OWLClassRestriction>();
 
 		// Retrieve the raw DOM Element of given OWL Class
@@ -348,8 +362,8 @@ public class OWLModel {
 						// We're just interested in Child-Nodes with name owl:Restriction
 						if (isNodeElementAndHasNameAndChilds(restrcitionNode,"owl:Restriction",true)) {
 							// JIHAAA we've found an restriction - Create an OWLCLassRestriction Object
-							OWLClassRestriction restriction = new OWLClassRestriction((Element) restrcitionNode);
-							restrictions.add(restriction);
+								OWLClassRestriction restriction = new OWLClassRestriction((Element) restrcitionNode);
+								restrictions.add(restriction);
 
 						}
 					}

@@ -110,8 +110,13 @@ public class OntologyTabFxController {
 			if (entity.isOWLClass()) {
 			
 				ObservableList<String> restItems = FXCollections.observableArrayList();
-				for (OWLClassRestriction r : ontology.getOWLClassRestrictionOfOWLClass(entity.asOWLClass(), true)) {
-					restItems.add(r.toFormattedToString());
+				
+				try {
+					for (OWLClassRestriction r : ontology.getOWLClassRestrictionOfOWLClass(entity.asOWLClass(), true)) {
+						restItems.add(r.toFormattedToString());
+					}
+				} catch(Exception e) {
+					appendLog("Error occured while parsing OWL-Restrictions for class <" +entity.getIRI().getShortForm() + ">");
 				}
 				
 				if(restItems.isEmpty())

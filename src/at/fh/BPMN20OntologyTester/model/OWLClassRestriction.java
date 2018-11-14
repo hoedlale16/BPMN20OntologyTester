@@ -21,10 +21,15 @@ import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
 public class OWLClassRestriction {
 
 	private OWLProperty onProperty;
-	private double cardinality;
+	private int cardinality;
 	private CardinalityTypeEnum cardinalityType = CardinalityTypeEnum.Unkown;
+	
+	//IF onClass stays null, Restriction does affect an attribute of DOM-Element of BPMN Model
+	//If onClass is not null, link to sub-Node inside the DOM-Element of BPMN Model is linked
 	private OWLEntity onClass;
-	private String onDataRange;
+	
+	//Just set if Restriction affects an attribute and defines the expected data-type for cardinality:
+	private DataRangeEnum onDataRange;
 	
 	public enum CardinalityTypeEnum {
 	    MinCardinality,
@@ -33,12 +38,42 @@ public class OWLClassRestriction {
 		Unkown;
 	}
 	
-	public OWLClassRestriction(Element domElement) {
+	public enum DataRangeEnum {
+		DataRangeString,
+		DataRangeBoolean,
+		DataRangeInteger,
+		Unkown
+	}
+	
+	public OWLClassRestriction(Element domElement) 
+	throws Exception {
 		try {
 			parseDomElement(domElement);
 		}catch(Exception e) {
-			e.printStackTrace();
+			throw new Exception("OWLClassRestriction failed: Error while parsing domElement");
 		}
+		
+		//Validate data
+		if(onProperty == null) {
+			throw new Exception("OWLClassRestriciton require link to an OWLProperty!");
+		}
+		
+		if (cardinalityType.equals(CardinalityTypeEnum.Unkown)) {
+			throw new Exception("OWLClass required valid CardinalityTypeEnum");
+		}
+		
+		if ( onDataRange != null &&  onDataRange.equals(DataRangeEnum.Unkown)) {
+			throw new Exception("Restriction affects a not supported DataRange");
+		}
+	}
+	
+	
+	/**
+	 * Checks if OWlRestriction affets an attribute of the BPMN-DOM-Node or a child node which is defined in 'onClass'
+	 * @return
+	 */
+	public boolean affectsChildNode() {
+		return (onClass != null);
 	}
 
 	/**
@@ -60,22 +95,38 @@ public class OWLClassRestriction {
 				case "owl:minCardinality":
 				case "owl:minQualifiedCardinality":
 					cardinalityType = CardinalityTypeEnum.MinCardinality;
-					cardinality = Double.parseDouble(childNode.getTextContent());					
+					cardinality = Integer.parseInt(childNode.getTextContent());					
 					break;
 				case "owl:maxCardinality":
 				case "owl:maxQualifiedCardinality":
 					cardinalityType = CardinalityTypeEnum.MaxCardinality;
-					cardinality = Double.parseDouble(childNode.getTextContent());					
+					cardinality = Integer.parseInt(childNode.getTextContent());					
 					break;
 				case "owl:qualifiedCardinality":
 					cardinalityType = CardinalityTypeEnum.ExactCardinality;
-					cardinality = Double.parseDouble(childNode.getTextContent());					
+					cardinality = Integer.parseInt(childNode.getTextContent());					
 					break;
 					
 				case "owl:onDataRange":
-					//Deprecated in OWL2.0 -> https://www.w3.org/TR/owl2-rdf-based-semantics/
-					//Note: The use of the IRI owl:DataRange has been deprecated as of OWL 2. The IRI rdfs:Datatype SHOULD be used instead. 
-					setOnDataRange(((Element)childNode).getAttribute("rdf:resource"));
+					DataRangeEnum dataRange = DataRangeEnum.Unkown;
+					
+					//BPMN2.0 Ontology currently defines DataRanges in
+					//  - http://www.w3.org/2001/XMLSchema#string
+					//	- http://www.w3.org/2001/XMLSchema#boolean
+					//	- http://www.w3.org/2001/XMLSchema#integer
+					
+					String value = ((Element)childNode).getAttribute("rdf:resource");
+					switch ( value ) {
+						case "http://www.w3.org/2001/XMLSchema#string":
+							dataRange = DataRangeEnum.DataRangeString; break;
+						case "http://www.w3.org/2001/XMLSchema#boolean":
+							dataRange = DataRangeEnum.DataRangeBoolean; break;
+						case "http://www.w3.org/2001/XMLSchema#integer":
+							dataRange = DataRangeEnum.DataRangeInteger; break;
+
+					}
+					
+					setOnDataRange(dataRange);
 					break;
 				case "owl:allValuesFrom":
 					break;
@@ -108,12 +159,22 @@ public class OWLClassRestriction {
 	}
 
 
-	public double getCardinality() {
+	public int getCardinality() {
 		return cardinality;
 	}
 
+	
+	public String getCardinalityAsString() {
+		return cardinality + "";
+	}
+	
+	public boolean getCardinalityAsBoolean() {
+			//0: means false, 1 means true
+			return (cardinality > 0);
+	}
+	
 
-	public void setCardinality(double cardinality) {
+	public void setCardinality(int cardinality) {
 		this.cardinality = cardinality;
 	}
 
@@ -137,39 +198,22 @@ public class OWLClassRestriction {
 		this.onClass = onClass;
 	}
 
-	public String getOnDataRange() {
+	public DataRangeEnum getOnDataRange() {
 		return onDataRange;
 	}
 
 
-	public void setOnDataRange(String onDataRange) {
+	public void setOnDataRange(DataRangeEnum onDataRange) {
 		this.onDataRange = onDataRange;
 	}
-	
-	/**
-	 * Determine if Cardinality is from type boolean
-	 * @return
-	 */
-	public boolean isCardinalityBoolean() {
-		if("http://www.w3.org/2001/XMLSchema#boolean".equals(onDataRange)) 
-			return true;
-		return false;
-	}
-	
-	public boolean convertCardinalityForDataRangeBoolean() {
-			//0: means false, 1 means true
-			return (cardinality > 0);
-	}
-
 	
 	public String toFormattedToString() {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("OWLClassRestriction [");
 		
-		if(onProperty != null) {
-			sb.append("onProperty=").append( onProperty.getIRI().getShortForm() ).append(", ");
-		}
+		//A Restrictions is required to have a link to an property
+		sb.append("onProperty=").append( onProperty.getIRI().getShortForm() ).append(", ");
 		
 		sb.append("cardinality=").append(cardinality).append(", ");
 		sb.append("cardinalityType=").append(cardinalityType).append(", ");
@@ -194,7 +238,7 @@ public class OWLClassRestriction {
 		final int prime = 31;
 		int result = 1;
 		long temp;
-		temp = Double.doubleToLongBits(cardinality);
+		temp = Integer.toUnsignedLong(cardinality);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((cardinalityType == null) ? 0 : cardinalityType.hashCode());
 		result = prime * result + ((onClass == null) ? 0 : onClass.hashCode());
@@ -212,7 +256,7 @@ public class OWLClassRestriction {
 		if (getClass() != obj.getClass())
 			return false;
 		OWLClassRestriction other = (OWLClassRestriction) obj;
-		if (Double.doubleToLongBits(cardinality) != Double.doubleToLongBits(other.cardinality))
+		if (cardinality != other.cardinality)
 			return false;
 		if (cardinalityType != other.cardinalityType)
 			return false;

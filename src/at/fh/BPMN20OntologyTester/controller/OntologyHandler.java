@@ -83,6 +83,12 @@ public class OntologyHandler {
 			throw new OWLOntologyCreationException(e);
 		}
 	}
+	
+	
+	
+	
+	
+	
 
 	/**
 	 * Sets a new Ontology for the application

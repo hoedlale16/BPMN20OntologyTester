@@ -66,6 +66,18 @@ public class BPMNModel {
 		}
 		return null;
 	}
+	
+	/**
+	 * Returns all childs of given Process as DOMElement which contains the raw information
+	 * @param p
+	 * @return
+	 */
+	public List<DomElement> getProcessElementsAsDomElements(Process p) {
+		List<DomElement> domElements = new ArrayList<DomElement>();
+		domElements.addAll(p.getDomElement().getChildElements());
+		
+		return domElements;
+	}
 
 	/**
 	 * Returns a list of StartEvents forgiven Process
@@ -148,6 +160,8 @@ public class BPMNModel {
 
 		return elements;
 	}
+	
+
 
 	/**
 	 * Helper Method to add an Element and his childs to the element Set in a
