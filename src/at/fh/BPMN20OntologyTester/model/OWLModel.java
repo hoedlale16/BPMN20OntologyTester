@@ -317,7 +317,7 @@ public class OWLModel {
 	 * @return
 	 */
 	public Set<OWLClassRestriction> getOWLClassRestrictionOfOWLClass(OWLClass owlClass,
-			boolean includeInheritedClasses) throws Exception {
+			boolean includeInheritedClasses)throws Exception {
 
 		Set<OWLClassRestriction> restrictions = new HashSet<OWLClassRestriction>();
 

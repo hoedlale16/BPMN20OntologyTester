@@ -20,7 +20,14 @@ import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
  */
 public class OWLClassRestriction {
 
+	//Defines if the OWLClassRestriction affects an XML-Attribute or an XML-Child-Tag
+	private AffectedXMLPartEnum affectedXMLPart;
+	
+	//Determines which Value is affected. Either it is a XML-Child-Tag or an XML-Attribute
+	//If onClass is set, it must be an XMl-Child-Tag otherwise it must be an XML-Attribute
 	private OWLProperty onProperty;
+	
+	//Cardinality defines how often the property must occurs. According the Type it is a range or a exact value
 	private int cardinality;
 	private CardinalityTypeEnum cardinalityType = CardinalityTypeEnum.Unkown;
 	
@@ -28,7 +35,7 @@ public class OWLClassRestriction {
 	//If onClass is not null, link to sub-Node inside the DOM-Element of BPMN Model is linked
 	private OWLEntity onClass;
 	
-	//Just set if Restriction affects an attribute and defines the expected data-type for cardinality:
+	//Just set if Restriction affects an attribute. It defines the expected data-type for the property:
 	private DataRangeEnum onDataRange;
 	
 	public enum CardinalityTypeEnum {
@@ -45,10 +52,21 @@ public class OWLClassRestriction {
 		Unkown
 	}
 	
+	public enum AffectedXMLPartEnum {
+		ChildNodeRestriction,
+		AttributeRestriction,
+		Unkown
+	}
+	
 	public OWLClassRestriction(Element domElement) 
 	throws Exception {
 		try {
 			parseDomElement(domElement);
+			if(onClass != null) {
+				this.affectedXMLPart = AffectedXMLPartEnum.ChildNodeRestriction;
+			} else {
+				this.affectedXMLPart = AffectedXMLPartEnum.AttributeRestriction;
+			}
 		}catch(Exception e) {
 			throw new Exception("OWLClassRestriction failed: Error while parsing domElement");
 		}
@@ -56,6 +74,10 @@ public class OWLClassRestriction {
 		//Validate data
 		if(onProperty == null) {
 			throw new Exception("OWLClassRestriciton require link to an OWLProperty!");
+		}	
+		
+		if(affectedXMLPart.equals(AffectedXMLPartEnum.Unkown)) {
+			throw new Exception("Unable to termine if Restriction is for XML-Attribute of XML-Child-Node");
 		}
 		
 		if (cardinalityType.equals(CardinalityTypeEnum.Unkown)) {
@@ -65,17 +87,10 @@ public class OWLClassRestriction {
 		if ( onDataRange != null &&  onDataRange.equals(DataRangeEnum.Unkown)) {
 			throw new Exception("Restriction affects a not supported DataRange");
 		}
+		
+		
 	}
 	
-	
-	/**
-	 * Checks if OWlRestriction affets an attribute of the BPMN-DOM-Node or a child node which is defined in 'onClass'
-	 * @return
-	 */
-	public boolean affectsChildNode() {
-		return (onClass != null);
-	}
-
 	/**
 	 * Helper method to parse given DOm-Object to get a restriction
 	 * 
@@ -125,8 +140,7 @@ public class OWLClassRestriction {
 							dataRange = DataRangeEnum.DataRangeInteger; break;
 
 					}
-					
-					setOnDataRange(dataRange);
+					onDataRange = dataRange;
 					break;
 				case "owl:allValuesFrom":
 					break;
@@ -153,60 +167,26 @@ public class OWLClassRestriction {
 		return onProperty;
 	}
 
-
-	public void setOnProperty(OWLProperty onProperty) {
-		this.onProperty = onProperty;
-	}
-
-
 	public int getCardinality() {
 		return cardinality;
 	}
-
 	
-	public String getCardinalityAsString() {
-		return cardinality + "";
-	}
-	
-	public boolean getCardinalityAsBoolean() {
-			//0: means false, 1 means true
-			return (cardinality > 0);
-	}
-	
-
-	public void setCardinality(int cardinality) {
-		this.cardinality = cardinality;
-	}
-
-
 	public CardinalityTypeEnum getCardinalityType() {
 		return cardinalityType;
 	}
-
-
-	public void setCardinalityType(CardinalityTypeEnum cardinalityType) {
-		this.cardinalityType = cardinalityType;
-	}
-
 
 	public OWLEntity getOnClass() {
 		return onClass;
 	}
 
-
-	public void setOnClass(OWLEntity onClass) {
-		this.onClass = onClass;
-	}
-
 	public DataRangeEnum getOnDataRange() {
 		return onDataRange;
 	}
-
-
-	public void setOnDataRange(DataRangeEnum onDataRange) {
-		this.onDataRange = onDataRange;
-	}
 	
+	public AffectedXMLPartEnum getAffectedXMLPart() {
+		return affectedXMLPart;
+	}
+
 	public String toFormattedToString() {
 		StringBuilder sb = new StringBuilder();
 

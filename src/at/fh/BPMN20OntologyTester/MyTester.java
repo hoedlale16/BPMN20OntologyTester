@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.List;
 import java.util.Set;
 
 import org.camunda.bpm.model.bpmn.instance.Process;
@@ -19,6 +18,7 @@ import at.fh.BPMN20OntologyTester.controller.BPMNModelHandler;
 import at.fh.BPMN20OntologyTester.controller.OWLTester;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
 import at.fh.BPMN20OntologyTester.model.BPMNModel;
+import at.fh.BPMN20OntologyTester.model.FailedOWLClassRestriction;
 import at.fh.BPMN20OntologyTester.model.OWLClassRestriction;
 import at.fh.BPMN20OntologyTester.model.OWLModel;
 
@@ -59,31 +59,16 @@ public class MyTester {
 	
 	private static void testRestrictionofElement(DomElement element, BPMNModel model, OWLModel ontology) throws Exception {
 		System.out.println("Test restrictions of Class <"+element.getLocalName()+">");
-			
-		//Get OWLClass for DOM-Element
-		OWLClass seOWLClass = ontology.getOWLClassByShortNameIgnoreCase(element.getLocalName());
-		if(seOWLClass == null) {
-			System.out.println("ERROR no OWLClass found for Element <" + element.getLocalName() + ">");
-			return;
-		}
-		
-		Set<OWLClassRestriction> restrictions = ontology.getOWLClassRestrictionOfOWLClass(seOWLClass, true);
-				
 
-		System.out.println("Test Element <" + element.getLocalName() + "> with Restrictions: "  + restrictions.size());
-		Set<OWLClassRestriction> failedRestrictions = OWLTester.testBPMNElementMeetOWLRestrictions(element, restrictions);
-		System.out.println("Found FailedRestrictions: " + failedRestrictions.size());
-		/*for(OWLClassRestriction fr: failedRestrictions) {
-				System.out.println(fr);
-		}*/
+		Set<FailedOWLClassRestriction> failedRestrictions = OWLTester.testBPMNElementMeetOWLRestrictions(element, ontology);
+		//Just output for Elements which have failed restrictions
+		if( failedRestrictions.size() > 0) {
+			OWLClass owlClass = ontology.getOWLClassByShortNameIgnoreCase(element.getLocalName());
+			int totalRestrictions = ontology.getOWLClassRestrictionOfOWLClass(owlClass, true).size();
 			
-		//show valid restrictions
-		restrictions.removeAll(failedRestrictions); 
-		System.out.println("Passed Restrictions: " + restrictions.size());
-		/*for(OWLClassRestriction pr: restrictions) {
-				System.out.println(pr);
-		}*/
-		System.out.println("Done");
+			System.out.println("  - Total Restrictions:  " + totalRestrictions);
+			System.out.println("  - Failed Restrictions: " + failedRestrictions.size());
+		}
 	}
 
 	/**
@@ -106,8 +91,16 @@ public class MyTester {
 			for(DomElement d: model.getProcessElementsAsDomElements(proc)) {
 				testRestrictionofElement(d,model,ontology);
 			}
+
+			/*for (DomElement startEvent : model.getProcessElementsAsDomElements(proc)) {
+				if(startEvent.getLocalName().equals("startEvent")) {
+					testRestrictionofElement(startEvent, model, ontology);					
+				}
+			}*/
+
 			
 			
+			System.out.println("Done");	
 			
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -67,6 +67,7 @@ public class BPMNModel {
 		return null;
 	}
 	
+
 	/**
 	 * Returns all childs of given Process as DOMElement which contains the raw information
 	 * @param p
@@ -78,6 +79,7 @@ public class BPMNModel {
 		
 		return domElements;
 	}
+	
 
 	/**
 	 * Returns a list of StartEvents forgiven Process
@@ -161,6 +163,10 @@ public class BPMNModel {
 		return elements;
 	}
 	
+	public DomElement getModelDefinitionAsDomElement() {
+		return model.getDocument().getRootElement();
+	}
+
 
 
 	/**

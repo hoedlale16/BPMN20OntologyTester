@@ -4,16 +4,15 @@
 package at.fh.BPMN20OntologyTester.controller;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
-import javax.print.DocFlavor.STRING;
-
 import org.camunda.bpm.model.xml.instance.DomElement;
-import org.semanticweb.HermiT.model.DataRange;
+import org.semanticweb.owlapi.model.OWLClass;
 
 import at.fh.BPMN20OntologyTester.model.BPMNModel;
+import at.fh.BPMN20OntologyTester.model.FailedOWLClassRestriction;
 import at.fh.BPMN20OntologyTester.model.OWLClassRestriction;
-import at.fh.BPMN20OntologyTester.model.OWLClassRestriction.DataRangeEnum;
 import at.fh.BPMN20OntologyTester.model.OWLModel;
 
 /**
@@ -38,99 +37,126 @@ public class OWLTester {
 
 		Set<String> elements = model.getAllElementsOfModel(ignoreExtensionElements);
 		for (String s : elements) {
-			if (!ontology.existsEntity(s))
+			if (!ontology.existsClassForEntity(s))
 				notFoundInOWL.add(s);
 		}
 		return notFoundInOWL;
 	}
 	
-	public static Set<OWLClassRestriction> testBPMNElementMeetOWLRestrictions(DomElement bpmnElement ,Set<OWLClassRestriction> owlClassRestrictions) {
-		Set<OWLClassRestriction> failedRestrictions = new HashSet<OWLClassRestriction>();
+	/**
+	 * Test method to check if Restrictions defined in the OWL are fullfiled by the BPMN-Element
+	 * @param bpmnElement - Element to test
+	 * @param owlClassRestrictions - List of Restrictions found for this element
+	 * @return
+	 */
+	@SuppressWarnings("incomplete-switch")
+	public static Set<FailedOWLClassRestriction> testBPMNElementMeetOWLRestrictions(DomElement bpmnElement ,OWLModel ontology) throws Exception{
+
+		Set<FailedOWLClassRestriction> failedRestrictions = new HashSet<FailedOWLClassRestriction>();
+
+		//Try to get OWLClass for given DOM-Element of ontology
+		OWLClass owlClass = ontology.getOWLClassByShortNameIgnoreCase(bpmnElement.getLocalName());
+		if(owlClass == null) {
+			//If we have no OWL-Class we can not test against restrictions.
+			//This error must already reported in test 'testBPMNElementExistsAsOWLClass, so we can ignore it here!
+			return failedRestrictions;
+		}
 		
-		
-		for(OWLClassRestriction r : owlClassRestrictions) {
-			
-			//Get Name which node(Child-Node or attribute) is effected
-			String affectedProperty = r.getOnProperty().getIRI().getShortForm();
-			
-			if(r.affectsChildNode()) {
-				//TODO: further look into childs
-				//Here we have to to some mapping i guess
-			} else {
-				//Restriction affects DOm-Attribute
-				String bpmnRawValue = bpmnElement.getAttribute(affectedProperty);
-				
-				switch (r.getOnDataRange()) {
-					case DataRangeBoolean:
-						if ( ! checkAttributeRestriction(r, Boolean.parseBoolean(bpmnRawValue)) ) {
-							failedRestrictions.add(r);
-						}
-						break;
-					case DataRangeInteger:
-						if ( ! checkAttributeRestriction(r,  Integer.parseInt(bpmnRawValue)) ) {
-							failedRestrictions.add(r);
-						}
-						break;
-					case DataRangeString:
-						if ( ! checkAttributeRestriction(r, bpmnRawValue) ) {
-							failedRestrictions.add(r);
-						}
-						break;
-					default:
-						//Not supported DataRange
-						failedRestrictions.add(r);
-						break;
+		//We've found an OWL-Class, load restrictions and start checking process for each restriction
+		for(OWLClassRestriction r : ontology.getOWLClassRestrictionOfOWLClass(owlClass, true)) {
+			switch(r.getAffectedXMLPart()) {
+				case ChildNodeRestriction: {
+					//TODO: further look into childs
+					Optional<FailedOWLClassRestriction> fr = testChildNodeRestrictions(r,bpmnElement);
+					if(fr.isPresent()) {
+						failedRestrictions.add(fr.get());
+					}
+					
+					//Here we have to to some mapping i guess
+					break;
 				}
-				
+				case AttributeRestriction: {
+					
+					Optional<FailedOWLClassRestriction> fr = testAttributeRestrictions(r,bpmnElement);
+					if(fr.isPresent()) {
+						failedRestrictions.add(fr.get());
+					}
+					
+					break;
+				}
 			}
-			
-			
-			
-			
 		}
 		
 		return failedRestrictions;
 	}
 	
+	private static Optional<FailedOWLClassRestriction> testChildNodeRestrictions(OWLClassRestriction restriction,DomElement bpmnElement) {
+		String affectedProperty = restriction.getOnProperty().getIRI().getShortForm();
+		
+		//Test cardinality
+		System.out.println("TODO - Implementation to test Child Node Restrictions missing!!!!");
+		
+		//No error found
+		return Optional.empty();
+		
+	}
 	
-	
+	private static Optional<FailedOWLClassRestriction> testAttributeRestrictions(OWLClassRestriction restriction,DomElement bpmnElement) {
+		
+		String affectedProperty = restriction.getOnProperty().getIRI().getShortForm();
 
-	/**
-	 * Tests if restriction is met. Returns true if restriction is met otherwhise false
-	 * @param r
-	 * @param bpmnValue
-	 */
-	private static boolean checkAttributeRestriction(OWLClassRestriction r, int bpmnValue) {
-		switch (r.getCardinalityType()) {
-			case ExactCardinality: return (bpmnValue == r.getCardinality());
-			case MinCardinality: return (bpmnValue > r.getCardinality());
-			case MaxCardinality: return (bpmnValue <= r.getCardinality());
-			default: {
-				//If this happens, some crazy shit is going on
-				return false;
+		//Test Cardinality
+		int bpmnOccurance = 0;
+		if (bpmnElement.hasAttribute(affectedProperty) ) {
+			bpmnOccurance = 1;
+		}
+		
+		if ( ! isRestrictionCardinaltyMet(bpmnOccurance, restriction)) {
+			String errMsg = "Restriction expected element <" + 
+					restriction.getOnProperty().getIRI().getShortForm() +"> <" + 
+					restriction.getCardinality() + "> times with Matchtype <" +
+					restriction.getCardinalityType() +"> but element occured in BPMN <" + bpmnOccurance +"> times.";
+			
+			return Optional.of(new FailedOWLClassRestriction(errMsg, restriction));
+		} 
+		
+		//Check DataType if Element occurs in BPMN-DOM-Element
+		if (bpmnElement.hasAttribute(affectedProperty)) {			
+			String bpmnRawValue = bpmnElement.getAttribute(affectedProperty);
+			if( ! isRestrictionDataTypeMet(bpmnRawValue, restriction)) {
+				String errMsg = "Restriction expected dataType <" +  restriction.getCardinalityType() +"> but found <" +bpmnRawValue + ">" ;
+				return Optional.of(new FailedOWLClassRestriction(errMsg, restriction));
 			}
+		}
+		
+		//No error found
+		return Optional.empty();
+		
+		
+	}
+	
+	private static boolean isRestrictionCardinaltyMet(int bpmnOccurance, OWLClassRestriction restriction) {
+		switch (restriction.getCardinalityType()) {
+			case ExactCardinality: return (bpmnOccurance == restriction.getCardinality());
+			case MinCardinality: return (bpmnOccurance >= restriction.getCardinality());
+			case MaxCardinality: return (bpmnOccurance <= restriction.getCardinality());
+			default: return false;
 		}
 	}
 	
-	private static boolean checkAttributeRestriction(OWLClassRestriction r, boolean bpmnValue) {
-		switch (r.getCardinalityType()) {
-			//In boolean case there must be an exact match!
-			case ExactCardinality: return (bpmnValue == r.getCardinalityAsBoolean());
-			default: {
-				//If this happens, some crazy shit is going on
-				return false;
+	private static boolean isRestrictionDataTypeMet(String bpmnRawValue, OWLClassRestriction rest) {
+		switch (rest.getOnDataRange()) {
+			case DataRangeString: return true; //String is always true...
+			case DataRangeBoolean: return ("true".equalsIgnoreCase(bpmnRawValue) || "false".equalsIgnoreCase(bpmnRawValue));
+			case DataRangeInteger: {
+				try {
+					Integer.parseInt(bpmnRawValue);
+					return true;
+				} catch(NumberFormatException e) {
+					return false;
+				}
 			}
-		}
-	}
-	
-	private static boolean checkAttributeRestriction(OWLClassRestriction r, String bpmnValue) {
-		switch (r.getCardinalityType()) {
-			//String Compare must be exact!
-			case ExactCardinality: return (bpmnValue.equals(r.getCardinalityAsString()));
-			default: {
-				//If this happens, some crazy shit is going on
-				return false;
-			}
+			default: return false;
 		}
 	}
 
