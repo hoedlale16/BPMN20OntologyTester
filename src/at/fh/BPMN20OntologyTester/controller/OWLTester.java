@@ -63,7 +63,7 @@ public class OWLTester {
 		}
 		
 		//We've found an OWL-Class, load restrictions and start checking process for each restriction
-		for(OWLClassRestriction r : ontology.getOWLClassRestrictionOfOWLClass(owlClass, true)) {
+		for(OWLClassRestriction r : ontology.getAllOWLClassRestrictionOfOWLClass(owlClass, true)) {
 			switch(r.getAffectedXMLPart()) {
 				case ChildNodeRestriction: {
 					//TODO: further look into childs
@@ -94,7 +94,7 @@ public class OWLTester {
 		String affectedProperty = restriction.getOnProperty().getIRI().getShortForm();
 		
 		//Test cardinality
-		System.out.println("TODO - Implementation to test Child Node Restrictions missing!!!!");
+		System.out.println("TODO - Implementation to test Child Node Restrictions missing!!!!"); 	
 		
 		//No error found
 		return Optional.empty();

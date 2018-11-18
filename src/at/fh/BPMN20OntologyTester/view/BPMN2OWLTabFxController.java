@@ -3,10 +3,12 @@ package at.fh.BPMN20OntologyTester.view;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 
 import org.camunda.bpm.model.xml.instance.DomElement;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLProperty;
 
 import at.fh.BPMN20OntologyTester.controller.BPMNModelHandler;
 import at.fh.BPMN20OntologyTester.controller.OWLTester;
@@ -42,7 +44,7 @@ public class BPMN2OWLTabFxController {
 
 	// GUI Element from Tab "BPMN2OWL"
 	@FXML
-	private Label lbBPMN2OWLModelName, lbBPMN2OWLProcessAmount;
+	private Label lbBPMN2OWLModelName, lbBPMN2OWLProcessAmount, lbRestrictionDescription;
 	@FXML
 	private ListView<String> lstBPMN2OWLNotFoundInOWL, lstFailedRestrictions;
 	@FXML
@@ -55,12 +57,18 @@ public class BPMN2OWLTabFxController {
 
 	// Get initialized on startup of application
 	private BPMNModel bpmnModel = null;
+	private OWLModel ontology = null;
 
 	public BPMN2OWLTabFxController() {
 	}
 
 	@FXML
 	private void initialize() {
+		try {
+			ontology = OntologyHandler.getInstance().getBpmn20Ontology();
+		} catch(Exception e) {
+			appendLog("Ontology not intilaized. Unable to check BPMN Model against an ontology!");
+		}
 	}
 
 	@FXML
@@ -131,10 +139,7 @@ public class BPMN2OWLTabFxController {
 	    if (node instanceof Text || (node instanceof TreeCell && ((TreeCell) node).getText() != null)) {
 	    	
 	    	BPMNElement selectedNode = treeBPMNfailedRestrictions.getSelectionModel().getSelectedItem().getValue();
-	        
-	        //Represents the processTreeItem - Elements are in the same line and the absolute root-item is not shown in javafX
-	        TreeItem<BPMNElement> processTreeItem = treeBPMNfailedRestrictions.getSelectionModel().getSelectedItem().getParent();
-	        
+	                
 	        //Show failed restrictions for selectedNode	        	        
 	        ObservableList<String> failedRestrictions = FXCollections.observableArrayList();
 	        for(FailedOWLClassRestriction r : selectedNode.getFailedRestrictions()) {
@@ -146,6 +151,27 @@ public class BPMN2OWLTabFxController {
 		
 	}
 
+	
+	@FXML
+	private void onHandleClickedOnFailedRestriction(MouseEvent event) {
+		
+		//Get selected Error-Test of faild Restriction
+		String selItem = lstFailedRestrictions.getSelectionModel().getSelectedItem();
+		//Get selected BPMN-Element of tree with failed restrictions
+		BPMNElement selectedBPMNElement = treeBPMNfailedRestrictions.getSelectionModel().getSelectedItem().getValue();
+		
+		if(selItem != null && selectedBPMNElement != null) {
+			//Get FailedRestriction Object with error text. Assume the error text is unique!
+			Optional<FailedOWLClassRestriction> rest = selectedBPMNElement.getFailedRestrictionWithErrorText(selItem);
+			if(rest.isPresent()) {
+				OWLProperty affectedProperty = rest.get().getRestriction().getOnProperty();
+				lbRestrictionDescription.setText(ontology.getCommentOfEntity(affectedProperty));
+			}
+		}
+		
+		
+
+	}
 
 	private void appendLog(String text) {
 		MainSceneFxController.getInstance().appendLog(text);
@@ -173,7 +199,6 @@ public class BPMN2OWLTabFxController {
 	}
 
 	private void showBPMNElementsNotExistInOWL(BPMNModel model) throws OWLOntologyCreationException, FileNotFoundException {
-		OWLModel ontology = OntologyHandler.getInstance().getBpmn20Ontology();		
 		ObservableList<String> elemNotFoundInOWL = FXCollections.observableArrayList();
 		//Determine if Childs of ExteniosnElement shoud be ignored or not.
 		boolean ignoreExtensionElements = chkIgnoreExtensionElements.isSelected();
@@ -189,8 +214,6 @@ public class BPMN2OWLTabFxController {
 	}
 	
 	private void showBPMNElementsNotMeedOWLRestrictions(BPMNModel model) throws Exception {
-		OWLModel ontology = OntologyHandler.getInstance().getBpmn20Ontology();	
-		
 		TreeItem<BPMNElement> rootItem = new TreeItem<BPMNElement>(new BPMNElement(model.getModelDefinitionAsDomElement()));
 		rootItem.setExpanded(true);
 		

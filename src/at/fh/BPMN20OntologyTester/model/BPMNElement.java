@@ -4,6 +4,7 @@
 package at.fh.BPMN20OntologyTester.model;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.camunda.bpm.model.xml.instance.DomElement;
@@ -56,6 +57,16 @@ public class BPMNElement {
 	}
 	public Set<FailedOWLClassRestriction> getFailedRestrictions() {
 		return failedRestrictions;
+	}
+	
+	public Optional<FailedOWLClassRestriction> getFailedRestrictionWithErrorText(String errText) {
+		for(FailedOWLClassRestriction fr : failedRestrictions) {
+			if(fr.getFailingReason().equals(errText)) {
+				return Optional.of(fr);
+			}
+		}
+		
+		return Optional.empty();
 	}
 	
 	public String getGUIDisplayName() {

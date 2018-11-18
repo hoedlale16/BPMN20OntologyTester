@@ -312,25 +312,35 @@ public class OWLModel {
 	 * 
 	 * @param owlClass
 	 *            - Class
-	 * @param includeInheritedClasses
+	 * @param includeAllInheritedClasses
 	 *            - True if Restrictions of inherited classes should loaded as well
 	 * @return
 	 */
-	public Set<OWLClassRestriction> getOWLClassRestrictionOfOWLClass(OWLClass owlClass,
-			boolean includeInheritedClasses)throws Exception {
+	public Set<OWLClassRestriction> getAllOWLClassRestrictionOfOWLClass(OWLClass owlClass,
+			boolean includeAllInheritedClasses)throws Exception {
 
 		Set<OWLClassRestriction> restrictions = new HashSet<OWLClassRestriction>();
 
-		// First add all restrictions of given class
-		restrictions.addAll(getDirectAssignedOWLRestrictions(owlClass));
-
-		// Second iterate over all sub classes and add restrictions if required
-		if (includeInheritedClasses) {
-			for (OWLClass c : getSubClassOf(owlClass)) {
-				restrictions.addAll(getDirectAssignedOWLRestrictions(c));
+		
+		//Set of all inheritedClasses and the root Class
+		Set<OWLClass> inheritedClasses = new HashSet<OWLClass>();
+		inheritedClasses.add(owlClass);
+		
+		//Iterate over all classes from the root down to all inherited classes. (not only the directly inherited onces!). 
+		//Add the restrictions of each class to the set of restrictions
+		for(OWLClass oc: inheritedClasses) {
+			
+			// Add all restrictions of current given class
+			restrictions.addAll(getOWLClassRestrictionOfOWLClass(oc));
+			
+			//Add all subClasses (inherited Classes of current class) if there are some (recursion!)
+			if (includeAllInheritedClasses) {
+				getSubClassOf(oc).forEach(c -> {
+					inheritedClasses.add(c);
+				});
 			}
 		}
-
+		
 		return restrictions;
 	}
 
@@ -341,8 +351,8 @@ public class OWLModel {
 	 * @param owlClass
 	 * @return
 	 */
-	private List<OWLClassRestriction> getDirectAssignedOWLRestrictions(OWLClass owlClass) throws Exception{
-		List<OWLClassRestriction> restrictions = new ArrayList<OWLClassRestriction>();
+	private Set<OWLClassRestriction> getOWLClassRestrictionOfOWLClass(OWLClass owlClass) throws Exception{
+		Set<OWLClassRestriction> restrictions = new HashSet<OWLClassRestriction>();
 
 		// Retrieve the raw DOM Element of given OWL Class
 		Element owlClassElement = getDOMElementOfClass(owlClass);
@@ -372,7 +382,6 @@ public class OWLModel {
 		}
 
 		return restrictions;
-
 	}
 
 	/**

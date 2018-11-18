@@ -49,7 +49,7 @@ public class MyTester {
 		System.out.println("All Restrictions of Class <"+elementName+">");
 		
 		OWLClass owlClass = ontology.getOWLClassByShortNameIgnoreCase(elementName);
-		for(OWLClassRestriction r : ontology.getOWLClassRestrictionOfOWLClass(owlClass, true)) {
+		for(OWLClassRestriction r : ontology.getAllOWLClassRestrictionOfOWLClass(owlClass, true)) {
 			System.out.println(r.toFormattedToString());
 
 		}
@@ -64,7 +64,7 @@ public class MyTester {
 		//Just output for Elements which have failed restrictions
 		if( failedRestrictions.size() > 0) {
 			OWLClass owlClass = ontology.getOWLClassByShortNameIgnoreCase(element.getLocalName());
-			int totalRestrictions = ontology.getOWLClassRestrictionOfOWLClass(owlClass, true).size();
+			int totalRestrictions = ontology.getAllOWLClassRestrictionOfOWLClass(owlClass, true).size();
 			
 			System.out.println("  - Total Restrictions:  " + totalRestrictions);
 			System.out.println("  - Failed Restrictions: " + failedRestrictions.size());

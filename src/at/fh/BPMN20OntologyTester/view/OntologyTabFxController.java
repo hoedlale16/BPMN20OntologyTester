@@ -112,7 +112,7 @@ public class OntologyTabFxController {
 				ObservableList<String> restItems = FXCollections.observableArrayList();
 				
 				try {
-					for (OWLClassRestriction r : ontology.getOWLClassRestrictionOfOWLClass(entity.asOWLClass(), true)) {
+					for (OWLClassRestriction r : ontology.getAllOWLClassRestrictionOfOWLClass(entity.asOWLClass(), true)) {
 						restItems.add(r.toFormattedToString());
 					}
 				} catch(Exception e) {
