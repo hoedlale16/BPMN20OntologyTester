@@ -69,7 +69,7 @@ public class Owl2BPMNMapper {
 	 * To get the mapping call method 'getMapping()'
 	 * @param ontology
 	 */
-	public void generateNewMapping(OWLModel ontology) {
+	public void generateNewMappingFile(OWLModel ontology) {
 		
 		//Clears all previous stored properties
 		owl2xmlMapping.clear();
@@ -120,7 +120,7 @@ public class Owl2BPMNMapper {
 	 * Returns the current Mapping between OWL and ProcessModel(XML)
 	 * @return
 	 */
-	public Properties getMapping() {
+	public Properties getAllMappings() {
 		return owl2xmlMapping;
 	}
 	

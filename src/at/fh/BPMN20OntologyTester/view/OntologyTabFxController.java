@@ -59,8 +59,12 @@ public class OntologyTabFxController {
 		
 		try {
 			appendLog("Read and initialize Mappingfile for Ontology to BPMN from ressource folder");
-			owl2bpmnMapping = Owl2BPMNMapper.getInstance().getMapping();
-		} catch (Exception e) {
+			String mappingResource = "/resource/owl/OWL2BPMNmapping.properties";
+			
+			//Load mapping
+			Owl2BPMNMapper.getInstance().initializeMapping(getClass().getResourceAsStream(mappingResource));
+			appendLog("Loaded <" + Owl2BPMNMapper.getInstance().getAllMappings().size() +"> mapping entries");
+		} catch (Exception e) {	
 			appendLog("Error while loading mappingfile: " + e.getMessage());
 			e.printStackTrace(); //TODO: remove
 		}	
