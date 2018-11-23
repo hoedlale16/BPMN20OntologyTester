@@ -909,9 +909,9 @@ Note that:
     
 
 
-    <!-- http://www.reiter.at/ontology/bpmn2.0#flowNodeRefs -->
+    <!-- http://www.reiter.at/ontology/bpmn2.0#flowNodeRef -->
 
-    <owl:ObjectProperty rdf:about="http://www.reiter.at/ontology/bpmn2.0#flowNodeRefs">
+    <owl:ObjectProperty rdf:about="http://www.reiter.at/ontology/bpmn2.0#flowNodeRef">
         <rdfs:comment>The list of FlowNodes partitioned into this Lane according to the partitionElement defined as part of the Lane element.</rdfs:comment>
     </owl:ObjectProperty>
     
@@ -1202,9 +1202,9 @@ not specified, the style of the label can be assumed by a tool.</rdfs:comment>
     
 
 
-    <!-- http://www.reiter.at/ontology/bpmn2.0#lanes -->
+    <!-- http://www.reiter.at/ontology/bpmn2.0#lane -->
 
-    <owl:ObjectProperty rdf:about="http://www.reiter.at/ontology/bpmn2.0#lanes">
+    <owl:ObjectProperty rdf:about="http://www.reiter.at/ontology/bpmn2.0#lane">
         <rdfs:comment>One or more Lane elements, which define a specific partition in the LaneSet.</rdfs:comment>
     </owl:ObjectProperty>
     
@@ -6792,8 +6792,7 @@ Table 8.8 presents the attributes and model associations for the ExtensionDefini
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">The FlowNode element is used to provide a single element as the source and target Sequence Flow associations (see
-Figure 8.35) instead of the individual associations of the elements that can connect to Sequence Flows (see the section
-above). Only the Gateway, Activity, Choreography Activity, and Event elements can connect to Sequence Flows
+Figure 8.35) instead of the individual associations of the elements that can connect to Sequence Flows (see the section above). Only the Gateway, Activity, Choreography Activity, and Event elements can connect to Sequence Flows
 and thus, these elements are the only ones that are sub-classes of FlowNode.
 Since Gateway, Activity, Choreography Activity, and Event have their own attributes, model associations, and
 inheritances; the FlowNode element does not inherit from any other BPMN element. Table 8.52 presents the additional
@@ -7578,7 +7577,7 @@ Table 10.51 presents the additional model associations of the ItemAwareElement e
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#flowNodeRefs"/>
+                <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#flowNodeRef"/>
                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#FlowNode"/>
             </owl:Restriction>
@@ -7648,7 +7647,7 @@ Activities.</rdfs:comment>
         <rdfs:subClassOf rdf:resource="http://www.reiter.at/ontology/bpmn2.0#ProcessPackage"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#lanes"/>
+                <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#lane"/>
                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Lane"/>
             </owl:Restriction>

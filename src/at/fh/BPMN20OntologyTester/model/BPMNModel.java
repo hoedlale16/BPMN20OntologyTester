@@ -178,7 +178,7 @@ public class BPMNModel {
 	 */
 	private void addElementToSet(DomElement element, Set<String> elementSet,boolean ignoreExtenionElements) {
 		elementSet.add(element.getLocalName());
-
+		
 		if(! "extensionElements".equals(element.getLocalName())) {
 			
 			// Iterate over all Childs and add them now...
@@ -195,4 +195,7 @@ public class BPMNModel {
 			}
 		}
 	}
+	
+	
+	
 }

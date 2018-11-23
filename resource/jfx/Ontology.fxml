@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -76,7 +77,7 @@
       </VBox>
    </left>
    <center>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <BorderPane BorderPane.alignment="CENTER">
          <top>
             <BorderPane BorderPane.alignment="CENTER">
                <right>
@@ -104,9 +105,6 @@
             <VBox BorderPane.alignment="CENTER">
                <children>
                   <BorderPane layoutX="10.0" layoutY="347.0">
-                     <padding>
-                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                     </padding>
                      <top>
                         <Label styleClass="lb_boxHeader" text="Description" BorderPane.alignment="TOP_LEFT" />
                      </top>
@@ -116,13 +114,13 @@
                   </BorderPane>
                   <BorderPane>
                      <padding>
-                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                        <Insets top="15.0" />
                      </padding>
                      <top>
                         <Label styleClass="lb_boxHeader" text="Restrictions" BorderPane.alignment="TOP_LEFT" />
                      </top>
                      <center>
-                        <ListView fx:id="lstRestrictions" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                        <ListView fx:id="lstRestrictions" BorderPane.alignment="CENTER" />
                      </center>
                   </BorderPane>
                </children>
@@ -133,4 +131,14 @@
    <padding>
       <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
    </padding>
+   <bottom>
+      <HBox alignment="BOTTOM_RIGHT" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" styleClass="buttons" text="OWL &lt;-&gt; BPMN Mapping" />
+         </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </HBox>
+   </bottom>
 </BorderPane>

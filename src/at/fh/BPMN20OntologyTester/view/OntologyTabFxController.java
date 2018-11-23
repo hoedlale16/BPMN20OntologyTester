@@ -1,11 +1,12 @@
 package at.fh.BPMN20OntologyTester.view;
 
 import java.util.Collections;
+import java.util.Properties;
 
-import org.apache.commons.codec.binary.StringUtils;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
+import at.fh.BPMN20OntologyTester.controller.Owl2BPMNMapper;
 import at.fh.BPMN20OntologyTester.model.OWLClassRestriction;
 import at.fh.BPMN20OntologyTester.model.OWLModel;
 import javafx.collections.FXCollections;
@@ -38,6 +39,7 @@ public class OntologyTabFxController {
 
 	// Get initialized on startup of application
 	private OWLModel ontology = null;
+	private Properties owl2bpmnMapping = null;
 
 	public OntologyTabFxController() {
 	}
@@ -45,17 +47,23 @@ public class OntologyTabFxController {
 	@FXML
 	private void initialize() {
 		try {
-			appendLog("Read and initialize BPMN2.0 Ontology");
+			appendLog("Read and initialize BPMN2.0 Ontology from ressource folder");
 			ontology = OntologyHandler.getInstance().getBpmn20Ontology();
-
+			
 			// Show results on GUI
 			showInitializedOntology(ontology);
-
 		} catch (Exception e) {
 			appendLog("Error while loading Ontology: " + e.getMessage());
-			e.printStackTrace();
-		}
-
+			e.printStackTrace(); //TODO: remove
+		}	
+		
+		try {
+			appendLog("Read and initialize Mappingfile for Ontology to BPMN from ressource folder");
+			owl2bpmnMapping = Owl2BPMNMapper.getInstance().getMapping();
+		} catch (Exception e) {
+			appendLog("Error while loading mappingfile: " + e.getMessage());
+			e.printStackTrace(); //TODO: remove
+		}	
 	}
 	
 	

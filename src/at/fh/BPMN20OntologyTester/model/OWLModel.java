@@ -2,9 +2,9 @@ package at.fh.BPMN20OntologyTester.model;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -15,18 +15,15 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.semanticweb.HermiT.ReasonerFactory;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.AxiomType;
-import org.semanticweb.owlapi.model.ClassExpressionType;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAnnotationValue;
-import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
-import org.semanticweb.owlapi.model.OWLClassAxiom;
-import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectRestriction;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLProperty;
@@ -208,17 +205,26 @@ public class OWLModel {
 	 * @param propertyIRI
 	 * @return
 	 */
-	public OWLProperty getPropertyByIRI(String propertyIRI) {
+	public Optional<OWLProperty> getPropertyByIRI(String propertyIRI) {
 		Set<OWLEntity> props = new HashSet<OWLEntity>();
 		props.addAll(getObjectProperties());
 		props.addAll(getDataProperties());
 
 		for (OWLEntity a : props) {
 			if (propertyIRI.equalsIgnoreCase(a.getIRI().toString()))
-				return (OWLProperty) a;
+				return Optional.of((OWLProperty) a);
+		}
+		
+		return Optional.empty();
+	}
+	
+	public Optional<OWLClass> getOWLClassByIRI(String classIRI) {
+		for (OWLClass c : getOWLClasses()) {
+			if (classIRI.equalsIgnoreCase(c.getIRI().toString()))
+				return Optional.of(c);
 		}
 
-		return null;
+		return Optional.empty();
 	}
 
 	/**
@@ -308,8 +314,20 @@ public class OWLModel {
 	}
 
 	/**
-	 * Returns the set of Restrictions which exists for the given OWL-Class
+	 * Returns the set of Restrictions which exists for the given OWL-Class.
 	 * 
+	 * Description:
+	 * All subClassOf Tags in the ontology represent an inheritance. 
+	 *   -If the subclassOf Tag has no childTag(owl:restriction) it is a simple inheritance and linked with attribut 'rdf:about'
+	 *   -If the subclassOf Tag has a child owl:restriciotn, it handles a restriction for the inherited class which is linked in 'onClass'
+	 *    For the XML it is unnecessary if the restriction affects the inherited class because it needs to be fullfilled by the XML anyway.
+	 *    
+	 * Workflow:
+	 *  In the fist step collect all inherited classes. get all subClassOf-Elements of inherited class and collect them in a set. This is done in an recursive way.
+	 *  
+	 *  In the second step iterate over all found classes and get the restrictions of the class. It doesn't matter if this is a directly asssosiated restriciton or based on inheritance. 
+	 *  In case of an 'inheridated restriction' the tag 'onClass' is not necessary anymore.
+
 	 * @param owlClass
 	 *            - Class
 	 * @param includeAllInheritedClasses
@@ -320,33 +338,48 @@ public class OWLModel {
 			boolean includeAllInheritedClasses)throws Exception {
 
 		Set<OWLClassRestriction> restrictions = new HashSet<OWLClassRestriction>();
-
+		Set<OWLClass> inheritedClasses = new HashSet<OWLClass>();		
+	
+		//1. Add given class and collect all inherited classes for given owlClass 
+		inheritedClasses = getAllInheritedClassesOfClass(owlClass,inheritedClasses,includeAllInheritedClasses );
 		
-		//Set of all inheritedClasses and the root Class
-		Set<OWLClass> inheritedClasses = new HashSet<OWLClass>();
-		inheritedClasses.add(owlClass);
-		
-		//Iterate over all classes from the root down to all inherited classes. (not only the directly inherited onces!). 
-		//Add the restrictions of each class to the set of restrictions
+		//2. Check for Restriction in each class and add them to list
+		//Due to the inheritance restrictions in subClassOfs are required to 
+		//be fullfilled by given owlClass as well
 		for(OWLClass oc: inheritedClasses) {
-			
-			// Add all restrictions of current given class
 			restrictions.addAll(getOWLClassRestrictionOfOWLClass(oc));
-			
-			//Add all subClasses (inherited Classes of current class) if there are some (recursion!)
-			if (includeAllInheritedClasses) {
-				getSubClassOf(oc).forEach(c -> {
-					inheritedClasses.add(c);
-				});
+		}
+		return restrictions;
+	}
+	
+	/**
+	 * Helper class to collect all inherited Classes of given class. 
+	 * Goes through all subclasess of given classes and calls the method recursively to return the total inherited classes of given class  
+	 * @param owlClass
+	 * @param inheritedclasses
+	 * @param includeAllInheritedClasses
+	 * @return
+	 */
+	private Set<OWLClass> getAllInheritedClassesOfClass(OWLClass owlClass, Set<OWLClass> inheritedclasses, boolean includeAllInheritedClasses) {
+		inheritedclasses.add(owlClass);
+		
+		//Check if inherited classes are required
+		if(includeAllInheritedClasses) {
+			for(OWLClass oc: getSubClassOf(owlClass)) {
+								
+				//Recursive call to add inherited classes. Just add them if they're not in the list yet
+				if(! inheritedclasses.contains(oc)) {
+					inheritedclasses = getAllInheritedClassesOfClass(oc,inheritedclasses, includeAllInheritedClasses);
+				}
 			}
 		}
 		
-		return restrictions;
+		return inheritedclasses;
 	}
 
+	
 	/**
-	 * Returns all restrictions which are directly associated with given class. no
-	 * sub classes checked
+	 * Helper class which returns all directlry associated restrictions(DataRestricitons) to given class.
 	 * 
 	 * @param owlClass
 	 * @return
@@ -372,7 +405,7 @@ public class OWLModel {
 						// We're just interested in Child-Nodes with name owl:Restriction
 						if (isNodeElementAndHasNameAndChilds(restrcitionNode,"owl:Restriction",true)) {
 							// JIHAAA we've found an restriction - Create an OWLCLassRestriction Object
-								OWLClassRestriction restriction = new OWLClassRestriction((Element) restrcitionNode);
+								OWLClassRestriction restriction = new OWLClassRestriction((Element) restrcitionNode, owlClass);
 								restrictions.add(restriction);
 
 						}
@@ -383,7 +416,7 @@ public class OWLModel {
 
 		return restrictions;
 	}
-
+	
 	/**
 	 * Returns the raw DOM-Element for given OWLClass
 	 * 
@@ -441,9 +474,23 @@ public class OWLModel {
 		Set<OWLSubClassOfAxiom> subClassAxioms = ontology.axioms(AxiomType.SUBCLASS_OF)
 				.filter(a -> a.getSubClass().equals(owlClass)).collect(Collectors.toSet());
 		for (OWLSubClassOfAxiom a : subClassAxioms) {
+			//Handle Subclass which is a direct link to a OWLClass
 			if (a.getSuperClass() instanceof OWLClass) {
-				subClasses.add(a.getSuperClass().asOWLClass());
+				OWLClass c = a.getSuperClass().asOWLClass();
+				subClasses.add(c);
 			}
+			
+			//Handle subClass which is hidden in owl:Restriciton Element (=ObjectRestriction)
+			if(a.getSuperClass() instanceof OWLObjectRestriction) {
+				OWLObjectRestriction r = (OWLObjectRestriction)a.getSuperClass();
+				r.signature().forEach( s -> {
+					if (s instanceof OWLClass) {
+						subClasses.add(s.asOWLClass());
+					}
+				});
+			}
+			
+			
 		}
 
 		return subClasses;

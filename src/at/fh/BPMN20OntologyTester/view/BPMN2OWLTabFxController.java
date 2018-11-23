@@ -24,6 +24,7 @@ import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -44,7 +45,9 @@ public class BPMN2OWLTabFxController {
 
 	// GUI Element from Tab "BPMN2OWL"
 	@FXML
-	private Label lbBPMN2OWLModelName, lbBPMN2OWLProcessAmount, lbRestrictionDescription;
+	private Label lbBPMN2OWLModelName, lbBPMN2OWLProcessAmount;
+	@FXML
+	private TextArea taRestrictionDescription;
 	@FXML
 	private ListView<String> lstBPMN2OWLNotFoundInOWL, lstFailedRestrictions;
 	@FXML
@@ -53,7 +56,7 @@ public class BPMN2OWLTabFxController {
 	private TreeView<BPMNElement> treeBPMNfailedRestrictions;
 	
 	@FXML
-	private CheckBox chkIgnoreExtensionElements;
+	private CheckBox chkIgnoreExtensionElements, cbIgnoreWarningRestrictions;
 
 	// Get initialized on startup of application
 	private BPMNModel bpmnModel = null;
@@ -104,6 +107,7 @@ public class BPMN2OWLTabFxController {
 			}
 		} catch (Exception e) {
 			appendLog("ERROR - Failed to load File <" + e.getMessage() + ">");
+			//TODO Remove
 			e.printStackTrace();
 		}
 	}
@@ -115,6 +119,18 @@ public class BPMN2OWLTabFxController {
 			if(bpmnModel != null) {
 				// Refresh Elements which are exist in BPMN but no OWL-Class found in OWL
 				showBPMNElementsNotExistInOWL(bpmnModel);
+			}
+		} catch (Exception e) {
+			appendLog("ERROR - Failed to load File <" + e.getMessage() + ">");
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
+	private void onIgnoreWarningRestrictions() {
+		try {
+			if(bpmnModel != null) {
+				showBPMNElementsNotMeedOWLRestrictions(bpmnModel);
 			}
 		} catch (Exception e) {
 			appendLog("ERROR - Failed to load File <" + e.getMessage() + ">");
@@ -142,8 +158,9 @@ public class BPMN2OWLTabFxController {
 	                
 	        //Show failed restrictions for selectedNode	        	        
 	        ObservableList<String> failedRestrictions = FXCollections.observableArrayList();
-	        for(FailedOWLClassRestriction r : selectedNode.getFailedRestrictions()) {
-	        	failedRestrictions.add(r.getFailingReason());
+	        	        
+	        for(FailedOWLClassRestriction r : selectedNode.getFailedRestrictions(cbIgnoreWarningRestrictions.isSelected())) {
+	        	failedRestrictions.add(r.getFormattedFailingReason());
 	        }
 	        //Collections.sort(elemNotFoundInOWL);
 	        lstFailedRestrictions.setItems(failedRestrictions);
@@ -165,7 +182,7 @@ public class BPMN2OWLTabFxController {
 			Optional<FailedOWLClassRestriction> rest = selectedBPMNElement.getFailedRestrictionWithErrorText(selItem);
 			if(rest.isPresent()) {
 				OWLProperty affectedProperty = rest.get().getRestriction().getOnProperty();
-				lbRestrictionDescription.setText(ontology.getCommentOfEntity(affectedProperty));
+				taRestrictionDescription.setText(ontology.getCommentOfEntity(affectedProperty));
 			}
 		}
 		
@@ -202,7 +219,7 @@ public class BPMN2OWLTabFxController {
 		ObservableList<String> elemNotFoundInOWL = FXCollections.observableArrayList();
 		//Determine if Childs of ExteniosnElement shoud be ignored or not.
 		boolean ignoreExtensionElements = chkIgnoreExtensionElements.isSelected();
-		OWLTester.testBPMNElementsExsistAsOWLClasses(ontology, model,ignoreExtensionElements).forEach(s -> elemNotFoundInOWL.add(s));
+		OWLTester.testAllBPMNElementsExsistAsOWLClasses(ontology, model,ignoreExtensionElements).forEach(s -> elemNotFoundInOWL.add(s));
 		Collections.sort(elemNotFoundInOWL);
 		lstBPMN2OWLNotFoundInOWL.setItems(elemNotFoundInOWL);
 		
@@ -225,11 +242,12 @@ public class BPMN2OWLTabFxController {
 			//Iterate now over all Elements of the process
 			for(DomElement domElement: model.getProcessElementsAsDomElements(proc)) {		
 				//Check for failed restrictions
-				Set<FailedOWLClassRestriction> failedRestrictions = OWLTester.testBPMNElementMeetOWLRestrictions(domElement, ontology);
+				Set<FailedOWLClassRestriction> failedRestrictions = OWLTester.testBPMNElementMeetOWLRestrictions(domElement, ontology, cbIgnoreWarningRestrictions.isSelected());
 				if( failedRestrictions.size() > 0) {		
 					failedElements++;
 					
-					BPMNElement elem = new BPMNElement(domElement,failedRestrictions);
+					String guiDisplayName = domElement.getLocalName() + "(Err: " + failedRestrictions.size() + ")";
+					BPMNElement elem = new BPMNElement(domElement,failedRestrictions,guiDisplayName);
 					//Create treeItem and show in GUI
 					TreeItem<BPMNElement> failedelement = new TreeItem<BPMNElement>(elem);
 					procItem.getChildren().add(failedelement);

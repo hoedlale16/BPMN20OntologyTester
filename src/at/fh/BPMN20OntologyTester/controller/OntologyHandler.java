@@ -84,11 +84,6 @@ public class OntologyHandler {
 		}
 	}
 	
-	
-	
-	
-	
-	
 
 	/**
 	 * Sets a new Ontology for the application
@@ -107,5 +102,7 @@ public class OntologyHandler {
 	public OWLModel getBpmn20Ontology() {
 		return bpmn20Ontology;
 	}
+	
+	
 
 }

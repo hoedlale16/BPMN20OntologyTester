@@ -5,6 +5,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -13,15 +14,15 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="bpmn2owlPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="500.0" minWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fh.BPMN20OntologyTester.view.BPMN2OWLTabFxController">
+<BorderPane fx:id="bpmn2owlPane" minHeight="500.0" minWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fh.BPMN20OntologyTester.view.BPMN2OWLTabFxController">
     <right>
 
 
     </right>
    <left>
-      <VBox minWidth="260.0" BorderPane.alignment="CENTER">
+      <VBox BorderPane.alignment="CENTER">
          <children>
-            <BorderPane prefWidth="260.0">
+            <BorderPane>
                <padding>
                   <Insets bottom="15.0" />
                </padding>
@@ -29,7 +30,7 @@
                   <Label alignment="TOP_LEFT" styleClass="lb_boxHeader" text="BPMN Model Key Aspects" BorderPane.alignment="TOP_LEFT" />
                </top>
                <center>
-                  <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" BorderPane.alignment="TOP_LEFT">
+                  <GridPane prefHeight="50.0" BorderPane.alignment="TOP_LEFT">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -52,7 +53,7 @@
             </BorderPane>
             <BorderPane>
                <center>
-                  <TreeView fx:id="treeBPMN20OWL" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                  <TreeView fx:id="treeBPMN20OWL" BorderPane.alignment="CENTER" />
                </center>
                <top>
                   <Label alignment="TOP_LEFT" styleClass="lb_boxHeader" text="Model Overview:" BorderPane.alignment="TOP_LEFT" />
@@ -61,55 +62,6 @@
          </children>
       </VBox>
    </left>
-   <center>
-      <HBox minWidth="764.0" spacing="20.0" BorderPane.alignment="CENTER">
-         <children>
-            <BorderPane>
-               <top>
-                  <Label alignment="TOP_LEFT" styleClass="lb_boxHeader" text="Elements not found in OWL" BorderPane.alignment="TOP_LEFT" />
-               </top>
-               <bottom>
-                  <CheckBox fx:id="chkIgnoreExtensionElements" mnemonicParsing="false" onAction="#onIgnoreExtenionElements" text="Ignore Extensions-Elements Childs" BorderPane.alignment="TOP_LEFT" />
-               </bottom>
-               <right>
-                  <ListView fx:id="lstBPMN2OWLNotFoundInOWL" minWidth="200.0" prefWidth="250.0" BorderPane.alignment="CENTER">
-                     <BorderPane.margin>
-                        <Insets />
-                     </BorderPane.margin>
-                  </ListView>
-               </right>
-            </BorderPane>
-            <BorderPane layoutX="30.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="824.0">
-               <top>
-                  <Label alignment="TOP_LEFT" styleClass="lb_boxHeader" text="Elements fail OWL-Restrictions" BorderPane.alignment="TOP_LEFT" />
-               </top>
-               <left>
-                  <TreeView fx:id="treeBPMNfailedRestrictions" minWidth="200.0" onMouseClicked="#handleClickedOnElementFailedRestrictions" prefWidth="250.0" showRoot="false" BorderPane.alignment="CENTER">
-                     <BorderPane.margin>
-                        <Insets right="15.0" />
-                     </BorderPane.margin>
-                  </TreeView>
-               </left>
-               <center>
-                  <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <ListView fx:id="lstFailedRestrictions" maxHeight="200.0" minHeight="150.0" minWidth="200.0" onMouseClicked="#onHandleClickedOnFailedRestriction">
-                           <VBox.margin>
-                              <Insets bottom="15.0" />
-                           </VBox.margin>
-                        </ListView>
-                        <Label styleClass="lb_boxHeader" text="Description according OWL:" />
-                        <Label fx:id="lbRestrictionDescription" />
-                     </children>
-                  </VBox>
-               </center>
-            </BorderPane>
-         </children>
-         <padding>
-            <Insets left="20.0" />
-         </padding>
-      </HBox>
-   </center>
    <bottom>
       <HBox alignment="BOTTOM_RIGHT" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
@@ -137,4 +89,63 @@
    <padding>
       <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
    </padding>
+   <center>
+      <HBox spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <BorderPane fx:id="bpElementNofFoundInOWL">
+               <top>
+                  <Label alignment="TOP_LEFT" styleClass="lb_boxHeader" text="Elements not found in OWL as OWL-Class" BorderPane.alignment="TOP_LEFT" />
+               </top>
+               <bottom>
+                  <CheckBox fx:id="chkIgnoreExtensionElements" mnemonicParsing="false" onAction="#onIgnoreExtenionElements" selected="true" text="Ignore Extensions-Elements Childs" BorderPane.alignment="TOP_LEFT" />
+               </bottom>
+               <right>
+                  <ListView fx:id="lstBPMN2OWLNotFoundInOWL" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets />
+                     </BorderPane.margin>
+                  </ListView>
+               </right>
+            </BorderPane>
+            <BorderPane fx:id="bpElementFailedRestrictions" layoutX="30.0" layoutY="10.0">
+               <top>
+                  <Label alignment="TOP_LEFT" styleClass="lb_boxHeader" text="Elements with failed OWL-Restrictions" BorderPane.alignment="TOP_LEFT" />
+               </top>
+               <left>
+                  <TreeView fx:id="treeBPMNfailedRestrictions" onMouseClicked="#handleClickedOnElementFailedRestrictions" showRoot="false" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets />
+                     </BorderPane.margin>
+                  </TreeView>
+               </left>
+               <bottom>
+                  <CheckBox fx:id="cbIgnoreWarningRestrictions" mnemonicParsing="false" onAction="#onIgnoreWarningRestrictions" selected="true" text="Ignore Warning Restrictions" BorderPane.alignment="TOP_LEFT" />
+               </bottom>
+            </BorderPane>
+            <VBox fx:id="vBFailingReasons" spacing="5.0">
+               <children>
+                  <BorderPane fx:id="bpReasons">
+                     <center>
+                        <ListView fx:id="lstFailedRestrictions" onMouseClicked="#onHandleClickedOnFailedRestriction" prefWidth="1000.0" BorderPane.alignment="TOP_LEFT" />
+                     </center>
+                     <top>
+                        <Label styleClass="lb_boxHeader" text="Failing Reason" BorderPane.alignment="TOP_LEFT" />
+                     </top>
+                  </BorderPane>
+                  <BorderPane fx:id="bpRestrictionDescription">
+                     <top>
+                        <Label styleClass="lb_boxHeader" text="Description according OWL:" BorderPane.alignment="TOP_LEFT" />
+                     </top>
+                     <center>
+                        <TextArea fx:id="taRestrictionDescription" editable="false" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </HBox>
+   </center>
 </BorderPane>

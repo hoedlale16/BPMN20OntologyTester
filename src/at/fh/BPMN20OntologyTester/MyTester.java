@@ -8,15 +8,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.Properties;
 import java.util.Set;
 
-import org.camunda.bpm.model.bpmn.instance.Process;
 import org.camunda.bpm.model.xml.instance.DomElement;
 import org.semanticweb.owlapi.model.OWLClass;
 
 import at.fh.BPMN20OntologyTester.controller.BPMNModelHandler;
 import at.fh.BPMN20OntologyTester.controller.OWLTester;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
+import at.fh.BPMN20OntologyTester.controller.Owl2BPMNMapper;
 import at.fh.BPMN20OntologyTester.model.BPMNModel;
 import at.fh.BPMN20OntologyTester.model.FailedOWLClassRestriction;
 import at.fh.BPMN20OntologyTester.model.OWLClassRestriction;
@@ -60,7 +61,7 @@ public class MyTester {
 	private static void testRestrictionofElement(DomElement element, BPMNModel model, OWLModel ontology) throws Exception {
 		System.out.println("Test restrictions of Class <"+element.getLocalName()+">");
 
-		Set<FailedOWLClassRestriction> failedRestrictions = OWLTester.testBPMNElementMeetOWLRestrictions(element, ontology);
+		Set<FailedOWLClassRestriction> failedRestrictions = OWLTester.testBPMNElementMeetOWLRestrictions(element, ontology,false);
 		//Just output for Elements which have failed restrictions
 		if( failedRestrictions.size() > 0) {
 			OWLClass owlClass = ontology.getOWLClassByShortNameIgnoreCase(element.getLocalName());
@@ -70,27 +71,46 @@ public class MyTester {
 			System.out.println("  - Failed Restrictions: " + failedRestrictions.size());
 		}
 	}
+	
+	private static void generateNewMappingFile(OWLModel ontology) throws Exception {
+
+		Owl2BPMNMapper.getInstance().generateNewMapping(ontology);
+		File mappingFile = new File("C:/Users/Alexander/Desktop/OWL2XMLmapping.properties");
+		Owl2BPMNMapper.getInstance().save(mappingFile);
+	}
 
 	/**
 	 * @param args
 	 */
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		
 		try {
+			System.out.println("---- Start -----");	
 			//Initialize Ontology and model
 			OWLModel ontology = OntologyHandler.getInstance().getBpmn20Ontology();			
 			BPMNModel model = createBPMNModel();
 			
+			generateNewMappingFile(ontology);
+			
 			//RESTRICITON TESTS;
+			/*
 			String elementName = "startEvent";
+			OWLClass owlClass = ontology.getOWLClassByShortNameIgnoreCase(elementName);
+			Set<OWLClassRestriction> x = ontology.getAllOWLClassRestrictionOfOWLClass(owlClass, true);
+			System.out.println(x.size());
+			System.out.println("--");
+			Set<OWLClassRestriction> x1 = ontology.getAllOWLClassRestrictionOfOWLClass(owlClass, true);
+			System.out.println(x1.size());
+			 */
 			//Show Restrictions of element
-			showRestrictionsOfElement(elementName,ontology);
-		
+			//showRestrictionsOfElement(elementName,ontology);
+
 			//Test restrictions of DOM-Element 			
-			Process proc = model.getProcessByName("Posteingang");
+			/*Process proc = model.getProcessByName("Posteingang");
 			for(DomElement d: model.getProcessElementsAsDomElements(proc)) {
 				testRestrictionofElement(d,model,ontology);
-			}
+			}*/
 
 			/*for (DomElement startEvent : model.getProcessElementsAsDomElements(proc)) {
 				if(startEvent.getLocalName().equals("startEvent")) {
@@ -100,7 +120,7 @@ public class MyTester {
 
 			
 			
-			System.out.println("Done");	
+			System.out.println("---- Done -----");	
 			
 		} catch (Exception e) {
 			e.printStackTrace();

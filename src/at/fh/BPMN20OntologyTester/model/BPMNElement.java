@@ -6,6 +6,7 @@ package at.fh.BPMN20OntologyTester.model;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.camunda.bpm.model.xml.instance.DomElement;
 
@@ -55,13 +56,32 @@ public class BPMNElement {
 	public DomElement getBpmnDomElement() {
 		return bpmnDomElement;
 	}
+	
+	/**
+	 * Returns all FailedOWLClassRestrictions
+	 * @return
+	 */
 	public Set<FailedOWLClassRestriction> getFailedRestrictions() {
 		return failedRestrictions;
 	}
 	
+	/**
+	 * Returns FailedRestrictions with or without filtering warnings
+	 * @param ignoreWarnings
+	 * @return
+	 */
+	public Set<FailedOWLClassRestriction> getFailedRestrictions(boolean ignoreWarnings) {
+		if (ignoreWarnings)
+			return failedRestrictions.stream().filter(r -> r.isErrorFailure()).collect(Collectors.toSet());
+		
+		return failedRestrictions;
+			
+	}
+	
+	
 	public Optional<FailedOWLClassRestriction> getFailedRestrictionWithErrorText(String errText) {
 		for(FailedOWLClassRestriction fr : failedRestrictions) {
-			if(fr.getFailingReason().equals(errText)) {
+			if(fr.getFormattedFailingReason().equals(errText)) {
 				return Optional.of(fr);
 			}
 		}
