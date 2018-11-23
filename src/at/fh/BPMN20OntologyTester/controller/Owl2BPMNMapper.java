@@ -89,7 +89,7 @@ public class Owl2BPMNMapper {
 		// Clears all previous stored properties
 		owl2xmlMapping.clear();
 
-		// Iterate over all OWL-Entites and generate a 1:1 mapping
+		// Iterate over all OWL-Entities and generate a 1:1 mapping
 		for (OWLEntity e : ontology.getAllEntities()) {
 			owl2xmlMapping.setProperty(e.getIRI().getShortForm(), e.getIRI().getShortForm());
 		}
