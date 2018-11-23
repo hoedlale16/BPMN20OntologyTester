@@ -84,7 +84,8 @@ public class OWLClassRestriction {
 		}
 
 		if (onClass == null) {
-			//Element 'onClass' not found, restriction is directly associated to given OWLClass
+			// Element 'onClass' not found, restriction is directly associated to given
+			// OWLClass
 			this.onClass = owlClassOfRestriction;
 		}
 	}
@@ -103,7 +104,7 @@ public class OWLClassRestriction {
 			switch (childNode.getNodeName()) {
 			case "owl:onProperty":
 				String propertyIRI = ((Element) childNode).getAttribute("rdf:resource");
-				Optional<OWLProperty> optProp = OntologyHandler.getInstance().getBpmn20Ontology()
+				Optional<OWLProperty> optProp = OntologyHandler.getInstance().getOntology()
 						.getPropertyByIRI(propertyIRI);
 				if (optProp.isPresent())
 					onProperty = optProp.get();
@@ -149,8 +150,7 @@ public class OWLClassRestriction {
 			case "owl:onClass":
 				String onClassIRI = ((Element) childNode).getAttribute("rdf:resource");
 
-				Optional<OWLClass> optClass = OntologyHandler.getInstance().getBpmn20Ontology()
-						.getOWLClassByIRI(onClassIRI);
+				Optional<OWLClass> optClass = OntologyHandler.getInstance().getOntology().getOWLClassByIRI(onClassIRI);
 				if (optClass.isPresent())
 					onClass = optClass.get();
 				break;

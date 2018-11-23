@@ -1,7 +1,6 @@
 package at.fh.BPMN20OntologyTester.view;
 
 import java.util.Collections;
-import java.util.Properties;
 
 import org.semanticweb.owlapi.model.OWLEntity;
 
@@ -12,17 +11,21 @@ import at.fh.BPMN20OntologyTester.model.OWLModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * Handels user interactions on tab "Ontology"
  * 
- * @author Alexander Hoedl
- * IMA16 - Information Management (BSc)
- * University of applied Sciences FH JOANNEUM
+ * @author Alexander Hoedl IMA16 - Information Management (BSc) University of
+ *         applied Sciences FH JOANNEUM
  *
  */
 public class OntologyTabFxController {
@@ -39,7 +42,7 @@ public class OntologyTabFxController {
 
 	// Get initialized on startup of application
 	private OWLModel ontology = null;
-	private Properties owl2bpmnMapping = null;
+	private Owl2BPMNMapper owl2bpmnMapping = null;
 
 	public OntologyTabFxController() {
 	}
@@ -48,33 +51,29 @@ public class OntologyTabFxController {
 	private void initialize() {
 		try {
 			appendLog("Read and initialize BPMN2.0 Ontology from ressource folder");
-			ontology = OntologyHandler.getInstance().getBpmn20Ontology();
-			
+			ontology = OntologyHandler.getInstance().getOntology();
+
 			// Show results on GUI
 			showInitializedOntology(ontology);
 		} catch (Exception e) {
 			appendLog("Error while loading Ontology: " + e.getMessage());
-			e.printStackTrace(); //TODO: remove
-		}	
-		
+			e.printStackTrace(); // TODO: remove
+		}
+
 		try {
 			appendLog("Read and initialize Mappingfile for Ontology to BPMN from ressource folder");
-			String mappingResource = "/resource/owl/OWL2BPMNmapping.properties";
-			
-			//Load mapping
-			Owl2BPMNMapper.getInstance().initializeMapping(getClass().getResourceAsStream(mappingResource));
-			appendLog("Loaded <" + Owl2BPMNMapper.getInstance().getAllMappings().size() +"> mapping entries");
-		} catch (Exception e) {	
+			owl2bpmnMapping = Owl2BPMNMapper.getInstance();
+			appendLog("Loaded <" + owl2bpmnMapping.getAllMappings().size() + "> mapping entries");
+		} catch (Exception e) {
 			appendLog("Error while loading mappingfile: " + e.getMessage());
-			e.printStackTrace(); //TODO: remove
-		}	
+			e.printStackTrace(); // TODO: remove
+		}
 	}
-	
-	
 
 	private void appendLog(String text) {
 		MainSceneFxController.getInstance().appendLog(text);
 	}
+
 	/**
 	 * Shows main facts of loaded Ontology on GUI. Called while initializing this
 	 * controller with default Ontology BPMN20.owl from resource folder which is not
@@ -95,7 +94,7 @@ public class OntologyTabFxController {
 		lstUnDocumentedEntities.setItems(undocItems);
 
 		// Show entities which rdfs:comment annotation
-		ObservableList<String> entities= FXCollections.observableArrayList();
+		ObservableList<String> entities = FXCollections.observableArrayList();
 		for (OWLEntity e : ontology.getAllEntities()) {
 			entities.add(e.getIRI().getShortForm());
 		}
@@ -111,33 +110,66 @@ public class OntologyTabFxController {
 		String strSelItem = cbOWLEntities.getSelectionModel().getSelectedItem();
 		if (strSelItem != null && !strSelItem.isEmpty()) {
 			OWLEntity entity = ontology.getEntityByShortName(strSelItem);
-			
-			//Set description for selected Entity
+
+			// Set description for selected Entity
 			String description = ontology.getCommentOfEntity(entity);
-			if(description == null || description.isEmpty())
+			if (description == null || description.isEmpty())
 				description = "No Description for Entity available!";
 			taOntDescription.setText(description);
-			
-			//Show Restriction for class
+
+			// Show Restriction for class
 			if (entity.isOWLClass()) {
-			
+
 				ObservableList<String> restItems = FXCollections.observableArrayList();
-				
+
 				try {
-					for (OWLClassRestriction r : ontology.getAllOWLClassRestrictionOfOWLClass(entity.asOWLClass(), true)) {
+					for (OWLClassRestriction r : ontology.getAllOWLClassRestrictionOfOWLClass(entity.asOWLClass(),
+							true)) {
 						restItems.add(r.toFormattedToString());
 					}
-				} catch(Exception e) {
-					appendLog("Error occured while parsing OWL-Restrictions for class <" +entity.getIRI().getShortForm() + ">");
+				} catch (Exception e) {
+					appendLog("Error occured while parsing OWL-Restrictions for class <"
+							+ entity.getIRI().getShortForm() + ">");
 				}
-				
-				if(restItems.isEmpty())
+
+				if (restItems.isEmpty())
 					restItems.add("No Restrictions for Class found");
-			
+
 				Collections.sort(restItems);
 				lstRestrictions.setItems(restItems);
 			}
-			
+
+		}
+	}
+
+	@FXML
+	private void onShowOwl2BPMNMapping() {
+
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader();
+
+			// Set Controller for dialog
+			Owl2BpmnMapperFxController controller = new Owl2BpmnMapperFxController(owl2bpmnMapping);
+			fxmlLoader.setController(controller);
+
+			// Create Scene for dialog from fXML file
+			String dialogFXML = "/resource/jfx/OWL2BPMNMappingDialog.fxml";
+			Scene scene = new Scene(FXMLLoader.load(getClass().getResource(dialogFXML)));
+			scene.getStylesheets().clear();
+			scene.getStylesheets().add("/resource/jfx/OntologyTesterfx.css");
+
+			Stage dialog = new Stage();
+			dialog.initStyle(StageStyle.UTILITY);
+			dialog.setTitle("Mapping OWL 2 BPMN-XML");
+			dialog.setScene(scene);
+			dialog.setResizable(false);
+
+			// Set Icon and Display stage...
+			dialog.getIcons().add(new Image(getClass().getResource("/resource/pics/logo.jpg").toString()));
+			dialog.show();
+
+		} catch (Exception e) {
+			appendLog("Error while open mapping dialog: " + e.getMessage());
 		}
 	}
 }

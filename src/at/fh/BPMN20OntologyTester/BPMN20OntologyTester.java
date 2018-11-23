@@ -16,9 +16,8 @@ import javafx.stage.Stage;
 /**
  * Main Class to start Application. Initialize all GUI-Elements.
  * 
- * @author Alexander Hödl
- * IMA16 - Information Management
- * University of applied Sciences FH JOANNEUM
+ * @author Alexander Hödl IMA16 - Information Management University of applied
+ *         Sciences FH JOANNEUM
  *
  */
 @SuppressWarnings("restriction")
@@ -42,13 +41,15 @@ public class BPMN20OntologyTester extends Application {
 			addNewTab("BPMN2OWL", loadScene("/resource/jfx/BPMN2OWL.fxml"), mainScene);
 			addNewTab("OWL Tests", loadScene("/resource/jfx/OntologyTests.fxml"), mainScene);
 		} catch (IOException e) {
-			System.out.println("Error initializing Application: "+e.getMessage() );
+			System.out.println("Error initializing Application: " + e.getMessage());
 		}
 	}
 
 	/**
-	 * Reads FXML-File from given Path and creates a scene out of it. 
-	 * @param fxml - path to fxml
+	 * Reads FXML-File from given Path and creates a scene out of it.
+	 * 
+	 * @param fxml
+	 *            - path to fxml
 	 * @return Scene Object created out of fxml
 	 * @throws IOException
 	 */
@@ -67,6 +68,7 @@ public class BPMN20OntologyTester extends Application {
 
 	/**
 	 * Helper-Method to create a new tab and add to tabPane in Main-Scene.
+	 * 
 	 * @param tabName
 	 * @param newTabScene
 	 * @param mainScene
@@ -93,7 +95,7 @@ public class BPMN20OntologyTester extends Application {
 		stage.setMaximized(true);
 		stage.setMinWidth(1024);
 		stage.setMinHeight(768);
-		
+
 		stage.getIcons().add(new Image(getClass().getResource("/resource/pics/logo.jpg").toString()));
 
 		stage.setScene(mainScene);
@@ -107,7 +109,8 @@ public class BPMN20OntologyTester extends Application {
 	@SuppressWarnings("restriction")
 	public static void main(String[] args) {
 		try {
-			// Start the GUI - Ontology get initialized when OntologyTabFxController get initialized
+			// Start the GUI - Ontology get initialized when OntologyTabFxController get
+			// initialized
 			LauncherImpl.launchApplication(BPMN20OntologyTester.class, args);
 		} catch (Exception e) {
 			// If we reach this part, some crazy shit is going on because GUI was unable to

@@ -6,9 +6,8 @@ import javafx.fxml.FXML;
 /**
  * Handels user interactions on tab "Ontology Tests"
  * 
- * @author Alexander Hoedl
- * IMA16 - Information Management (BSc)
- * University of applied Sciences FH JOANNEUM
+ * @author Alexander Hoedl IMA16 - Information Management (BSc) University of
+ *         applied Sciences FH JOANNEUM
  *
  */
 public class OntologyTestTabFxController {
@@ -28,6 +27,6 @@ public class OntologyTestTabFxController {
 	private void appendLog(String text) {
 		MainSceneFxController.getInstance().appendLog(text);
 	}
-	
-	//TODO: Define Button Functionality and stuff
+
+	// TODO: Define Button Functionality and stuff
 }

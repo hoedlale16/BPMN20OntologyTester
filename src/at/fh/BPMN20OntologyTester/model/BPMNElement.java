@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 import org.camunda.bpm.model.xml.instance.DomElement;
 
 /**
+ * Represents a simple BPMN-Element (e.g. startEvent, task, process)
+ * 
  * @author Alexander Hoedl
  * IMA16 - Information Management (BSc)
  * University of applied Sciences FH JOANNEUM

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="mainBorder" prefHeight="768.0" prefWidth="1024.0" styleClass="bg_game" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+    <right>
+
+
+    </right>
+    <top>
+        <Label fx:id="lbHeader" contentDisplay="CENTER" styleClass="lb_header" text="TODO" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" BorderPane.alignment="BOTTOM_CENTER">
+            <font>
+                <Font size="27.0" />
+            </font>
+        </Label>
+    </top>
+   <center>
+      <TabPane fx:id="mainTabPane" minHeight="568.0" minWidth="1024.0" tabClosingPolicy="UNAVAILABLE" tabMinHeight="1.0" tabMinWidth="1.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

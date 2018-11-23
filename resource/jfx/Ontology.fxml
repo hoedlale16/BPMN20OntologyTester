@@ -134,7 +134,7 @@
    <bottom>
       <HBox alignment="BOTTOM_RIGHT" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" styleClass="buttons" text="OWL &lt;-&gt; BPMN Mapping" />
+            <Button mnemonicParsing="false" onAction="#onShowOwl2BPMNMapping" styleClass="buttons" text="OWL &lt;-&gt; BPMN Mapping" />
          </children>
          <padding>
             <Insets top="10.0" />

@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.Properties;
 import java.util.Set;
 
 import org.camunda.bpm.model.xml.instance.DomElement;
@@ -60,8 +59,10 @@ public class MyTester {
 	
 	private static void testRestrictionofElement(DomElement element, BPMNModel model, OWLModel ontology) throws Exception {
 		System.out.println("Test restrictions of Class <"+element.getLocalName()+">");
-
-		Set<FailedOWLClassRestriction> failedRestrictions = OWLTester.testBPMNElementMeetOWLRestrictions(element, ontology,false);
+		//Get OWL2XML-Naming Mappig
+		Owl2BPMNMapper owl2bpmnMapper = Owl2BPMNMapper.getInstance();
+		
+		Set<FailedOWLClassRestriction> failedRestrictions = OWLTester.testBPMNElementMeetOWLRestrictions(element, ontology,owl2bpmnMapper,false);
 		//Just output for Elements which have failed restrictions
 		if( failedRestrictions.size() > 0) {
 			OWLClass owlClass = ontology.getOWLClassByShortNameIgnoreCase(element.getLocalName());
@@ -74,7 +75,7 @@ public class MyTester {
 	
 	private static void generateNewMappingFile(OWLModel ontology) throws Exception {
 
-		Owl2BPMNMapper.getInstance().generateNewMapping(ontology);
+		Owl2BPMNMapper.getInstance().generateNewMappingFile(ontology);
 		File mappingFile = new File("C:/Users/Alexander/Desktop/OWL2XMLmapping.properties");
 		Owl2BPMNMapper.getInstance().save(mappingFile);
 	}
@@ -88,7 +89,7 @@ public class MyTester {
 		try {
 			System.out.println("---- Start -----");	
 			//Initialize Ontology and model
-			OWLModel ontology = OntologyHandler.getInstance().getBpmn20Ontology();			
+			OWLModel ontology = OntologyHandler.getInstance().getOntology();			
 			BPMNModel model = createBPMNModel();
 			
 			generateNewMappingFile(ontology);
