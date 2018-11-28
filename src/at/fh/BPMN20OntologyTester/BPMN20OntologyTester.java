@@ -7,11 +7,9 @@ import com.sun.javafx.application.LauncherImpl;
 import at.fh.BPMN20OntologyTester.controller.FxController;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
 import at.fh.BPMN20OntologyTester.controller.Owl2BPMNMapper;
-import at.fh.BPMN20OntologyTester.view.OntologyTabFxController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
@@ -87,7 +85,7 @@ public class BPMN20OntologyTester extends Application {
 
 		} catch (Exception e) {
 			// Just continue, and print message to console.
-			System.out.println(e.getMessage());
+			System.out.println("Error while initializing AppData:" +e.getMessage());
 		}
 	}
 
@@ -109,6 +107,10 @@ public class BPMN20OntologyTester extends Application {
 			// Create Scene from given fXML path file
 			fxmlLoader.setLocation(BPMN20OntologyTester.class.getResource(fxml));
 			Scene scene = new Scene(fxmlLoader.load());
+			
+			//Store Controller to have access to it later
+			scene.setUserData(fxmlLoader.getController());
+			
 			// Set CSS
 			scene.getStylesheets().clear();
 			scene.getStylesheets().add("/resource/jfx/OntologyTesterfx.css");

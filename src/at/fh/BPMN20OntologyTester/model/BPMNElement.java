@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.camunda.bpm.model.xml.instance.DomElement;
+import org.w3c.dom.Document;
 
 /**
  * Represents a simple BPMN-Element (e.g. startEvent, task, process)
@@ -23,6 +24,7 @@ public class BPMNElement {
 	private final DomElement bpmnDomElement;
 	private final Set<FailedOWLClassRestriction> failedRestrictions;
 	private final String guiDisplayName;
+	
 	/**
 	 * @param bpmnDomElement
 	 * @param failedRestrictions

@@ -243,10 +243,23 @@ public class OWLModel {
 		return false;
 	}
 
-	public boolean existsClassForEntity(String name) {
+	public boolean existsOWLClassWithName(String name) {
 		for (OWLEntity e : this.getOWLClasses()) {
 			// in Model the names might be in lower case, so ignore case sensitive
 			if (e.getIRI().getShortForm().equalsIgnoreCase(name))
+				return true;
+		}
+		return false;
+	}
+	
+	public boolean existsOWLPropertyWithName(String name) {
+		Set<OWLProperty> props = new HashSet<OWLProperty>();
+		props.addAll(this.getDataProperties());
+		props.addAll(this.getObjectProperties());
+		
+		for (OWLProperty p : props) {
+			// in Model the names might be in lower case, so ignore case sensitive
+			if (p.getIRI().getShortForm().equalsIgnoreCase(name))
 				return true;
 		}
 		return false;

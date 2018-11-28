@@ -31,19 +31,16 @@ public class BPMNModelHandler {
 	 * @param modelFile
 	 *            - File where to read
 	 * @return Object representing process
-	 * @throws VerifyException
-	 *             - Thrown if validation against xsd('resouce/BPMN20.xsd) failed
-	 * @throws BpmnModelException
-	 *             - Thrown if error occurred while reading process model
+	 * @throws Exception 
 	 */
 	public static BPMNModel readModelFromFile(File modelFile)
-			throws VerifyException, BpmnModelException, ModelValidationException {
+			throws Exception {
 		// Read and validate Model (XSD)
 		BpmnModelInstance modelInst = Bpmn.readModelFromFile(modelFile);
 		Bpmn.validateModel(modelInst);
 
 		// Create Object and return it
-		return new BPMNModel(modelInst);
+		return new BPMNModel(modelInst, modelFile);
 
 	}
 

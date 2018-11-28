@@ -42,6 +42,20 @@ public class Owl2BPMNMapper {
 		// Initialize property mappings. Muss filled via load-Methods
 		this.owl2xmlMapping = new Properties();
 	}
+	
+	/**
+	 * Replaces current stored mapping with given new one
+	 * @param newMapping
+	 */
+	public void replaceMapping(Properties newMapping) {
+		this.owl2xmlMapping.clear();
+
+		for(Object k : newMapping.keySet()) {
+			String key = (String) k;
+			String value = newMapping.getProperty(key);
+			owl2xmlMapping.setProperty(key, value);
+		}
+	}
 
 	/**
 	 * Initialize Properties for mapping by reading given file. 
@@ -101,14 +115,14 @@ public class Owl2BPMNMapper {
 	}
 
 	/**
-	 * Sets or adds a new mapping to the properties, depending if owlEntryName
+	 * Sets or adds a new mapping to the properties, depending if xmlElementName
 	 * already exists or not
 	 * 
-	 * @param owlEntityName
 	 * @param xmlElementName
+	 * @param owlEntityName
 	 */
-	public void setMapping(String owlEntityName, String xmlElementName) {
-		owl2xmlMapping.setProperty(owlEntityName, xmlElementName);
+	public void setMapping(String xmlElementName,String owlEntityName ) {
+		owl2xmlMapping.setProperty(xmlElementName,owlEntityName);
 	}
 
 	/**
@@ -119,13 +133,15 @@ public class Owl2BPMNMapper {
 	 * @return
 	 */
 	public Optional<String> getXmlElementName(String owlEntityName) {
-		String xmlElement = owl2xmlMapping.getProperty(owlEntityName);
-
-		if (xmlElement == null) {
-			return Optional.empty();
+		if (owl2xmlMapping.containsValue(owlEntityName)) {
+			for (Object v : owl2xmlMapping.values()) {
+				String key = (String) v;
+				if (key.endsWith(owlEntityName))
+					return Optional.of(key);
+			}
 		}
 
-		return Optional.of(xmlElement);
+		return Optional.empty();
 	}
 
 	/**
@@ -136,15 +152,14 @@ public class Owl2BPMNMapper {
 	 * @return
 	 */
 	public Optional<String> getOwlEntityName(String xmlElementName) {
-		if (owl2xmlMapping.containsValue(xmlElementName)) {
-			for (Object v : owl2xmlMapping.values()) {
-				String key = (String) v;
-				if (key.endsWith(xmlElementName))
-					return Optional.of(key);
-			}
+		String xmlElement = owl2xmlMapping.getProperty(xmlElementName);
+
+		if (xmlElement == null) {
+			return Optional.empty();
 		}
 
-		return Optional.empty();
+		return Optional.of(xmlElement);
+		
 	}
 
 	/**

@@ -27,10 +27,10 @@ import at.fh.BPMN20OntologyTester.model.OWLModel;
 public class OWLTester {
 
 	/**
-	 * Simple test if given ontology contains all model elements as OWL Class. For
-	 * the naming mapping (OWl-Class/Properties and XML-Node/Attribute Names the
-	 * owl2bpmnmapper is used. Returns a list of Elements which ontology does not
-	 * understand.
+	 * Simple test if given ontology contains all model elements(xml-nodes) as OWL
+	 * Class. For the naming mapping (OWl-Class/Properties and XML-Node/Attribute
+	 * Names the owl2bpmnmapper is used. Returns a list of Elements which ontology
+	 * does not understand.
 	 * 
 	 * @param ontology
 	 *            - Ontology to test
@@ -47,15 +47,54 @@ public class OWLTester {
 			Owl2BPMNMapper owl2bpmnMapper, boolean ignoreExtensionElements) {
 		Set<String> notFoundInOWL = new HashSet<String>();
 
-		// Each XML-Element(Tag) must exist as OWL-Class in the Ontology.
+		// Each XML-Node must exist as OWL-Class in the Ontology.
 		// Each Attribute of an XML-Test must exist as OWL-Property in the Ontology
-		Set<String> elements = model.getAllElementsOfModel(ignoreExtensionElements);
-		for (String s : elements) {
+		Set<DomElement> elements = model.getAllElementsOfModel(ignoreExtensionElements);
+		for (DomElement s : elements) {
 
-			String mappedOWLname = getMappedNameForBPMNElement(s, owl2bpmnMapper);
+			String mappedOWLname = getMappedNameForBPMNElement(s.getLocalName(), owl2bpmnMapper);
 
-			if (!ontology.existsClassForEntity(mappedOWLname))
-				notFoundInOWL.add(s);
+			if (!ontology.existsOWLClassWithName(mappedOWLname)) {
+				notFoundInOWL.add(s.getLocalName());
+			}
+		}
+		return notFoundInOWL;
+	}
+
+	/**
+	 * Simple test if given ontology contains all for all attributes of each model
+	 * elements(xml-nodes) as OWLProperty. For the naming mapping
+	 * (OWl-Class/Properties and XML-Node/Attribute Names the owl2bpmnmapper is
+	 * used. Returns a list of Elements which ontology does not understand.
+	 * 
+	 * @param ontology
+	 *            - Ontology to test
+	 * @param model
+	 *            - Process modell to test against ontolgy
+	 * @param owl2bpmnMapper
+	 *            - Mapper to map use correct names of each part for mapping
+	 * @param ignoreExtensionElements
+	 *            - flag if elements in exteionElements should be ignored. These
+	 *            elements are customized element according the BPMN-2.0 Standard
+	 * @return
+	 */
+	public static Set<String> testAllBPMNAttributesExsistAsOWLProperties(OWLModel ontology, BPMNModel model,
+			Owl2BPMNMapper owl2bpmnMapper, boolean ignoreExtensionElements) {
+		Set<String> notFoundInOWL = new HashSet<String>();
+
+		// Each Attribute of an XML-Test must exist as OWL-Property in the Ontology
+		Set<DomElement> elements = model.getAllElementsOfModel(ignoreExtensionElements);
+		for (DomElement domElement : elements) {
+			// Get all attributes of current element and check if
+			// for(Attribute attribute: domElement.getAttriubtes()) {
+			// TODO: Hier gehts weiter!
+			String attributeName = "TODO";
+
+			String mappedOWLname = getMappedNameForBPMNElement(attributeName, owl2bpmnMapper);
+
+			if (!ontology.existsOWLPropertyWithName(mappedOWLname)) {
+				notFoundInOWL.add(attributeName);
+			}
 		}
 		return notFoundInOWL;
 	}

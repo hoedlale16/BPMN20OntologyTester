@@ -57,92 +57,102 @@ public class BPMN2OWLTabFxController implements FxController {
 
 	@FXML
 	private CheckBox chkIgnoreExtensionElements, cbIgnoreWarningRestrictions;
-	
+
 	@FXML
 	private Button btLoadBPMN, btGenerateReport, btConvertToOWL;
 
-	// Get initialized on startup of application
-	private final OWLModel ontology;
-
-	//Initialized when user load BPMN Model
+	// Initialized when user load BPMN Model
 	private BPMNModel bpmnModel = null;
+	ObservableList<String> elemNotFoundInOWL = FXCollections.observableArrayList();
+	ObservableList<String> elemFailedRestrictions = FXCollections.observableArrayList();
 
-	
 	public BPMN2OWLTabFxController() {
-
-		Optional<OWLModel> optOntology = OntologyHandler.getInstance().getLoadedOntology();
-		
-		if (optOntology.isPresent()) {
-			this.ontology = optOntology.get();
-		} else {
-			appendLog("Ontology not intilaized. Unable to check BPMN Model against an ontology!");
-			this.ontology = null;
-		} 
 	}
-	
+
 	/**
-	 * Helper methods to activate or deactivate Buttons on GUI depending an ontology is set or not
+	 * Helper methods to activate or deactivate Buttons on GUI depending an ontology
+	 * is set or not
 	 */
 	private void updateActivationSateofButtons() {
-		boolean ontologyNotExists = (ontology == null) ? true : false;
-		
-		btLoadBPMN.setDisable(ontologyNotExists);
-		btConvertToOWL.setDisable(ontologyNotExists);
-		btGenerateReport.setDisable(ontologyNotExists);
+		boolean ontologyExists = OntologyHandler.getInstance().getLoadedOntology().isPresent();
+
+		btLoadBPMN.setDisable(!ontologyExists);
+		btConvertToOWL.setDisable(!ontologyExists);
+		btGenerateReport.setDisable(!ontologyExists);
 	}
-	
 
 	@FXML
 	private void initialize() {
-		
-		//Set User-Input Elements according ontology found or not
+
+		// Set User-Input Elements according ontology found or not
 		updateActivationSateofButtons();
 	}
 
 	@FXML
 	private void onLoadBPMN() {
-		try {
-			FileChooser chooser = new FileChooser();
-			chooser.setTitle("Load BPMN2.0 Process Modell");
 
-			chooser.getExtensionFilters().add(new ExtensionFilter("BPMN 2.0", "*.bpmn"));
-			chooser.getExtensionFilters().add(new ExtensionFilter("XML-BPMN", "*.xml"));
+		Optional<OWLModel> optOntology = OntologyHandler.getInstance().getLoadedOntology();
+		if (optOntology.isPresent()) {
+			try {
+				FileChooser chooser = new FileChooser();
+				chooser.setTitle("Load BPMN2.0 Process Modell");
 
-			// Handle selected file
-			File selectedFile = chooser.showOpenDialog(null);
+				chooser.getExtensionFilters().add(new ExtensionFilter("BPMN 2.0", "*.bpmn"));
+				chooser.getExtensionFilters().add(new ExtensionFilter("XML-BPMN", "*.xml"));
 
-			if (selectedFile != null) {
-				bpmnModel = BPMNModelHandler.readModelFromFile(selectedFile);
-				appendLog("Read BPMN-File <" + selectedFile.getAbsolutePath() + ">");
+				// Handle selected file
+				File selectedFile = chooser.showOpenDialog(null);
 
-				// Set Main Information at labels
-				String modelName = bpmnModel.getModelDefinitions().getName();
-				lbBPMN2OWLModelName.setText(modelName);
-				lbBPMN2OWLProcessAmount.setText("" + bpmnModel.getProcesses().size());
+				if (selectedFile != null) {
+					bpmnModel = BPMNModelHandler.readModelFromFile(selectedFile);
+					appendLog("Read BPMN-File <" + selectedFile.getAbsolutePath() + ">");
 
-				// Show Process as Tree
-				showBPMNasTree(bpmnModel);
+					// Set Main Information at labels
+					String modelName = bpmnModel.getModelDefinitions().getName();
+					lbBPMN2OWLModelName.setText(modelName);
+					lbBPMN2OWLProcessAmount.setText("" + bpmnModel.getProcesses().size());
 
-				// show Elements which are exist in BPMN but no OWL-Class found in OWL
-				showBPMNElementsNotExistInOWL(bpmnModel);
+					// Show Process as Tree
+					showBPMNasTree(bpmnModel);
 
-				// Show Elements which were found in OWL but does not meed all restrictions of
-				// OWL
-				showBPMNElementsFailedOWLRestrictions(bpmnModel);
+					OWLModel ontology = optOntology.get();
+					Owl2BPMNMapper owl2bpmnMapper = Owl2BPMNMapper.getInstance();
+
+					// show Elements which are exist in BPMN but no OWL-Class found in OWL
+					showBPMNElementsNotExistInOWL(bpmnModel, ontology, owl2bpmnMapper);
+
+					// Show Elements which were found in OWL but does not meed all restrictions of
+					// OWL
+					showBPMNElementsFailedOWLRestrictions(bpmnModel, ontology, owl2bpmnMapper);
+				}
+			} catch (Exception e) {
+				appendLog("ERROR - Failed to load File <" + e.getMessage() + ">");
+				// TODO Remove
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			appendLog("ERROR - Failed to load File <" + e.getMessage() + ">");
-			// TODO Remove
-			e.printStackTrace();
 		}
+	}
+
+	@FXML
+	private void onReset() {
+		bpmnModel = null;
+		elemNotFoundInOWL.clear();
+		elemFailedRestrictions.clear();
+		taRestrictionDescription.setText("");
+		treeBPMN20OWL.setRoot(null);
+		treeBPMNfailedRestrictions.setRoot(null);
 	}
 
 	@FXML
 	private void onIgnoreExtenionElements() {
 		try {
 			if (bpmnModel != null) {
+
+				OWLModel ontology = OntologyHandler.getInstance().getLoadedOntology().get();
+				Owl2BPMNMapper owl2bpmnMapper = Owl2BPMNMapper.getInstance();
+
 				// Refresh Elements which are exist in BPMN but no OWL-Class found in OWL
-				showBPMNElementsNotExistInOWL(bpmnModel);
+				showBPMNElementsNotExistInOWL(bpmnModel, ontology, owl2bpmnMapper);
 			}
 		} catch (Exception e) {
 			appendLog("ERROR - Failed to load File <" + e.getMessage() + ">");
@@ -154,7 +164,10 @@ public class BPMN2OWLTabFxController implements FxController {
 	private void onIgnoreWarningRestrictions() {
 		try {
 			if (bpmnModel != null) {
-				showBPMNElementsFailedOWLRestrictions(bpmnModel);
+				OWLModel ontology = OntologyHandler.getInstance().getLoadedOntology().get();
+				Owl2BPMNMapper owl2bpmnMapper = Owl2BPMNMapper.getInstance();
+
+				showBPMNElementsFailedOWLRestrictions(bpmnModel, ontology, owl2bpmnMapper);
 			}
 		} catch (Exception e) {
 			appendLog("ERROR - Failed to load File <" + e.getMessage() + ">");
@@ -173,7 +186,7 @@ public class BPMN2OWLTabFxController implements FxController {
 	}
 
 	@FXML
-	private void handleClickedOnElementFailedRestrictions(MouseEvent event) {
+	private void onHandleClickedOnElementFailedRestrictions(MouseEvent event) {
 		Node node = event.getPickResult().getIntersectedNode();
 		// Accept clicks only on node cells, and not on empty spaces of the TreeView
 		if (node instanceof Text || (node instanceof TreeCell && ((TreeCell) node).getText() != null)) {
@@ -181,14 +194,13 @@ public class BPMN2OWLTabFxController implements FxController {
 			BPMNElement selectedNode = treeBPMNfailedRestrictions.getSelectionModel().getSelectedItem().getValue();
 
 			// Show failed restrictions for selectedNode
-			ObservableList<String> failedRestrictions = FXCollections.observableArrayList();
-
+			elemFailedRestrictions.clear();
 			for (FailedOWLClassRestriction r : selectedNode
 					.getFailedRestrictions(cbIgnoreWarningRestrictions.isSelected())) {
-				failedRestrictions.add(r.getFormattedFailingReason());
+				elemFailedRestrictions.add(r.getFormattedFailingReason());
 			}
 			// Collections.sort(elemNotFoundInOWL);
-			lstFailedRestrictions.setItems(failedRestrictions);
+			lstFailedRestrictions.setItems(elemFailedRestrictions);
 		}
 
 	}
@@ -196,17 +208,25 @@ public class BPMN2OWLTabFxController implements FxController {
 	@FXML
 	private void onHandleClickedOnFailedRestriction(MouseEvent event) {
 
+		TreeItem<BPMNElement> curSelElementFailedRestriction = treeBPMNfailedRestrictions.getSelectionModel()
+				.getSelectedItem();
+
 		// Get selected Error-Test of faild Restriction
 		String selItem = lstFailedRestrictions.getSelectionModel().getSelectedItem();
-		// Get selected BPMN-Element of tree with failed restrictions
-		BPMNElement selectedBPMNElement = treeBPMNfailedRestrictions.getSelectionModel().getSelectedItem().getValue();
 
-		if (selItem != null && selectedBPMNElement != null) {
+		if (curSelElementFailedRestriction != null && selItem != null) {
+
+			// Get selected BPMN-Element of tree with failed restrictions
+			BPMNElement selectedBPMNElement = curSelElementFailedRestriction.getValue();
 			// Get FailedRestriction Object with error text. Assume the error text is
 			// unique!
 			Optional<FailedOWLClassRestriction> rest = selectedBPMNElement.getFailedRestrictionWithErrorText(selItem);
 			if (rest.isPresent()) {
 				OWLProperty affectedProperty = rest.get().getRestriction().getOnProperty();
+
+				// We know here that the onoltogy must present.
+				OWLModel ontology = OntologyHandler.getInstance().getLoadedOntology().get();
+
 				taRestrictionDescription.setText(ontology.getCommentOfEntity(affectedProperty));
 			}
 		}
@@ -238,12 +258,12 @@ public class BPMN2OWLTabFxController implements FxController {
 		treeBPMN20OWL.setRoot(rootItem);
 	}
 
-	private void showBPMNElementsNotExistInOWL(BPMNModel model) throws Exception {
-		ObservableList<String> elemNotFoundInOWL = FXCollections.observableArrayList();
+	private void showBPMNElementsNotExistInOWL(BPMNModel model, OWLModel ontology, Owl2BPMNMapper owl2bpmnMapper)
+			throws Exception {
+
 		// Determine if Childs of ExteniosnElement shoud be ignored or not.
 		boolean ignoreExtensionElements = chkIgnoreExtensionElements.isSelected();
 		// Get Mapper for OWL2BPMN-TagNames;
-		Owl2BPMNMapper owl2bpmnMapper = Owl2BPMNMapper.getInstance();
 		OWLTester.testAllBPMNElementsExsistAsOWLClasses(ontology, model, owl2bpmnMapper, ignoreExtensionElements)
 				.forEach(s -> elemNotFoundInOWL.add(s));
 		Collections.sort(elemNotFoundInOWL);
@@ -254,16 +274,13 @@ public class BPMN2OWLTabFxController implements FxController {
 			appendLog("Warning - Found <" + elemNotFoundInOWL.size()
 					+ "> elements in BPMN which have no OWL-Class in the ontology!");
 		}
-
 	}
 
-	private void showBPMNElementsFailedOWLRestrictions(BPMNModel model) throws Exception {
+	private void showBPMNElementsFailedOWLRestrictions(BPMNModel model, OWLModel ontology,
+			Owl2BPMNMapper owl2bpmnMapper) throws Exception {
 		TreeItem<BPMNElement> rootItem = new TreeItem<BPMNElement>(
 				new BPMNElement(model.getModelDefinitionAsDomElement()));
 		rootItem.setExpanded(true);
-
-		// Get OWL2XML-Naming Mappig
-		Owl2BPMNMapper owl2bpmnMapper = Owl2BPMNMapper.getInstance();
 
 		int failedElements = 0;
 		for (org.camunda.bpm.model.bpmn.instance.Process proc : model.getProcesses()) {

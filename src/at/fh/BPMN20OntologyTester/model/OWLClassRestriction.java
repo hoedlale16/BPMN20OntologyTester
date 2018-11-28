@@ -141,7 +141,6 @@ public class OWLClassRestriction {
 					onDataRange = DataRangeEnum.DataRangeInteger;
 					break;
 				default:
-					System.out.println("DataType <" + value + ">");
 					onDataRange = DataRangeEnum.Unkown;
 
 				}
@@ -156,9 +155,6 @@ public class OWLClassRestriction {
 			case "#text":
 				// No glue where this comes from, ignore it...
 				break;
-			default:
-				System.out.println("Unsupported child <" + childNode.getNodeName() + ">");
-
 			}
 		}
 	}

@@ -44,43 +44,38 @@ public class OntologyTabFxController implements FxController {
 	@FXML
 	private TextArea taOntDescription;
 
-	// Get initialized on startup of application
-	private final OWLModel ontology;
-	private final Owl2BPMNMapper owl2bpmnMapping;
-	
 	public OntologyTabFxController() {
-				
-		//Init local ontology variable
-		Optional<OWLModel> optOntology = OntologyHandler.getInstance().getLoadedOntology();
-		if (optOntology.isPresent()) {
-			this.ontology = optOntology.get();
-			appendLog("Read and initialized BPMN2.0 Ontology from ressource folder");
-		} else {
-			appendLog("Unable to load Ontology from ressource folder. Unable to verify ontology!");
-			this.ontology = null;
-		} 
-		
-		//Init local owl2bpmn varaibel
-		this.owl2bpmnMapping = Owl2BPMNMapper.getInstance();
-		if(! this.owl2bpmnMapping.hasMappings())
-			appendLog("Found no mappings for OWL2BPMN convertion");
-		else
-			appendLog("Loaded <" + owl2bpmnMapping.getLoadedMapping().size() + "> OWL2BPMN mapping entries");
 	}
 
 	@FXML
 	private void initialize() {
-		//Show loaded Ontology on GUI
-		showInitializedOntology(this.ontology);
+
+		// Init local ontology variable
+		Optional<OWLModel> optOntology = OntologyHandler.getInstance().getLoadedOntology();
+		if (optOntology.isPresent()) {
+			appendLog("Read and initialized BPMN2.0 Ontology from ressource folder");
+			// Show loaded Ontology on GUI
+			showInitializedOntology(optOntology.get());
+		} else {
+			appendLog("Unable to load Ontology from ressource folder. Unable to verify ontology!");
+		}
+
+
+		// Init local owl2bpmn varaibel
+		if (!Owl2BPMNMapper.getInstance().hasMappings())
+			appendLog("Found no mappings for OWL2BPMN convertion");
+		else
+			appendLog(
+					"Loaded <" + Owl2BPMNMapper.getInstance().getLoadedMapping().size() + "> OWL2BPMN mapping entries");
+
 	}
-	
 
 	private void appendLog(String text) {
 		MainSceneFxController.getInstance().appendLog(text);
 	}
 
 	/**
-	 * Shows main facts of loaded Ontology on GUI. 
+	 * Shows main facts of loaded Ontology on GUI.
 	 */
 	private void showInitializedOntology(OWLModel ontology) {
 		if (ontology != null) {
@@ -114,6 +109,9 @@ public class OntologyTabFxController implements FxController {
 	private void onShowOntologyEntityDetails() {
 		String strSelItem = cbOWLEntities.getSelectionModel().getSelectedItem();
 		if (strSelItem != null && !strSelItem.isEmpty()) {
+			
+			//When we can select something, the ontology must be present
+			OWLModel ontology = OntologyHandler.getInstance().getLoadedOntology().get();
 			OWLEntity entity = ontology.getEntityByShortName(strSelItem);
 
 			// Set description for selected Entity
@@ -149,10 +147,13 @@ public class OntologyTabFxController implements FxController {
 
 	@FXML
 	private void onShowOwl2BPMNMapping() {
-		
+
 		try {
 			Stage dialog = BPMN20OntologyTester.getOWL2BPMNMappingDialog();
-			dialog.show();
+			dialog.showAndWait();
+			appendLog("Applied changes for mapping OWL2BPMN. Mapping contains now <"
+					+ Owl2BPMNMapper.getInstance().getLoadedMapping().size() + "> entries");
+
 		} catch (Exception e) {
 			appendLog("Error while open mapping dialog: " + e.getMessage());
 		}

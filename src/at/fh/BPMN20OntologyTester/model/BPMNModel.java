@@ -1,10 +1,16 @@
 package at.fh.BPMN20OntologyTester.model;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.camunda.bpm.model.bpmn.BpmnModelInstance;
 import org.camunda.bpm.model.bpmn.instance.Collaboration;
@@ -15,6 +21,11 @@ import org.camunda.bpm.model.bpmn.instance.StartEvent;
 import org.camunda.bpm.model.bpmn.instance.bpmndi.BpmnDiagram;
 import org.camunda.bpm.model.xml.instance.DomDocument;
 import org.camunda.bpm.model.xml.instance.DomElement;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
  * Representation of an .bpmn File(XML) (BPMN-Model)
@@ -27,10 +38,36 @@ import org.camunda.bpm.model.xml.instance.DomElement;
 public class BPMNModel {
 
 	private final BpmnModelInstance model;
+	
+	// Represents the File from which the OWL-API Object was create out
+	private final Document rawDOMDocument;
 
-	public BPMNModel(BpmnModelInstance model) {
-		this.model = model;
+	public BPMNModel(BpmnModelInstance model, File file) throws Exception {
+		try {
+			this.model = model;
+			this.rawDOMDocument = praseXMlFile(file);
+		}catch (Exception e) {
+			throw new Exception ("unable to parse raw XML Doucment for model!");
+		}
 	}
+	
+	/**
+	 * Parses given XML-File and creates an DOM-Document out of it
+	 * 
+	 * @param file
+	 * @return
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 * @throws IOException
+	 */
+	private Document praseXMlFile(File file) throws ParserConfigurationException, SAXException, IOException {
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = factory.newDocumentBuilder();
+
+		Document doc = builder.parse(file);
+		return doc;
+	}
+	
 
 	/**
 	 * Return the Collaboration of the model which represents the head information
@@ -154,8 +191,8 @@ public class BPMNModel {
 	 * 
 	 * @return
 	 */
-	public Set<String> getAllElementsOfModel(boolean ignoreFromExtensionElementsField) {
-		Set<String> elements = new HashSet<String>();
+	public Set<DomElement> getAllElementsOfModel(boolean ignoreFromExtensionElementsField) {
+		Set<DomElement> elements = new HashSet<DomElement>();
 
 		DomDocument doc = model.getDocument();
 		addElementToSet(doc.getRootElement(), elements, ignoreFromExtensionElementsField);
@@ -176,8 +213,8 @@ public class BPMNModel {
 	 * @param element
 	 * @param elementSet
 	 */
-	private void addElementToSet(DomElement element, Set<String> elementSet,boolean ignoreExtenionElements) {
-		elementSet.add(element.getLocalName());
+	private void addElementToSet(DomElement element, Set<DomElement> elementSet,boolean ignoreExtenionElements) {
+		elementSet.add(element);
 		
 		if(! "extensionElements".equals(element.getLocalName())) {
 			
@@ -194,6 +231,20 @@ public class BPMNModel {
 				}
 			}
 		}
+	}
+	
+	public List<Node> getAttributeofNode(String tagName) {
+		NodeList elements = rawDOMDocument.getElementsByTagName(tagName);
+		for(int i=0; i< elements.getLength();i++) {
+			if(elements.item(i) instanceof Element) {
+				Element element = (Element)elements.item(i);
+				//If parent is correct, assume we have found the raw type
+				//if(element.getParentNode().getLocalName().e)
+				//TODO: hier gehts weiter
+			}
+		}
+		
+		return null;
 	}
 	
 	

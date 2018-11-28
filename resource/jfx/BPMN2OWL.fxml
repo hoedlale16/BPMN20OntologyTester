@@ -75,12 +75,17 @@
    </bottom>
    <top>
       <BorderPane BorderPane.alignment="CENTER">
-         <center>
-            <Button fx:id="btLoadBPMN" mnemonicParsing="false" onAction="#onLoadBPMN" styleClass="buttons" text="Load BPMN" BorderPane.alignment="CENTER" />
-         </center>
          <padding>
             <Insets bottom="10.0" />
          </padding>
+         <center>
+            <HBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="btLoadBPMN" mnemonicParsing="false" onAction="#onLoadBPMN" styleClass="buttons" text="Load BPMN" />
+                  <Button fx:id="btReset" mnemonicParsing="false" onAction="#onReset" styleClass="buttons" text="Reset" />
+               </children>
+            </HBox>
+         </center>
       </BorderPane>
    </top>
    <opaqueInsets>
@@ -94,7 +99,7 @@
          <children>
             <BorderPane fx:id="bpElementNofFoundInOWL">
                <top>
-                  <Label alignment="TOP_LEFT" styleClass="lb_boxHeader" text="Elements not found in OWL as OWL-Class" BorderPane.alignment="TOP_LEFT" />
+                  <Label alignment="TOP_LEFT" styleClass="lb_boxHeader" text="XML-Nodes not found as OWL-Class" BorderPane.alignment="TOP_LEFT" />
                </top>
                <bottom>
                   <CheckBox fx:id="chkIgnoreExtensionElements" mnemonicParsing="false" onAction="#onIgnoreExtenionElements" selected="true" text="Ignore Extensions-Elements Childs" BorderPane.alignment="TOP_LEFT" />
@@ -109,10 +114,10 @@
             </BorderPane>
             <BorderPane fx:id="bpElementFailedRestrictions" layoutX="30.0" layoutY="10.0">
                <top>
-                  <Label alignment="TOP_LEFT" styleClass="lb_boxHeader" text="Elements with failed OWL-Restrictions" BorderPane.alignment="TOP_LEFT" />
+                  <Label alignment="TOP_LEFT" styleClass="lb_boxHeader" text="XML-Nodes with failed OWL-Restrictions" BorderPane.alignment="TOP_LEFT" />
                </top>
                <left>
-                  <TreeView fx:id="treeBPMNfailedRestrictions" onMouseClicked="#handleClickedOnElementFailedRestrictions" showRoot="false" BorderPane.alignment="CENTER">
+                  <TreeView fx:id="treeBPMNfailedRestrictions" onMouseClicked="#onHandleClickedOnElementFailedRestrictions" showRoot="false" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
                         <Insets />
                      </BorderPane.margin>

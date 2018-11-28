@@ -1,23 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainBorder" prefHeight="768.0" prefWidth="1024.0" styleClass="bg_game" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="mainBorder" prefHeight="595.0" prefWidth="1016.0" styleClass="bg_game" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fh.BPMN20OntologyTester.view.Owl2BpmnMapperFxController">
     <right>
 
 
     </right>
     <top>
-        <Label fx:id="lbHeader" contentDisplay="CENTER" styleClass="lb_header" text="TODO" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" BorderPane.alignment="BOTTOM_CENTER">
+        <Label fx:id="lbHeader" contentDisplay="CENTER" styleClass="lb_header" text="Namingmapping OWL-Entries &lt;-&gt; XML-Elements" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" BorderPane.alignment="BOTTOM_CENTER">
             <font>
                 <Font size="27.0" />
             </font>
         </Label>
     </top>
+   <padding>
+      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+   </padding>
+   <bottom>
+      <BorderPane BorderPane.alignment="CENTER">
+         <right>
+            <HBox alignment="BOTTOM_RIGHT" spacing="10.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="btCancel" mnemonicParsing="false" onAction="#onCancel" styleClass="buttons" text="Cancel" />
+                  <Button fx:id="btApplyClose" mnemonicParsing="false" onAction="#onApplyAndClose" styleClass="buttons" text="Apply and Close" />
+               </children>
+               <opaqueInsets>
+                  <Insets top="10.0" />
+               </opaqueInsets>
+            </HBox>
+         </right>
+         <left>
+            <HBox spacing="10.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="btLoad" mnemonicParsing="false" onAction="#onLoadMapping" styleClass="buttons" text="Load" />
+                  <Button fx:id="btExport" mnemonicParsing="false" onAction="#onExportMapping" styleClass="buttons" text="Export" />
+               </children>
+            </HBox>
+         </left>
+         <padding>
+            <Insets top="15.0" />
+         </padding>
+         <center>
+            <HBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="btNewEntry" mnemonicParsing="false" onAction="#onNewEntry" styleClass="buttons" text="New Entry" />
+                  <Button fx:id="btDeleteSelected" mnemonicParsing="false" onAction="#onDeleteSelected" styleClass="buttons" text="Delete selected" />
+               </children>
+            </HBox>
+         </center>
+      </BorderPane>
+   </bottom>
    <center>
-      <TabPane fx:id="mainTabPane" minHeight="568.0" minWidth="1024.0" tabClosingPolicy="UNAVAILABLE" tabMinHeight="1.0" tabMinWidth="1.0" BorderPane.alignment="CENTER" />
+      <BorderPane BorderPane.alignment="CENTER">
+         <center>
+            <TableView fx:id="tableOWL2BPMN" editable="true" onKeyPressed="#onTableKeyPressed" BorderPane.alignment="CENTER">
+               <columns>
+                  <TableColumn fx:id="tcBPMNNaming" minWidth="0.0" onEditCommit="#onBPMNNameChanged" prefWidth="181.0" text="BPMN Naming">
+                  	<cellValueFactory>
+                		<PropertyValueFactory property="bpmnName" />
+					</cellValueFactory>
+      			  </TableColumn>
+                  <TableColumn fx:id="tcOWLNaming" onEditCommit="#onOWLNameChanged" prefWidth="150.0" text="OWL Naming">
+                  	<cellValueFactory>
+                		<PropertyValueFactory property="owlName" />
+					</cellValueFactory>
+      			  </TableColumn>
+                  <TableColumn fx:id="tcDuplicate" editable="false" prefWidth="75.0" text="Duplicate">
+                  	<cellValueFactory>
+                		<PropertyValueFactory property="duplicate" />
+					</cellValueFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="tcModified" editable="false" prefWidth="75.0" text="Modified">
+                    <cellValueFactory>
+                		<PropertyValueFactory property="modified" />
+					</cellValueFactory>
+                  </TableColumn>
+               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+         </center>
+         <top>
+            <TextArea fx:id="taDescription" editable="false" prefColumnCount="0" prefRowCount="0" text="To edit, double click on column and edit.&#10;The BPMN-Naming must be unique and represents the key of the pair.&#10;" BorderPane.alignment="CENTER">
+               <padding>
+                  <Insets bottom="15.0" />
+               </padding>
+            </TextArea>
+         </top>
+      </BorderPane>
    </center>
 </BorderPane>
