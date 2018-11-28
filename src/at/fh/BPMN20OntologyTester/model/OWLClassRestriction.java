@@ -11,8 +11,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
-
 /**
  * A Restriction class defines an owl:restriction Enttrie. There might be more
  * than one restriction on a class or property(e.g. Min/Max)
@@ -65,11 +63,13 @@ public class OWLClassRestriction {
 	 *            domElement of XML-Tag 'subClassOf of ontology
 	 * @param owlClassOfRestriction
 	 *            OWL-Class where domElement(restricion) is found
+	 * @param ontology
+	 * 				ontology where restriciton is found from to create links for onClass/onProperty
 	 * @throws Exception
 	 */
-	public OWLClassRestriction(Element domElement, OWLClass owlClassOfRestriction) throws Exception {
+	public OWLClassRestriction(Element domElement, OWLClass owlClassOfRestriction, OWLModel ontology) throws Exception {
 		try {
-			parseDomElement(domElement, owlClassOfRestriction);
+			parseDomElement(domElement, owlClassOfRestriction, ontology);
 		} catch (Exception e) {
 			throw new Exception("OWLClassRestriction failed: Error while parsing domElement");
 		}
@@ -96,7 +96,7 @@ public class OWLClassRestriction {
 	 * @param domElement
 	 * @throws Exception
 	 */
-	private void parseDomElement(Element domElement, OWLClass owlClassOfRestriction) throws Exception {
+	private void parseDomElement(Element domElement, OWLClass owlClassOfRestriction, OWLModel ontology) throws Exception {
 		NodeList childs = domElement.getChildNodes();
 		for (int i = 0; i < childs.getLength(); i++) {
 
@@ -104,8 +104,7 @@ public class OWLClassRestriction {
 			switch (childNode.getNodeName()) {
 			case "owl:onProperty":
 				String propertyIRI = ((Element) childNode).getAttribute("rdf:resource");
-				Optional<OWLProperty> optProp = OntologyHandler.getInstance().getOntology()
-						.getPropertyByIRI(propertyIRI);
+				Optional<OWLProperty> optProp = ontology.getPropertyByIRI(propertyIRI);
 				if (optProp.isPresent())
 					onProperty = optProp.get();
 				break;
@@ -150,7 +149,7 @@ public class OWLClassRestriction {
 			case "owl:onClass":
 				String onClassIRI = ((Element) childNode).getAttribute("rdf:resource");
 
-				Optional<OWLClass> optClass = OntologyHandler.getInstance().getOntology().getOWLClassByIRI(onClassIRI);
+				Optional<OWLClass> optClass = ontology.getOWLClassByIRI(onClassIRI);
 				if (optClass.isPresent())
 					onClass = optClass.get();
 				break;

@@ -3,6 +3,7 @@ package at.fh.BPMN20OntologyTester.view;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import at.fh.BPMN20OntologyTester.controller.FxController;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 
@@ -15,7 +16,7 @@ import javafx.scene.control.TextArea;
  *         applied Sciences FH JOANNEUM
  *
  */
-public class MainSceneFxController {
+public class MainSceneFxController implements FxController {
 
 	// GUI Elements from Main GUI
 	@FXML

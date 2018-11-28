@@ -31,36 +31,40 @@ public class Owl2BPMNMapper {
 
 	private static Owl2BPMNMapper theInstance;
 
-	public static Owl2BPMNMapper getInstance() throws Exception {
+	public static Owl2BPMNMapper getInstance() {
 		if (theInstance == null)
 			theInstance = new Owl2BPMNMapper();
 
 		return theInstance;
 	}
 
-	private Owl2BPMNMapper() throws Exception {
-		// Just called one due to design pattern singleton
-
-		// Initialize mapping from file from ressource directory
+	private Owl2BPMNMapper() {
+		// Initialize property mappings. Muss filled via load-Methods
 		this.owl2xmlMapping = new Properties();
-		initializeMapping(getClass().getResourceAsStream("/resource/owl/OWL2BPMNmapping.properties"));
-	}
-
-	public void initializeMapping(File file) throws Exception {
-		initializeMapping(new FileInputStream(file));
 	}
 
 	/**
-	 * Helper method to initialize Properties for mapping. Handles the given
-	 * inputstream and creates mapping properties out of it
+	 * Initialize Properties for mapping by reading given file. 
+	 * Creates mapping properties out of it. to get the mapping call getter methods
 	 * 
 	 * @param stream
 	 * @throws Exception
 	 */
-	private void initializeMapping(InputStream stream) throws Exception {
+	public void loadMappingFromFile(File file) throws Exception {
+		loadMappingFromStream(new FileInputStream(file));
+	}
+
+	/**
+	 * Initialize Properties for mapping by reading given stream. 
+	 * Creates mapping properties out of it. to get the mapping call getter methods
+	 * 
+	 * @param stream
+	 * @throws Exception
+	 */
+	public void loadMappingFromStream(InputStream stream) throws Exception {
 		try {
 			if (stream != null) {
-				owl2xmlMapping.load(stream);
+				this.owl2xmlMapping.load(stream);
 			} else {
 				throw new Exception("Given input is null - unable to load properties!");
 			}
@@ -76,6 +80,7 @@ public class Owl2BPMNMapper {
 				}
 			}
 		}
+		
 	}
 
 	/**
@@ -147,8 +152,16 @@ public class Owl2BPMNMapper {
 	 * 
 	 * @return
 	 */
-	public Properties getAllMappings() {
+	public Properties getLoadedMapping() {
 		return owl2xmlMapping;
+	}
+	
+	/**
+	 * Return true if mappings exists or false if no mappings exists
+	 * @return
+	 */
+	public boolean hasMappings() {
+		return !owl2xmlMapping.isEmpty();
 	}
 
 	/**

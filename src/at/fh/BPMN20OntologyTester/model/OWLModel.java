@@ -416,7 +416,7 @@ public class OWLModel {
 						if (isNodeElementAndHasNameAndChilds(restrcitionNode, "owl:Restriction", true)) {
 							// JIHAAA we've found an restriction - Create an OWLCLassRestriction Object
 							OWLClassRestriction restriction = new OWLClassRestriction((Element) restrcitionNode,
-									owlClass);
+									owlClass,this);
 							restrictions.add(restriction);
 
 						}

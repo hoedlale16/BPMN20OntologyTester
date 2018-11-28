@@ -1,5 +1,6 @@
 package at.fh.BPMN20OntologyTester.view;
 
+import at.fh.BPMN20OntologyTester.controller.FxController;
 import at.fh.BPMN20OntologyTester.model.BPMNModel;
 import javafx.fxml.FXML;
 
@@ -10,7 +11,7 @@ import javafx.fxml.FXML;
  *         applied Sciences FH JOANNEUM
  *
  */
-public class OntologyTestTabFxController {
+public class OntologyTestTabFxController implements FxController {
 
 	// GUI Element from Tab "Ontology Tests"
 

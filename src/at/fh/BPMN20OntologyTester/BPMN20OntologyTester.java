@@ -4,14 +4,20 @@ import java.io.IOException;
 
 import com.sun.javafx.application.LauncherImpl;
 
+import at.fh.BPMN20OntologyTester.controller.FxController;
+import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
+import at.fh.BPMN20OntologyTester.controller.Owl2BPMNMapper;
+import at.fh.BPMN20OntologyTester.view.OntologyTabFxController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * Main Class to start Application. Initialize all GUI-Elements.
@@ -23,25 +29,65 @@ import javafx.stage.Stage;
 @SuppressWarnings("restriction")
 public class BPMN20OntologyTester extends Application {
 
-	// Define all possible GUI-Screens here to switch between them
+	// The main scene of the Application where all other GUIs are added as Tab
 	private static Scene mainScene;
+	private static Scene owl2bpmnMappingDialogScene;
+	
+	public static Stage getOWL2BPMNMappingDialog() {
+		
+		Stage dialog = new Stage();
+		dialog.initStyle(StageStyle.UTILITY);
+		dialog.setTitle("Mapping OWL 2 BPMN-XML");
+		dialog.setScene(owl2bpmnMappingDialogScene);
+		dialog.setResizable(false);
 
-	public static Scene getMainScene() {
-		return mainScene;
+		// Set Icon and Display stage...
+		dialog.getIcons().add(new Image(BPMN20OntologyTester.class.getResource("/resource/pics/logo.jpg").toString()));
+
+		return dialog;
 	}
 
 	@Override
 	public void init() {
 		try {
-			mainScene = loadScene("/resource/jfx/MainScene.fxml");
+			// Read and initialize Ontology - If an error occured here just continue
+			// building the GUI
+			intitalizeAppData("/resource/owl/BPMN20.owl", "/resource/owl/OWL2BPMNmapping.properties");
 
-			// Load Scenes for the tabs from FXML, create a new tabs and add to tabPane of
+			// Load GUI- Scenes for from FXML, create a new tabs and add to tabPane of
 			// mainScene
-			addNewTab("Ontology", loadScene("/resource/jfx/Ontology.fxml"), mainScene);
-			addNewTab("BPMN2OWL", loadScene("/resource/jfx/BPMN2OWL.fxml"), mainScene);
-			addNewTab("OWL Tests", loadScene("/resource/jfx/OntologyTests.fxml"), mainScene);
-		} catch (IOException e) {
+			mainScene = loadScene("/resource/jfx/MainScene.fxml", null);
+			addNewTab("Ontology", loadScene("/resource/jfx/Ontology.fxml", null), mainScene);	
+			addNewTab("BPMN2OWL", loadScene("/resource/jfx/BPMN2OWL.fxml", null), mainScene);
+			addNewTab("OWL Tests", loadScene("/resource/jfx/OntologyTests.fxml", null), mainScene);
+			
+			//Load additional dialogs
+			owl2bpmnMappingDialogScene = loadScene("/resource/jfx/OWL2BPMNMappingDialog.fxml",null);
+			
+		} catch (Exception e) {
 			System.out.println("Error initializing Application: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	private void intitalizeAppData(String ontologyResourcePath, String owl2xmlMappingPath) {
+		try {
+			// Load Ontology from given resourcePath
+			OntologyHandler owlHandler = OntologyHandler.getInstance();
+			owlHandler.loadOntology(getClass().getResourceAsStream(ontologyResourcePath));
+			if (!owlHandler.getLoadedOntology().isPresent())
+				throw new Exception("Error! - Unable to read Ontology from <" + ontologyResourcePath + ">");
+
+			// Load OWL2XML Mapping file from given resourcePath
+			Owl2BPMNMapper owl2xmlMapper = Owl2BPMNMapper.getInstance();
+			owl2xmlMapper.loadMappingFromStream(getClass().getResourceAsStream(owl2xmlMappingPath));
+			if (!owl2xmlMapper.hasMappings())
+				throw new Exception(
+						"Warning! - Unable to read OWL2BPMN Mapping file from <" + owl2xmlMappingPath + ">");
+
+		} catch (Exception e) {
+			// Just continue, and print message to console.
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -53,15 +99,23 @@ public class BPMN20OntologyTester extends Application {
 	 * @return Scene Object created out of fxml
 	 * @throws IOException
 	 */
-	private Scene loadScene(String fxml) throws IOException {
+	private static Scene loadScene(String fxml, FxController controller) throws IOException {
 		try {
-			// Try to load scene from fxml
-			Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxml)));
+			FXMLLoader fxmlLoader = new FXMLLoader();
+			if (controller != null) {
+				fxmlLoader.setController(controller);
+			}
+
+			// Create Scene from given fXML path file
+			fxmlLoader.setLocation(BPMN20OntologyTester.class.getResource(fxml));
+			Scene scene = new Scene(fxmlLoader.load());
+			// Set CSS
 			scene.getStylesheets().clear();
 			scene.getStylesheets().add("/resource/jfx/OntologyTesterfx.css");
 			return scene;
 
-		} catch (IOException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
 			throw new IOException("Error while loading Scene <" + fxml + ">");
 		}
 	}
@@ -106,7 +160,6 @@ public class BPMN20OntologyTester extends Application {
 	public void stop() {
 	}
 
-	@SuppressWarnings("restriction")
 	public static void main(String[] args) {
 		try {
 			// Start the GUI - Ontology get initialized when OntologyTabFxController get

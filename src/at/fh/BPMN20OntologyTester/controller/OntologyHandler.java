@@ -1,10 +1,10 @@
 package at.fh.BPMN20OntologyTester.controller;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.Optional;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -21,53 +21,54 @@ import at.fh.BPMN20OntologyTester.model.OWLModel;
  */
 public class OntologyHandler {
 
-	// This Object represents the famous BPMN20Ontology
-	private OWLModel bpmn20Ontology = null;
+	// This Object represents the current loaded Ontology
+	private OWLModel loadedOntology = null;
 
-	// Design-Pattern Singleton:
-	// Take care that only one instance of the Ontology exists in the whole
-	// application
+	// Design-Pattern Singleton to take care that there is just one OntologyHandler:
 	private static OntologyHandler theInstance = null;
 
-	public static OntologyHandler getInstance() throws OWLOntologyCreationException, FileNotFoundException {
+	public static OntologyHandler getInstance() {
 		if (theInstance == null)
 			theInstance = new OntologyHandler();
 		return theInstance;
 	}
 
-	private OntologyHandler() throws OWLOntologyCreationException, FileNotFoundException {
-		/*
-		 * Just called one due to design pattern singleton. Creates Ontology by reading
-		 * from resource File as Stream as initialization on startup If an other
-		 * ontology is required, overwrite loaded one with method loadOntolgy or
-		 * setOntology.
+	private OntologyHandler() {
+		/**
+		 * To load an ontology call the loadOntolgy methods which reads the given
+		 * ontoloy, and sets it 'loadedOntolgy' To get the ontolgy, call the method
+		 * getLoadedOntolgy To set an external created new ontology call method
+		 * setOntology
 		 */
-		setOntology(loadOntology(getClass().getResourceAsStream("/resource/owl/BPMN20.owl")));
+
 	}
 
 	/**
-	 * Method to load and create a BPMN20 Ontology from given file. Must set
-	 * explizit via method 'setBpmn20Ontology' for usage
+	 * Method to load and create a BPMN20 Ontology from given file and sets loaded
+	 * ontology as currently loaded one To get the loaded ontology, just call method
+	 * getLoadedOntolgy which returns the loaded ontology or Optional.empty if not
+	 * set
 	 * 
 	 * @param file
 	 *            - OWL-File to load which represents the BPMN20 Ontology
-	 * @return Ontology as object
 	 * @throws OWLOntologyCreationException
 	 */
-	public OWLModel loadOntology(File file) throws OWLOntologyCreationException {
+	public void loadOntology(File file) throws OWLOntologyCreationException {
 		OWLOntology ontology = OWLManager.createOWLOntologyManager().loadOntologyFromOntologyDocument(file);
-		return new OWLModel(ontology, file);
+		setOntology(new OWLModel(ontology, file));
 	}
 
 	/**
-	 * Method to load and initialize the BPMN20 Ontology from an input stream.
+	 * Method to load and create a BPMN20 Ontology from given inputstream and sets loaded
+	 * ontology as currently loaded one To get the loaded ontology, just call method
+	 * getLoadedOntolgy which returns the loaded ontology or Optional.empty if not
+	 * set
 	 * 
 	 * @param stream
 	 *            - OWL to load from stream which represents the BPMN20 Ontology
-	 * @return Ontology as object
 	 * @throws OWLOntologyCreationException
 	 */
-	private OWLModel loadOntology(InputStream stream) throws OWLOntologyCreationException {
+	public void loadOntology(InputStream stream) throws OWLOntologyCreationException {
 		try {
 			// Parse content to a temporary File to store it for the DOM and parse it for
 			// the OWL Manager as well
@@ -76,10 +77,9 @@ public class OntologyHandler {
 			Files.copy(stream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
 			OWLOntology ontology = OWLManager.createOWLOntologyManager().loadOntologyFromOntologyDocument(file);
-
-			return new OWLModel(ontology, file);
+			setOntology(new OWLModel(ontology, file));
 		} catch (Exception e) {
-			throw new OWLOntologyCreationException(e);
+			throw new OWLOntologyCreationException("Unable to load ontology from inputstream", e);
 		}
 	}
 
@@ -89,7 +89,7 @@ public class OntologyHandler {
 	 * @param newOntology
 	 */
 	public void setOntology(OWLModel newOntology) {
-		this.bpmn20Ontology = newOntology;
+		this.loadedOntology = newOntology;
 	}
 
 	/**
@@ -98,8 +98,12 @@ public class OntologyHandler {
 	 * 
 	 * @return
 	 */
-	public OWLModel getOntology() {
-		return bpmn20Ontology;
+	public Optional<OWLModel> getLoadedOntology() {
+		if (loadedOntology == null) {
+			return Optional.empty();
+		} else {
+			return Optional.of(loadedOntology);
+		}
 	}
 
 }

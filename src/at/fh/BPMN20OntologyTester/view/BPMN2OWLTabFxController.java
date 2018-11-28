@@ -9,6 +9,7 @@ import org.camunda.bpm.model.xml.instance.DomElement;
 import org.semanticweb.owlapi.model.OWLProperty;
 
 import at.fh.BPMN20OntologyTester.controller.BPMNModelHandler;
+import at.fh.BPMN20OntologyTester.controller.FxController;
 import at.fh.BPMN20OntologyTester.controller.OWLTester;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
 import at.fh.BPMN20OntologyTester.controller.Owl2BPMNMapper;
@@ -20,6 +21,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -39,7 +41,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
  *         applied Sciences FH JOANNEUM
  *
  */
-public class BPMN2OWLTabFxController {
+public class BPMN2OWLTabFxController implements FxController {
 
 	// GUI Element from Tab "BPMN2OWL"
 	@FXML
@@ -55,21 +57,46 @@ public class BPMN2OWLTabFxController {
 
 	@FXML
 	private CheckBox chkIgnoreExtensionElements, cbIgnoreWarningRestrictions;
+	
+	@FXML
+	private Button btLoadBPMN, btGenerateReport, btConvertToOWL;
 
 	// Get initialized on startup of application
-	private BPMNModel bpmnModel = null;
-	private OWLModel ontology = null;
+	private final OWLModel ontology;
 
+	//Initialized when user load BPMN Model
+	private BPMNModel bpmnModel = null;
+
+	
 	public BPMN2OWLTabFxController() {
+
+		Optional<OWLModel> optOntology = OntologyHandler.getInstance().getLoadedOntology();
+		
+		if (optOntology.isPresent()) {
+			this.ontology = optOntology.get();
+		} else {
+			appendLog("Ontology not intilaized. Unable to check BPMN Model against an ontology!");
+			this.ontology = null;
+		} 
 	}
+	
+	/**
+	 * Helper methods to activate or deactivate Buttons on GUI depending an ontology is set or not
+	 */
+	private void updateActivationSateofButtons() {
+		boolean ontologyNotExists = (ontology == null) ? true : false;
+		
+		btLoadBPMN.setDisable(ontologyNotExists);
+		btConvertToOWL.setDisable(ontologyNotExists);
+		btGenerateReport.setDisable(ontologyNotExists);
+	}
+	
 
 	@FXML
 	private void initialize() {
-		try {
-			ontology = OntologyHandler.getInstance().getOntology();
-		} catch (Exception e) {
-			appendLog("Ontology not intilaized. Unable to check BPMN Model against an ontology!");
-		}
+		
+		//Set User-Input Elements according ontology found or not
+		updateActivationSateofButtons();
 	}
 
 	@FXML
@@ -101,7 +128,7 @@ public class BPMN2OWLTabFxController {
 
 				// Show Elements which were found in OWL but does not meed all restrictions of
 				// OWL
-				showBPMNElementsNotMeedOWLRestrictions(bpmnModel);
+				showBPMNElementsFailedOWLRestrictions(bpmnModel);
 			}
 		} catch (Exception e) {
 			appendLog("ERROR - Failed to load File <" + e.getMessage() + ">");
@@ -127,7 +154,7 @@ public class BPMN2OWLTabFxController {
 	private void onIgnoreWarningRestrictions() {
 		try {
 			if (bpmnModel != null) {
-				showBPMNElementsNotMeedOWLRestrictions(bpmnModel);
+				showBPMNElementsFailedOWLRestrictions(bpmnModel);
 			}
 		} catch (Exception e) {
 			appendLog("ERROR - Failed to load File <" + e.getMessage() + ">");
@@ -230,7 +257,7 @@ public class BPMN2OWLTabFxController {
 
 	}
 
-	private void showBPMNElementsNotMeedOWLRestrictions(BPMNModel model) throws Exception {
+	private void showBPMNElementsFailedOWLRestrictions(BPMNModel model) throws Exception {
 		TreeItem<BPMNElement> rootItem = new TreeItem<BPMNElement>(
 				new BPMNElement(model.getModelDefinitionAsDomElement()));
 		rootItem.setExpanded(true);

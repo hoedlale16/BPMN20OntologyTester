@@ -88,8 +88,12 @@ public class MyTester {
 		
 		try {
 			System.out.println("---- Start -----");	
-			//Initialize Ontology and model
-			OWLModel ontology = OntologyHandler.getInstance().getOntology();			
+			//Initialize Ontology
+			OntologyHandler owlHandler = OntologyHandler.getInstance();
+			owlHandler.loadOntology(MyTester.class.getResourceAsStream("/resource/owl/BPMN20.owl"));
+			OWLModel ontology = OntologyHandler.getInstance().getLoadedOntology().get();
+			
+			//Initialize Model
 			BPMNModel model = createBPMNModel();
 			
 			generateNewMappingFile(ontology);
