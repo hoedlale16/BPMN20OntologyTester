@@ -126,6 +126,7 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 			File selectedFile = chooser.showOpenDialog(null);
 
 			if (selectedFile != null) {
+				
 				// Create Testcase with given BPMN
 				testcase = createTestcase(BPMNModelHandler.readModelFromFile(selectedFile));
 				appendLog("Read BPMN-File <" + selectedFile.getAbsolutePath() + ">");
@@ -161,30 +162,30 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 	@FXML
 	private void onGenerateReport() {
 		if (testcase != null ) {
-		try {
-			FileChooser chooser = new FileChooser();
-			chooser.setTitle("Export Testcase report");
-
-			chooser.getExtensionFilters().add(new ExtensionFilter("TestcaseReport", "*.txt"));
-
-			// Handle selected file
-			File selectedFile = chooser.showSaveDialog(null);
-
-			if (selectedFile != null) {	
-				FileWriter writer = new FileWriter(selectedFile);
-				writer.write(testcase.getTestResultReport());
-				writer.flush();
-				writer.close();
-				
-				appendLog("Created Testaces report <" + selectedFile.getAbsolutePath() + ">");
-			}
+			try {
+				FileChooser chooser = new FileChooser();
+				chooser.setTitle("Export Testcase report");
+	
+				chooser.getExtensionFilters().add(new ExtensionFilter("TestcaseReport", "*.txt"));
+	
+				// Handle selected file
+				File selectedFile = chooser.showSaveDialog(null);
+	
+				if (selectedFile != null) {	
+					FileWriter writer = new FileWriter(selectedFile);
+					writer.write(testcase.getTestResultReport());
+					writer.flush();
+					writer.close();
+					
+					appendLog("Created Testaces report <" + selectedFile.getAbsolutePath() + ">");
+				}
 			} catch (Exception e) {
 				appendLog("Error - Failed to create testcase report <" + e.getMessage() + ">");
 				
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Error!");
 				alert.setHeaderText("Error creating testcase report");
-				alert.setContentText("ERROR - Failed to load File <" + e.getMessage() + ">");
+				alert.setContentText("ERROR - Failed to write to File <" + e.getMessage() + ">");
 				alert.showAndWait();
 			} 
 		}
@@ -278,8 +279,9 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 	private void showTcResults() {
 		// Clear TC-specific GUI elements and execute tests of testcase
 		xmlNodeNotFoundInOWL.clear();
-		treeBPMNfailedRestrictions.setRoot(null);
+		xmlAttributesNotFoundInOWL.clear();
 		failedRestrictionsOfXmlNode.clear();
+		treeBPMNfailedRestrictions.setRoot(null);
 		taRestrictionDescription.setText("");
 
 		if (testcase != null) {

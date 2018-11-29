@@ -5,8 +5,10 @@ import java.io.IOException;
 import com.sun.javafx.application.LauncherImpl;
 
 import at.fh.BPMN20OntologyTester.controller.FxController;
-import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
 import at.fh.BPMN20OntologyTester.controller.OWL2BPMNMapper;
+import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
+import at.fh.BPMN20OntologyTester.model.TestCase;
+import at.fh.BPMN20OntologyTester.view.OwlTestSuiteTabTcResultFxController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -44,6 +46,26 @@ public class BPMN20OntologyTester extends Application {
 
 		return dialog;
 	}
+	
+	public static Tab getTestSuiteTestResultTag(TestCase testcase) {
+		try {
+			Tab tab = new Tab();
+			String tabName = testcase.getProcessModel().getFileFromWhomModelWasCreated().getName();
+			tab.setText(tabName);
+			OwlTestSuiteTabTcResultFxController controller = new OwlTestSuiteTabTcResultFxController(testcase);
+			
+			Scene scene = loadScene("/resource/jfx/TabOwlTestsuiteTabTCResult.fxml",controller);
+			
+			tab.setContent(scene.getRoot());
+		
+			return tab;
+		} catch (Exception e) {
+			//Sollte in Produktionsbetrieg benau nie passieren, daher nur auf die Console im Fall des Falls
+			System.out.println("Error initializing Application: " + e.getMessage());
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	@Override
 	public void init() {
@@ -55,12 +77,12 @@ public class BPMN20OntologyTester extends Application {
 			// Load GUI- Scenes for from FXML, create a new tabs and add to tabPane of
 			// mainScene
 			mainScene = loadScene("/resource/jfx/MainScene.fxml", null);
-			addNewTab("Ontology", loadScene("/resource/jfx/Ontology.fxml", null), mainScene);	
-			addNewTab("Compare BPMN", loadScene("/resource/jfx/BPMN2OWL.fxml", null), mainScene);
-			addNewTab("OWL Testsuite", loadScene("/resource/jfx/OntologyTests.fxml", null), mainScene);
+			addNewTab("Ontology", loadScene("/resource/jfx/TabOntology.fxml", null), mainScene);	
+			addNewTab("Compare BPMN", loadScene("/resource/jfx/TabCompareBpmn2Owl.fxml", null), mainScene);
+			addNewTab("OWL Testsuite", loadScene("/resource/jfx/TabOwlTestSuite.fxml", null), mainScene);
 			
 			//Load additional dialogs
-			owl2bpmnMappingDialogScene = loadScene("/resource/jfx/OWL2BPMNMappingDialog.fxml",null);
+			owl2bpmnMappingDialogScene = loadScene("/resource/jfx/DialogOwl2BpmnMapping.fxml",null);
 			
 		} catch (Exception e) {
 			System.out.println("Error initializing Application: " + e.getMessage());

@@ -8,21 +8,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.Set;
-
-import org.camunda.bpm.model.xml.instance.DomElement;
-import org.semanticweb.owlapi.model.OWLClass;
 
 import com.sun.javafx.application.LauncherImpl;
 
 import at.fh.BPMN20OntologyTester.controller.BPMNModelHandler;
 import at.fh.BPMN20OntologyTester.controller.FxController;
 import at.fh.BPMN20OntologyTester.controller.OWL2BPMNMapper;
-import at.fh.BPMN20OntologyTester.controller.OWLTester;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
 import at.fh.BPMN20OntologyTester.model.BPMNModel;
-import at.fh.BPMN20OntologyTester.model.FailedOWLClassRestriction;
-import at.fh.BPMN20OntologyTester.model.OWLClassRestriction;
 import at.fh.BPMN20OntologyTester.model.OWLModel;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -39,6 +32,7 @@ import javafx.stage.StageStyle;
  * University of applied Sciences FH JOANNEUM
  *
  */
+@SuppressWarnings("restriction")
 public class MyTester  extends Application {
 	private static Scene owl2bpmnMappingDialogScene;
 	

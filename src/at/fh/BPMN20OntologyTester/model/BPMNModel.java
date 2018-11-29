@@ -40,12 +40,14 @@ public class BPMNModel {
 
 	private final BpmnModelInstance model;
 	
-	// Represents the File from which the OWL-API Object was create out
+	// Represents the File from which the Process model was created out	
+	private final File fileCreatedFrom;
 	private final Document rawDOMDocument;
 
 	public BPMNModel(BpmnModelInstance model, File file) throws Exception {
 		try {
 			this.model = model;
+			this.fileCreatedFrom = file;
 			this.rawDOMDocument = praseXMlFile(file);
 		}catch (Exception e) {
 			throw new Exception ("unable to parse raw XML Doucment for model!");
@@ -72,6 +74,10 @@ public class BPMNModel {
 	
 	public Document getRawDOMDocument() {
 		return rawDOMDocument;
+	}
+	
+	public File getFileFromWhomModelWasCreated() {
+		return fileCreatedFrom;
 	}
 
 	/**
