@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="bpmn2owlPane" minHeight="500.0" minWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fh.BPMN20OntologyTester.view.BPMN2OWLTabFxController">
+<BorderPane fx:id="bpmn2owlPane" minHeight="500.0" minWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fh.BPMN20OntologyTester.view.CompareBpmn2OwlTabFxController">
     <right>
 
 
@@ -97,35 +97,47 @@
    <center>
       <HBox spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <BorderPane fx:id="bpElementNofFoundInOWL">
-               <top>
-                  <Label alignment="TOP_LEFT" styleClass="lb_boxHeader" text="XML-Nodes not found as OWL-Class" BorderPane.alignment="TOP_LEFT" />
-               </top>
+            <BorderPane>
+               <center>
+                  <VBox spacing="10.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <BorderPane fx:id="bPNodesNotAsOWLClass">
+                           <top>
+                              <Label alignment="TOP_LEFT" styleClass="lb_boxHeader" text="XML-Nodes not found as OWL-Class" BorderPane.alignment="TOP_LEFT" />
+                           </top>
+                           <center>
+                              <ListView fx:id="lstXmlNodesNotAsOWLClass" minWidth="150.0" BorderPane.alignment="CENTER" />
+                           </center>
+                        </BorderPane>
+                        <BorderPane fx:id="bpAttributesNotAsProperties">
+                           <top>
+                              <Label alignment="TOP_LEFT" styleClass="lb_boxHeader" text="XML-Attributes not as OWL-Properties" BorderPane.alignment="TOP_LEFT" />
+                           </top>
+                           <center>
+                              <ListView fx:id="lstAttributesNotAsProperty" minWidth="150.0" BorderPane.alignment="CENTER" />
+                           </center>
+                        </BorderPane>
+                     </children>
+                  </VBox>
+               </center>
                <bottom>
-                  <CheckBox fx:id="chkIgnoreExtensionElements" mnemonicParsing="false" onAction="#onIgnoreExtenionElements" selected="true" text="Ignore Extensions-Elements Childs" BorderPane.alignment="TOP_LEFT" />
+                  <CheckBox fx:id="cbIgnoreExtensionElements" mnemonicParsing="false" onAction="#onUpdateTestCaseResults" selected="true" text="Ignore Extensions-Elements Childs" BorderPane.alignment="TOP_LEFT" />
                </bottom>
-               <right>
-                  <ListView fx:id="lstBPMN2OWLNotFoundInOWL" BorderPane.alignment="CENTER">
-                     <BorderPane.margin>
-                        <Insets />
-                     </BorderPane.margin>
-                  </ListView>
-               </right>
             </BorderPane>
             <BorderPane fx:id="bpElementFailedRestrictions" layoutX="30.0" layoutY="10.0">
                <top>
                   <Label alignment="TOP_LEFT" styleClass="lb_boxHeader" text="XML-Nodes with failed OWL-Restrictions" BorderPane.alignment="TOP_LEFT" />
                </top>
-               <left>
-                  <TreeView fx:id="treeBPMNfailedRestrictions" onMouseClicked="#onHandleClickedOnElementFailedRestrictions" showRoot="false" BorderPane.alignment="CENTER">
+               <bottom>
+                  <CheckBox fx:id="cbIgnoreWarningRestrictions" mnemonicParsing="false" onAction="#onUpdateTestCaseResults" selected="true" text="Ignore Warning Restrictions" BorderPane.alignment="TOP_LEFT" />
+               </bottom>
+               <center>
+                  <TreeView fx:id="treeBPMNfailedRestrictions" minWidth="150.0" onMouseClicked="#onHandleClickedOnElementFailedRestrictions" showRoot="false" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
                         <Insets />
                      </BorderPane.margin>
                   </TreeView>
-               </left>
-               <bottom>
-                  <CheckBox fx:id="cbIgnoreWarningRestrictions" mnemonicParsing="false" onAction="#onIgnoreWarningRestrictions" selected="true" text="Ignore Warning Restrictions" BorderPane.alignment="TOP_LEFT" />
-               </bottom>
+               </center>
             </BorderPane>
             <VBox fx:id="vBFailingReasons" spacing="5.0">
                <children>

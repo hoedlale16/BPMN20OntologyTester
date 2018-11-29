@@ -3,11 +3,7 @@ package at.fh.BPMN20OntologyTester.controller;
 import java.io.File;
 
 import org.camunda.bpm.model.bpmn.Bpmn;
-import org.camunda.bpm.model.bpmn.BpmnModelException;
 import org.camunda.bpm.model.bpmn.BpmnModelInstance;
-import org.camunda.bpm.model.xml.ModelValidationException;
-
-import com.google.common.base.VerifyException;
 
 import at.fh.BPMN20OntologyTester.model.BPMNModel;
 

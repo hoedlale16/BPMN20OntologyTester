@@ -17,9 +17,9 @@ import com.sun.javafx.application.LauncherImpl;
 
 import at.fh.BPMN20OntologyTester.controller.BPMNModelHandler;
 import at.fh.BPMN20OntologyTester.controller.FxController;
+import at.fh.BPMN20OntologyTester.controller.OWL2BPMNMapper;
 import at.fh.BPMN20OntologyTester.controller.OWLTester;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
-import at.fh.BPMN20OntologyTester.controller.Owl2BPMNMapper;
 import at.fh.BPMN20OntologyTester.model.BPMNModel;
 import at.fh.BPMN20OntologyTester.model.FailedOWLClassRestriction;
 import at.fh.BPMN20OntologyTester.model.OWLClassRestriction;
@@ -53,42 +53,6 @@ public class MyTester  extends Application {
 		return BPMNModelHandler.readModelFromFile(file);
 	}
 	
-	
-	private static void showRestrictionsOfElement(String elementName, OWLModel ontology) throws Exception {
-		System.out.println("All Restrictions of Class <"+elementName+">");
-		
-		OWLClass owlClass = ontology.getOWLClassByShortNameIgnoreCase(elementName);
-		for(OWLClassRestriction r : ontology.getAllOWLClassRestrictionOfOWLClass(owlClass, true)) {
-			System.out.println(r.toFormattedToString());
-
-		}
-		System.out.println("Done");
-	}
-	
-	
-	private static void testRestrictionofElement(DomElement element, BPMNModel model, OWLModel ontology) throws Exception {
-		System.out.println("Test restrictions of Class <"+element.getLocalName()+">");
-		//Get OWL2XML-Naming Mappig
-		Owl2BPMNMapper owl2bpmnMapper = Owl2BPMNMapper.getInstance();
-		
-		Set<FailedOWLClassRestriction> failedRestrictions = OWLTester.testBPMNElementMeetOWLRestrictions(element, ontology,owl2bpmnMapper,false);
-		//Just output for Elements which have failed restrictions
-		if( failedRestrictions.size() > 0) {
-			OWLClass owlClass = ontology.getOWLClassByShortNameIgnoreCase(element.getLocalName());
-			int totalRestrictions = ontology.getAllOWLClassRestrictionOfOWLClass(owlClass, true).size();
-			
-			System.out.println("  - Total Restrictions:  " + totalRestrictions);
-			System.out.println("  - Failed Restrictions: " + failedRestrictions.size());
-		}
-	}
-	
-	private static void generateNewMappingFile(OWLModel ontology) throws Exception {
-
-		Owl2BPMNMapper.getInstance().generateNewMappingFile(ontology);
-		File mappingFile = new File("C:/Users/Alexander/Desktop/OWL2XMLmapping.properties");
-		Owl2BPMNMapper.getInstance().save(mappingFile);
-	}
-
 	/**
 	 * @param args
 	 */
@@ -103,7 +67,7 @@ public class MyTester  extends Application {
 			OWLModel ontology = OntologyHandler.getInstance().getLoadedOntology().get();
 			
 			//Initialize OWL2XML Mapping
-			Owl2BPMNMapper owl2xmlMapper = Owl2BPMNMapper.getInstance();
+			OWL2BPMNMapper owl2xmlMapper = OWL2BPMNMapper.getInstance();
 			owl2xmlMapper.loadMappingFromStream(MyTester.class.getResourceAsStream("/resource/owl/OWL2BPMNmapping.properties"));
 			
 			//Initialize Model

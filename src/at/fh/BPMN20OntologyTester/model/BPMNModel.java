@@ -23,6 +23,7 @@ import org.camunda.bpm.model.xml.instance.DomDocument;
 import org.camunda.bpm.model.xml.instance.DomElement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -68,6 +69,10 @@ public class BPMNModel {
 		return doc;
 	}
 	
+	
+	public Document getRawDOMDocument() {
+		return rawDOMDocument;
+	}
 
 	/**
 	 * Return the Collaboration of the model which represents the head information
@@ -200,6 +205,15 @@ public class BPMNModel {
 		return elements;
 	}
 	
+	public Set<String> getAllAttributesOfModel() {
+		Set<String> xmlAttributes = new HashSet<String>();
+		
+		//Collect all occurred attributes in this model
+		getAllAttributesOfNode(rawDOMDocument.getDocumentElement(), xmlAttributes);
+		
+		return xmlAttributes;
+	}
+	
 	public DomElement getModelDefinitionAsDomElement() {
 		return model.getDocument().getRootElement();
 	}
@@ -233,20 +247,30 @@ public class BPMNModel {
 		}
 	}
 	
-	public List<Node> getAttributeofNode(String tagName) {
-		NodeList elements = rawDOMDocument.getElementsByTagName(tagName);
-		for(int i=0; i< elements.getLength();i++) {
-			if(elements.item(i) instanceof Element) {
-				Element element = (Element)elements.item(i);
-				//If parent is correct, assume we have found the raw type
-				//if(element.getParentNode().getLocalName().e)
-				//TODO: hier gehts weiter
+	/**
+	 * Helper method which returns a set of attributes of given element including
+	 * all attributes of all child nodes
+	 * 
+	 * @param element
+	 * @param attributeSet
+	 */
+	private void getAllAttributesOfNode(Element element, Set<String> attributeSet) {
+
+		//Add all attributes of curent given element
+		NamedNodeMap attributes = element.getAttributes();
+		for (int i = 0; i < attributes.getLength(); i++) {
+			Node attribute = attributes.item(i);
+			attributeSet.add(attribute.getNodeName());
+		}
+
+		// Now add all childs in a recursive way
+		NodeList childs = element.getChildNodes();
+		for (int i = 0; i < childs.getLength(); i++) {
+			if (childs.item(i) instanceof Element) {
+				getAllAttributesOfNode((Element) childs.item(i), attributeSet);
 			}
 		}
-		
-		return null;
 	}
-	
 	
 	
 }

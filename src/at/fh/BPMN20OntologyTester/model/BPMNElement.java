@@ -9,7 +9,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.camunda.bpm.model.xml.instance.DomElement;
-import org.w3c.dom.Document;
 
 /**
  * Represents a simple BPMN-Element (e.g. startEvent, task, process)
@@ -23,7 +22,7 @@ public class BPMNElement {
 	
 	private final DomElement bpmnDomElement;
 	private final Set<FailedOWLClassRestriction> failedRestrictions;
-	private final String guiDisplayName;
+	private String guiDisplayName;
 	
 	/**
 	 * @param bpmnDomElement
@@ -97,6 +96,13 @@ public class BPMNElement {
 		return guiDisplayName;
 	}
 	
+	public void setGUIDisplayName(String guiDisplayName) {
+		this.guiDisplayName = guiDisplayName;
+	}
+	
+	public String getDomLocalName() {
+		return bpmnDomElement.getLocalName();
+	}
 	
 	public void addFailedRestriction(FailedOWLClassRestriction r) {
 		failedRestrictions.add(r);
@@ -110,6 +116,42 @@ public class BPMNElement {
 	@Override
 	public String toString() {
 		return guiDisplayName;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		//To compare two BPMNElements for us at bpmnDomElement just the localname is important
+		result = prime * result + ((bpmnDomElement == null) ? 0 : bpmnDomElement.getLocalName().hashCode());
+		result = prime * result + ((failedRestrictions == null) ? 0 : failedRestrictions.hashCode());
+		result = prime * result + ((guiDisplayName == null) ? 0 : guiDisplayName.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BPMNElement other = (BPMNElement) obj;
+		if (bpmnDomElement == null) {
+			if (other.bpmnDomElement != null)
+				return false;
+		} else if (!bpmnDomElement.getLocalName().equals(other.bpmnDomElement.getLocalName()))
+			return false;
+		if (failedRestrictions == null) {
+			if (other.failedRestrictions != null)
+				return false;
+		} else if (!failedRestrictions.equals(other.failedRestrictions))
+			return false;
+		if (guiDisplayName == null) {
+			if (other.guiDisplayName != null)
+				return false;
+		} else if (!guiDisplayName.equals(other.guiDisplayName))
+			return false;
+		return true;
 	}
 	
 	

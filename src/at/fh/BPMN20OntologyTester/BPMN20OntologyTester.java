@@ -6,7 +6,7 @@ import com.sun.javafx.application.LauncherImpl;
 
 import at.fh.BPMN20OntologyTester.controller.FxController;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
-import at.fh.BPMN20OntologyTester.controller.Owl2BPMNMapper;
+import at.fh.BPMN20OntologyTester.controller.OWL2BPMNMapper;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -56,8 +56,8 @@ public class BPMN20OntologyTester extends Application {
 			// mainScene
 			mainScene = loadScene("/resource/jfx/MainScene.fxml", null);
 			addNewTab("Ontology", loadScene("/resource/jfx/Ontology.fxml", null), mainScene);	
-			addNewTab("BPMN2OWL", loadScene("/resource/jfx/BPMN2OWL.fxml", null), mainScene);
-			addNewTab("OWL Tests", loadScene("/resource/jfx/OntologyTests.fxml", null), mainScene);
+			addNewTab("Compare BPMN", loadScene("/resource/jfx/BPMN2OWL.fxml", null), mainScene);
+			addNewTab("OWL Testsuite", loadScene("/resource/jfx/OntologyTests.fxml", null), mainScene);
 			
 			//Load additional dialogs
 			owl2bpmnMappingDialogScene = loadScene("/resource/jfx/OWL2BPMNMappingDialog.fxml",null);
@@ -77,7 +77,7 @@ public class BPMN20OntologyTester extends Application {
 				throw new Exception("Error! - Unable to read Ontology from <" + ontologyResourcePath + ">");
 
 			// Load OWL2XML Mapping file from given resourcePath
-			Owl2BPMNMapper owl2xmlMapper = Owl2BPMNMapper.getInstance();
+			OWL2BPMNMapper owl2xmlMapper = OWL2BPMNMapper.getInstance();
 			owl2xmlMapper.loadMappingFromStream(getClass().getResourceAsStream(owl2xmlMappingPath));
 			if (!owl2xmlMapper.hasMappings())
 				throw new Exception(

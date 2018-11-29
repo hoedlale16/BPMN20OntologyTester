@@ -6,12 +6,11 @@ package at.fh.BPMN20OntologyTester.view;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 
 import at.fh.BPMN20OntologyTester.controller.FxController;
-import at.fh.BPMN20OntologyTester.controller.Owl2BPMNMapper;
+import at.fh.BPMN20OntologyTester.controller.OWL2BPMNMapper;
 import at.fh.BPMN20OntologyTester.view.dto.Owl2BpmnTableData;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -77,7 +76,7 @@ public class Owl2BpmnMapperFxController implements FxController {
 	public Owl2BpmnMapperFxController() {
 
 		// COnvert Data from Mapper to List for GUI and changes
-		prepareData(Owl2BPMNMapper.getInstance().getLoadedMapping());
+		prepareData(OWL2BPMNMapper.getInstance().getLoadedMapping());
 	}
 
 	private void prepareData(Properties propMappings) {
@@ -98,7 +97,7 @@ public class Owl2BpmnMapperFxController implements FxController {
 	private boolean containsModifiedData() {
 		
 		//Check for added or deleted entries
-		if(data.size() != Owl2BPMNMapper.getInstance().getLoadedMapping().size())
+		if(data.size() != OWL2BPMNMapper.getInstance().getLoadedMapping().size())
 			return true;
 		
 		//Check for real modifikations
@@ -183,6 +182,7 @@ public class Owl2BpmnMapperFxController implements FxController {
 		
 		if (event.getCode().isLetterKey() || event.getCode().isDigitKey()) {
 			// User entered key for editing.(alphabet or number key)
+			@SuppressWarnings("unchecked")
 			final TablePosition<Owl2BpmnTableData, String> focusedCell = tableOWL2BPMN.focusModelProperty().get()
 					.focusedCellProperty().get();
 			// Trigger Edit
@@ -334,7 +334,7 @@ public class Owl2BpmnMapperFxController implements FxController {
 				alert.showAndWait();
 			} else {
 				//Apply changes and close
-				Owl2BPMNMapper.getInstance().replaceMapping(getNewMappings());
+				OWL2BPMNMapper.getInstance().replaceMapping(getNewMappings());
 				((Node)(event.getSource())).getScene().getWindow().hide();
 			}
 			
@@ -385,8 +385,8 @@ public class Owl2BpmnMapperFxController implements FxController {
 		} catch (Exception e) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error!");
-			alert.setHeaderText("Error while loading Mapping file");
-			alert.setContentText("ERROR - Failed to load File <" + e.getMessage() + ">");
+			alert.setHeaderText("Error while exporting Mapping file");
+			alert.setContentText("ERROR - Failed to export mapping to  File <" + e.getMessage() + ">");
 			alert.showAndWait();
 		} 
 		
