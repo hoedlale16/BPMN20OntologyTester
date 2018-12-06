@@ -9,11 +9,22 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.rdf.model.Literal;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
+
 import com.sun.javafx.application.LauncherImpl;
 
 import at.fh.BPMN20OntologyTester.controller.BPMNModelHandler;
 import at.fh.BPMN20OntologyTester.controller.FxController;
-import at.fh.BPMN20OntologyTester.controller.OWL2BPMNMapper;
+import at.fh.BPMN20OntologyTester.controller.Owl2BpmnNamingMapper;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
 import at.fh.BPMN20OntologyTester.model.BPMNModel;
 import at.fh.BPMN20OntologyTester.model.OWLModel;
@@ -23,6 +34,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import ru.avicomp.ontapi.OntologyModel;
 
 /**
  * This is a not producitve main to test implementations in a fast way without loading a gUI and stuff
@@ -47,6 +59,23 @@ public class MyTester  extends Application {
 		return BPMNModelHandler.readModelFromFile(file);
 	}
 	
+	private void testSparql(OWLModel ontology, String queryString) {
+		Query query = QueryFactory.create(queryString) ;
+		 Model model = ((OntologyModel)ontology).asGraphModel();
+		//Model model = ((OntologyModel)ontology.getOntology());
+		try (QueryExecution qexec = QueryExecutionFactory.create(query, model)) {
+		    ResultSet results = qexec.execSelect() ;
+		    while (results.hasNext())
+		    {
+		      QuerySolution soln = results.nextSolution() ;
+		      RDFNode x = soln.get("varName") ;       // Get a result variable by name.
+		      Resource r = soln.getResource("VarR") ; // Get a result variable - must be a resource
+		      Literal l = soln.getLiteral("VarL") ;   // Get a result variable - must be a literal
+
+		    }
+		  }
+	}
+	
 	/**
 	 * @param args
 	 */
@@ -61,7 +90,7 @@ public class MyTester  extends Application {
 			OWLModel ontology = OntologyHandler.getInstance().getLoadedOntology().get();
 			
 			//Initialize OWL2XML Mapping
-			OWL2BPMNMapper owl2xmlMapper = OWL2BPMNMapper.getInstance();
+			Owl2BpmnNamingMapper owl2xmlMapper = Owl2BpmnNamingMapper.getInstance();
 			owl2xmlMapper.loadMappingFromStream(MyTester.class.getResourceAsStream("/resource/owl/OWL2BPMNmapping.properties"));
 			
 			//Initialize Model
@@ -86,7 +115,7 @@ public class MyTester  extends Application {
 	@Override
 	public void init() {
 		try {
-			owl2bpmnMappingDialogScene = loadScene("/resource/jfx/OWL2BPMNMappingDialog.fxml",null);
+			owl2bpmnMappingDialogScene = loadScene("/resource/jfx/DialogOwl2BpmnMapping.fxml",null);
 			
 		} catch (Exception e) {
 			System.out.println("Error initializing Application: " + e.getMessage());

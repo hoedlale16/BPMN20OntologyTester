@@ -12,7 +12,7 @@ import org.camunda.bpm.model.bpmn.instance.Process;
 import at.fh.BPMN20OntologyTester.BPMN20OntologyTester;
 import at.fh.BPMN20OntologyTester.controller.BPMNModelHandler;
 import at.fh.BPMN20OntologyTester.controller.FxController;
-import at.fh.BPMN20OntologyTester.controller.OWL2BPMNMapper;
+import at.fh.BPMN20OntologyTester.controller.Owl2BpmnNamingMapper;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
 import at.fh.BPMN20OntologyTester.model.BPMNElement;
 import at.fh.BPMN20OntologyTester.model.BPMNModel;
@@ -149,7 +149,7 @@ public class OwlTestSuiteTabFxController implements FxController {
 				for (File f : testCases) {
 					this.updateMessage("Test <" + f.getName() + ">");
 					// Create Tab which triggers the execution of the test
-					TestCase testcase = createTestcase(BPMNModelHandler.readModelFromFile(f));
+					TestCase testcase = new TestCase(BPMNModelHandler.readModelFromFile(f));
 					Tab tab = BPMN20OntologyTester.getTestSuiteTestResultTag(testcase);
 					testResultTabs.put(testcase, tab);
 				}
@@ -262,25 +262,9 @@ public class OwlTestSuiteTabFxController implements FxController {
 
 		testSuiteLog.append("----------------------------").append("\n");
 	}
-
-	/**
-	 * Helper Method to create a Testcase for given processModel
-	 * @param processModel
-	 * @return
-	 */
-	private TestCase createTestcase(BPMNModel processModel) {
-		Optional<OWLModel> optOntology = OntologyHandler.getInstance().getLoadedOntology();
-		if (optOntology.isPresent() && processModel != null) {
-
-			OWLModel ontology = optOntology.get();
-			OWL2BPMNMapper owl2bpmnMapper = OWL2BPMNMapper.getInstance();
-			return new TestCase(ontology, processModel, owl2bpmnMapper);
-		}
-		return null;
-	}
+	
 
 	private void appendLog(String text) {
 		MainSceneFxController.getInstance().appendLog(text);
 	}
-
 }

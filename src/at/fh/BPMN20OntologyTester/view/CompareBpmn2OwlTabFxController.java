@@ -12,7 +12,7 @@ import org.semanticweb.owlapi.model.OWLProperty;
 
 import at.fh.BPMN20OntologyTester.controller.BPMNModelHandler;
 import at.fh.BPMN20OntologyTester.controller.FxController;
-import at.fh.BPMN20OntologyTester.controller.OWL2BPMNMapper;
+import at.fh.BPMN20OntologyTester.controller.Owl2BpmnNamingMapper;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
 import at.fh.BPMN20OntologyTester.model.BPMNElement;
 import at.fh.BPMN20OntologyTester.model.BPMNModel;
@@ -101,17 +101,6 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 		// Set User-Input Elements according ontology found or not
 		updateActivationSateofButtons();
 	}
-	
-	private TestCase createTestcase(BPMNModel processModel) {
-		Optional<OWLModel> optOntology = OntologyHandler.getInstance().getLoadedOntology();
-		if (optOntology.isPresent() && processModel != null) {
-		 
-			OWLModel ontology = optOntology.get();
-			OWL2BPMNMapper owl2bpmnMapper = OWL2BPMNMapper.getInstance();
-			return new TestCase(ontology, processModel, owl2bpmnMapper);
-		}
-		return null;
-	}
 
 	@FXML
 	private void onLoadBPMN() {
@@ -128,7 +117,7 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 			if (selectedFile != null) {
 				
 				// Create Testcase with given BPMN
-				testcase = createTestcase(BPMNModelHandler.readModelFromFile(selectedFile));
+				testcase = new TestCase(BPMNModelHandler.readModelFromFile(selectedFile));
 				appendLog("Read BPMN-File <" + selectedFile.getAbsolutePath() + ">");
 
 				// Show loaded BPMN Model Data and Testresults
@@ -296,7 +285,7 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 		testcase.setIgnoreTcSpecificData(cbIgnoreExtensionElements.isSelected());
 
 		//Execute tests and show result
-		testcase.executeTest(TestCaseEnum.XMLNodesAsOWLClass);
+		testcase.executeTest(TestCaseEnum.XMLElementsAsOWLClasses);
 		
 		testcase.getResultsXmlNodesWithoutOWLClass().forEach(e -> {
 			//if (!xmlNodeNotFoundInOWL.contains(e.getDomLocalName())) {
@@ -328,7 +317,7 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 		testcase.setIgnoreTcSpecificData(cbIgnoreWarningRestrictions.isSelected());
 
 		//Execute tests and show result
-		testcase.executeTest(TestCaseEnum.XMLNodeFailOWLClassRestrictions);	
+		testcase.executeTest(TestCaseEnum.XMLElementFailOWLClassRestrictions);	
 		Map<Process, List<BPMNElement>> elementsFailedRestrictions = testcase.getResultsXmlNodesFailOWLRestrictions();
 		int totalFailedElements = 0;
 

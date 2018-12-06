@@ -152,7 +152,7 @@ public class OwlTestSuiteTabTcResultFxController implements FxController {
 		testcase.setIgnoreTcSpecificData(cbIgnoreExtensionElements.isSelected());
 
 		//Execute tests and show result
-		testcase.executeTest(TestCaseEnum.XMLNodesAsOWLClass);
+		testcase.executeTest(TestCaseEnum.XMLElementsAsOWLClasses);
 		
 		testcase.getResultsXmlNodesWithoutOWLClass().forEach(e -> {
 			//if (!xmlNodeNotFoundInOWL.contains(e.getDomLocalName())) {
@@ -180,7 +180,7 @@ public class OwlTestSuiteTabTcResultFxController implements FxController {
 		testcase.setIgnoreTcSpecificData(cbIgnoreWarningRestrictions.isSelected());
 
 		//Execute tests and show result
-		testcase.executeTest(TestCaseEnum.XMLNodeFailOWLClassRestrictions);	
+		testcase.executeTest(TestCaseEnum.XMLElementFailOWLClassRestrictions);	
 		Map<Process, List<BPMNElement>> elementsFailedRestrictions = testcase.getResultsXmlNodesFailOWLRestrictions();
 
 		// Build Tree to show results

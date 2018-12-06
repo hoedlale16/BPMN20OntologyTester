@@ -5,7 +5,7 @@ import java.io.IOException;
 import com.sun.javafx.application.LauncherImpl;
 
 import at.fh.BPMN20OntologyTester.controller.FxController;
-import at.fh.BPMN20OntologyTester.controller.OWL2BPMNMapper;
+import at.fh.BPMN20OntologyTester.controller.Owl2BpmnNamingMapper;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
 import at.fh.BPMN20OntologyTester.model.TestCase;
 import at.fh.BPMN20OntologyTester.view.OwlTestSuiteTabTcResultFxController;
@@ -70,7 +70,7 @@ public class BPMN20OntologyTester extends Application {
 	@Override
 	public void init() {
 		try {
-			// Read and initialize Ontology - If an error occured here just continue
+			// Read and initialize Ontology - If an error occurred here just continue
 			// building the GUI
 			intitalizeAppData("/resource/owl/BPMN20.owl", "/resource/owl/OWL2BPMNmapping.properties");
 
@@ -99,7 +99,7 @@ public class BPMN20OntologyTester extends Application {
 				throw new Exception("Error! - Unable to read Ontology from <" + ontologyResourcePath + ">");
 
 			// Load OWL2XML Mapping file from given resourcePath
-			OWL2BPMNMapper owl2xmlMapper = OWL2BPMNMapper.getInstance();
+			Owl2BpmnNamingMapper owl2xmlMapper = Owl2BpmnNamingMapper.getInstance();
 			owl2xmlMapper.loadMappingFromStream(getClass().getResourceAsStream(owl2xmlMappingPath));
 			if (!owl2xmlMapper.hasMappings())
 				throw new Exception(

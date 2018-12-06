@@ -21,7 +21,7 @@ import at.fh.BPMN20OntologyTester.model.OWLModel;
  */
 public class OntologyHandler {
 
-	// This Object represents the current loaded Ontology
+	// This Object represents the current loaded ontology
 	private OWLModel loadedOntology = null;
 
 	// Design-Pattern Singleton to take care that there is just one OntologyHandler:
@@ -40,7 +40,6 @@ public class OntologyHandler {
 		 * getLoadedOntolgy To set an external created new ontology call method
 		 * setOntology
 		 */
-
 	}
 
 	/**

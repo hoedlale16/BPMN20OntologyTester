@@ -98,17 +98,6 @@ public class OWLModel {
 	}
 
 	/**
-	 * Returns the Reasoner Object for the Ontolgy to query for sub-classes and
-	 * stuff
-	 * 
-	 * @return
-	 */
-	public OWLReasoner getOWLReasoner() {
-		OWLReasonerFactory rf = new ReasonerFactory();
-		return rf.createReasoner(ontology);
-	}
-
-	/**
 	 * Returns all avaliable Classes from Ontology
 	 * 
 	 * @return

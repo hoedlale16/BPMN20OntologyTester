@@ -50,7 +50,7 @@ public class OWLTester {
 	 * @return
 	 */
 	public static Set<BPMNElement> testXMLNodesExsistAsOWLClasses(OWLModel ontology, BPMNModel model,
-			OWL2BPMNMapper owl2bpmnMapper, boolean ignoreExtensionElements) {
+			Owl2BpmnNamingMapper owl2bpmnMapper, boolean ignoreExtensionElements) {
 		Set<BPMNElement> notFoundInOWL = new HashSet<BPMNElement>();
 
 		// Each XML-Node must exist as OWL-Class in the Ontology.
@@ -58,7 +58,7 @@ public class OWLTester {
 		Set<DomElement> elements = model.getAllElementsOfModel(ignoreExtensionElements);
 		for (DomElement element : elements) {
 
-			String mappedOWLname = getMappedNameForBPMNElement(element.getLocalName(), owl2bpmnMapper);
+			String mappedOWLname = owl2bpmnMapper.getMappedNameFor(element.getLocalName(), true);
 
 			if (!ontology.existsOWLClassWithName(mappedOWLname)) {
 				notFoundInOWL.add(new BPMNElement(element));
@@ -85,11 +85,11 @@ public class OWLTester {
 	 * @return
 	 */
 	public static Set<String> testXMLAttributesExsistAsOWLProperties(OWLModel ontology, BPMNModel model,
-			OWL2BPMNMapper owl2bpmnMapper, boolean ignoreExtensionElements) {
+			Owl2BpmnNamingMapper owl2bpmnMapper, boolean ignoreExtensionElements) {
 		Set<String> notFoundInOWL = new HashSet<String>();
 		
 		for(String xmlAttr: model.getAllAttributesOfModel()) {
-			String mappedOWLname = getMappedNameForBPMNElement(xmlAttr, owl2bpmnMapper);
+			String mappedOWLname = owl2bpmnMapper.getMappedNameFor(xmlAttr, true);
 			if (!ontology.existsOWLPropertyWithName(mappedOWLname)) {
 				notFoundInOWL.add(xmlAttr);
 			}
@@ -111,7 +111,7 @@ public class OWLTester {
 	 * @throws Exception
 	 */
 	public static Map<Process, List<BPMNElement>> testXMLNodesMeedOWLClassRestrictions(OWLModel ontology,
-			BPMNModel model, OWL2BPMNMapper owl2bpmnMapper, boolean ignoreWarningRestrictions) {
+			BPMNModel model, Owl2BpmnNamingMapper owl2bpmnMapper, boolean ignoreWarningRestrictions) {
 
 		Map<Process, List<BPMNElement>> failedNodes = new HashMap<Process, List<BPMNElement>>();
 
@@ -163,13 +163,12 @@ public class OWLTester {
 	 * @throws Exception
 	 */
 	private static Set<FailedOWLClassRestriction> getFailedOWLClassRestricionsOfXmlNode(DomElement xmlElement,
-			OWLModel ontology, OWL2BPMNMapper owl2bpmnMapper, boolean ignoreWarningRestrictions) throws Exception {
+			OWLModel ontology, Owl2BpmnNamingMapper owl2bpmnMapper, boolean ignoreWarningRestrictions) throws Exception {
 
 		Set<FailedOWLClassRestriction> failedRestrictions = new HashSet<FailedOWLClassRestriction>();
 
 		// Get mapped OWL name for XML-Node
-		String mappedOWLname = getMappedNameForBPMNElement(xmlElement.getLocalName(), owl2bpmnMapper);
-
+		String mappedOWLname = owl2bpmnMapper.getMappedNameFor(xmlElement.getLocalName(), true);
 		OWLClass owlClass = ontology.getOWLClassByShortNameIgnoreCase(mappedOWLname);
 		if (owlClass == null) {
 			// If we have no OWL-Class we can not test against restrictions.
@@ -202,11 +201,11 @@ public class OWLTester {
 	 * @return
 	 */
 	private static Optional<FailedOWLClassRestriction> testRestriction(OWLClassRestriction restriction,
-			DomElement bpmnElement, OWL2BPMNMapper owl2bpmnMapper, boolean ignoreWarningRestrictions) {
+			DomElement bpmnElement, Owl2BpmnNamingMapper owl2bpmnMapper, boolean ignoreWarningRestrictions) {
 
 		// Map OWL-Name to XML-Element name
 		String originalOWLPropertyName = restriction.getOnProperty().getIRI().getShortForm();
-		String affectedXMLElementName = getMappedNameForOWLElement(originalOWLPropertyName, owl2bpmnMapper);
+		String affectedXMLElementName = owl2bpmnMapper.getMappedNameFor(originalOWLPropertyName, false);
 
 		boolean foundAsAttributeOrXmlTag = false;
 		// TODO: properly we need a mapping between PropertyNames of OWL and
@@ -325,46 +324,6 @@ public class OWLTester {
 		default:
 			return false;
 		}
-	}
-
-	/**
-	 * Returns the mapped name for given BPMN-Element-Name. If there is a mapping
-	 * returns the mapping string otherwise the original name
-	 * 
-	 * @param originalName
-	 * @param owl2bpmnMapping
-	 * @return
-	 */
-	private static String getMappedNameForBPMNElement(String originalName, OWL2BPMNMapper owl2bpmnMapping) {
-		// Try to get OWLClass for given DOM-Element of ontology
-		String mappedOWLName = originalName;
-		// Check if we have an mapping key. Then we have to overwrite the raw xmlTagName
-		Optional<String> optMappedName = owl2bpmnMapping.getOwlEntityName(originalName);
-		if (optMappedName.isPresent()) {
-			mappedOWLName = optMappedName.get();
-		}
-		;
-		return mappedOWLName;
-	}
-
-	/**
-	 * Returns the mapped name for given OWL-Class/Property-Name. If there is a
-	 * mapping returns the mapping string otherwise the original name
-	 * 
-	 * @param originalName
-	 * @param owl2bpmnMapping
-	 * @return
-	 */
-	private static String getMappedNameForOWLElement(String originalName, OWL2BPMNMapper owl2bpmnMapping) {
-		// Try to get OWLClass for given DOM-Element of ontology
-		String mappedOWLName = originalName;
-		// Check if we have an mapping key. Then we have to overwrite the raw xmlTagName
-		Optional<String> optMappedName = owl2bpmnMapping.getXmlElementName(originalName);
-		if (optMappedName.isPresent()) {
-			mappedOWLName = optMappedName.get();
-		}
-		;
-		return mappedOWLName;
 	}
 
 }

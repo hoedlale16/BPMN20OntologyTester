@@ -7,12 +7,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.camunda.bpm.model.bpmn.instance.Process;
 
-import at.fh.BPMN20OntologyTester.controller.OWL2BPMNMapper;
+import at.fh.BPMN20OntologyTester.controller.Owl2BpmnNamingMapper;
 import at.fh.BPMN20OntologyTester.controller.OWLTester;
+import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
 
 /**
  * Represents a OWL<->ProcessModel Testcase and holds the testresults
@@ -24,7 +26,7 @@ public class TestCase {
 
 	private final OWLModel ontology;
 	private final BPMNModel processModel;
-	private final OWL2BPMNMapper owl2bpmnMapping;
+	private final Owl2BpmnNamingMapper owl2bpmnMapping;
 
 	// Holds the testresults
 	private final Set<BPMNElement> resultsXmlNodesWithoutOWLClass = new HashSet<BPMNElement>();
@@ -34,26 +36,62 @@ public class TestCase {
 	private boolean ignoreTcSpecificData = false;
 
 	public enum TestCaseEnum {
-		XMLNodesAsOWLClass, XMlAttributesAsOWLProperties, XMLNodeFailOWLClassRestrictions,
+		XMLElementsAsOWLClasses, XMlAttributesAsOWLProperties, XMLElementFailOWLClassRestrictions,
 	}
 
 	/**
 	 * @param ontology
 	 * @param processModel
 	 * @param owl2bpmnMapping
+	 * @throws Exception 
 	 */
-	public TestCase(OWLModel ontology, BPMNModel processModel, OWL2BPMNMapper owl2bpmnMapping) {
+	public TestCase(OWLModel ontology, BPMNModel processModel, Owl2BpmnNamingMapper owl2bpmnMapping) throws Exception {
 		this.ontology = ontology;
 		this.processModel = processModel;
 		this.owl2bpmnMapping = owl2bpmnMapping;
+		
+		if (this.ontology == null) {
+			throw new Exception ("Ontology not loaded - unable to create testcase!");
+		} 
+		if(this.processModel == null) {
+			throw new Exception("No process model given! - unable to create testcase!");
+		}
 	}
 
-	public TestCase(OWLModel ontology, BPMNModel processModel, OWL2BPMNMapper owl2bpmnMapping,
-			boolean ignoreSpecificData) {
+	public TestCase(OWLModel ontology, BPMNModel processModel, Owl2BpmnNamingMapper owl2bpmnMapping,
+			boolean ignoreSpecificData)  throws Exception {
 		this.ontology = ontology;
 		this.processModel = processModel;
 		this.owl2bpmnMapping = owl2bpmnMapping;
 		this.ignoreTcSpecificData = ignoreSpecificData;
+		
+		if (this.ontology == null) {
+			throw new Exception ("Ontology not loaded - unable to create testcase!");
+		} 
+		if(this.processModel == null) {
+			throw new Exception("No process model given! - unable to create testcase!");
+		}
+	}
+	
+	/**
+	 * Creates a TestCase with given proessModel. 
+	 * Uses loaded Ontology and Mapping file to create Testcase
+	 * @param processModel
+	 * @throws Exception - Throws exception if ontology or process model is null
+	 */
+	public TestCase(BPMNModel processModel) throws Exception {
+
+		Optional<OWLModel> optOntology = OntologyHandler.getInstance().getLoadedOntology();
+		if (! optOntology.isPresent()) {
+			throw new Exception ("Ontology not loaded - unable to create testcase!");
+		} 
+		if(processModel == null) {
+			throw new Exception("No process model given! - unable to create testcase!");
+		}
+		
+		this.ontology = optOntology.get();
+		this.processModel = processModel;
+		this.owl2bpmnMapping = Owl2BpmnNamingMapper.getInstance();
 	}
 
 	public OWLModel getOntology() {
@@ -64,7 +102,7 @@ public class TestCase {
 		return processModel;
 	}
 
-	public OWL2BPMNMapper getOwl2bpmnMapping() {
+	public Owl2BpmnNamingMapper getOwl2bpmnMapping() {
 		return owl2bpmnMapping;
 	}
 
@@ -90,7 +128,7 @@ public class TestCase {
 
 	public void executeTest(TestCaseEnum testcase) {
 		switch (testcase) {
-		case XMLNodesAsOWLClass: {
+		case XMLElementsAsOWLClasses: {
 			resultsXmlNodesWithoutOWLClass.clear();
 			resultsXmlNodesWithoutOWLClass.addAll(OWLTester.testXMLNodesExsistAsOWLClasses(ontology, processModel,
 					owl2bpmnMapping, ignoreTcSpecificData));
@@ -102,7 +140,7 @@ public class TestCase {
 					processModel, owl2bpmnMapping, ignoreTcSpecificData));
 			break;
 		}
-		case XMLNodeFailOWLClassRestrictions: {
+		case XMLElementFailOWLClassRestrictions: {
 			resultsXmlNodesFailOWLRestrictions.clear();
 			resultsXmlNodesFailOWLRestrictions.putAll(OWLTester.testXMLNodesMeedOWLClassRestrictions(ontology,
 					processModel, owl2bpmnMapping, ignoreTcSpecificData));
@@ -112,9 +150,9 @@ public class TestCase {
 	}
 
 	public void executeAllTets() {
-		executeTest(TestCaseEnum.XMLNodesAsOWLClass);
+		executeTest(TestCaseEnum.XMLElementsAsOWLClasses);
 		executeTest(TestCaseEnum.XMlAttributesAsOWLProperties);
-		executeTest(TestCaseEnum.XMLNodeFailOWLClassRestrictions);
+		executeTest(TestCaseEnum.XMLElementFailOWLClassRestrictions);
 	}
 
 	
