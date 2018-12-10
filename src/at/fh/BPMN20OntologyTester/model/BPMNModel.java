@@ -28,6 +28,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import at.fh.BPMN20OntologyTester.model.enums.OWLConformanceClassEnum;
+
 /**
  * Representation of an .bpmn File(XML) (BPMN-Model)
  * 
@@ -43,6 +45,7 @@ public class BPMNModel {
 	// Represents the File from which the Process model was created out	
 	private final File fileCreatedFrom;
 	private final Document rawDOMDocument;
+	private OWLConformanceClassEnum conformanceClass;
 
 	public BPMNModel(BpmnModelInstance model, File file) throws Exception {
 		try {
@@ -78,6 +81,14 @@ public class BPMNModel {
 	
 	public File getFileFromWhomModelWasCreated() {
 		return fileCreatedFrom;
+	}
+	
+	public OWLConformanceClassEnum getConformanceClass() {
+		return conformanceClass;
+	}
+
+	public void setConformanceClass(OWLConformanceClassEnum conformanceClass) {
+		this.conformanceClass = conformanceClass;
 	}
 
 	/**

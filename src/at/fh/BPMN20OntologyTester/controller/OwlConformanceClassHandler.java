@@ -93,6 +93,7 @@ public class OwlConformanceClassHandler {
 			case DescriptiveConformance: return 1;
 			case AnalyticConformance: return 2;
 			case ExecutiveConformance: return 3;
+			case FullConformance: return 4;
 			default: return 0;
 		}
 	}

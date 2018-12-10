@@ -129,12 +129,8 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 				
 				// Create Testcase with given BPMN
 				//testcase = new TestCase(BPMNModelHandler.readModelFromFile(selectedFile));
-				loadProcessModel(selectedFile);
+				loadAndTestProcessModel(selectedFile);
 				appendLog("Read BPMN-File <" + selectedFile.getAbsolutePath() + ">");
-
-				// Show loaded BPMN Model Data and Testresults
-				//showModelOverview(testcase);
-				//showTcResults(testcase);
 			}
 		} catch (Exception e) {
 			appendLog("ERROR - Failed to load File <" + e.getMessage() + ">");
@@ -143,7 +139,7 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 	}
 	
 	
-	private void loadProcessModel(File f) {
+	private void loadAndTestProcessModel(File f) {
 		// Use a seperate Thread to create TestResultTabs
 		Task<TestCase> ontologyTestsTask = new Task<TestCase>() {
 			@Override
@@ -151,6 +147,7 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 				this.updateMessage("Test <" + f.getName() + ">");
 				// Create Tab which triggers the execution of the test
 				TestCase testcase = new TestCase(BPMNModelHandler.readModelFromFile(f));
+				testcase.determineConformanceClassOfModel();
 				return testcase;
 			}
 		};
@@ -314,8 +311,7 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 			// Set Label-Texts
 			lbBPMN2OWLModelName.setText(model.getModelDefinitions().getName());
 			lbBPMN2OWLProcessAmount.setText("" + testcase.getProcessModel().getProcesses().size());
-			OwlConformanceClassHandler confClassHandler = OwlConformanceClassHandler.getInstance();
-			lbBPMNConformanceClass.setText(""+confClassHandler.getHighestConformanceClass(testcase.getConformanceClasses()));
+			lbBPMNConformanceClass.setText(""+model.getConformanceClass());
 
 			// Show Model as tree
 			TreeItem<String> rootItem = new TreeItem<String>(model.getModelDefinitions().getName());

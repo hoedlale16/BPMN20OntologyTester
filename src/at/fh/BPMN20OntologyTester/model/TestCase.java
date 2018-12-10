@@ -15,6 +15,7 @@ import org.camunda.bpm.model.bpmn.instance.Process;
 import at.fh.BPMN20OntologyTester.controller.OWLTester;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
 import at.fh.BPMN20OntologyTester.controller.Owl2BpmnNamingMapper;
+import at.fh.BPMN20OntologyTester.controller.OwlConformanceClassHandler;
 import at.fh.BPMN20OntologyTester.model.enums.OWLConformanceClassEnum;
 import at.fh.BPMN20OntologyTester.model.enums.TestCaseEnum;
 
@@ -149,10 +150,21 @@ public class TestCase {
 		}
 	}
 
-	public void executeAllTets() {
+	public void executeAllTests() {
 		executeTest(TestCaseEnum.XMLElementsAsOWLClasses);
 		executeTest(TestCaseEnum.XMlAttributesAsOWLProperties);
 		executeTest(TestCaseEnum.XMLElementFailOWLClassRestrictions);
+		
+		determineConformanceClassOfModel();
+	}
+	
+	public void determineConformanceClassOfModel() {
+		processModel.setConformanceClass(getConformanceClassesOfModel());
+	}
+	
+	public OWLConformanceClassEnum getConformanceClassesOfModel() {
+		OwlConformanceClassHandler confClassHandler = OwlConformanceClassHandler.getInstance();
+		return confClassHandler.getHighestConformanceClass(getConformanceClasses());
 	}
 	
 	public Map<OWLConformanceClassEnum, List<BPMNElement>> getConformanceClasses() {
@@ -174,6 +186,7 @@ public class TestCase {
 		  .append(" - OWL-ObjectProperties: ").append(ontology.getObjectProperties().size()).append("\n\n");
 		
 		sb.append("General OWL Issues:").append("\n")
+		  .append(" - Processmodel Conformance Class: ").append(processModel.getConformanceClass()).append("\n")
 		  .append(" - Number of XML-Nodes without OWL-Class: ").append(resultsXmlNodesWithoutOWLClass.size()).append("\n")
 		  .append(" - Number of XML-Attributes without OWL-Propertiy: ").append(resultsXmlAttributesWithoutOWLProperty.size()).append("\n")
 		  .append(" - Number of XML-Nodes which failed the OWL-Class Restriction: ").append(totalFailedOWLClassRestrictions).append("\n\n");
