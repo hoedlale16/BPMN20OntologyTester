@@ -12,9 +12,11 @@ import java.util.Set;
 
 import org.camunda.bpm.model.bpmn.instance.Process;
 
-import at.fh.BPMN20OntologyTester.controller.Owl2BpmnNamingMapper;
 import at.fh.BPMN20OntologyTester.controller.OWLTester;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
+import at.fh.BPMN20OntologyTester.controller.Owl2BpmnNamingMapper;
+import at.fh.BPMN20OntologyTester.model.enums.OWLConformanceClassEnum;
+import at.fh.BPMN20OntologyTester.model.enums.TestCaseEnum;
 
 /**
  * Represents a OWL<->ProcessModel Testcase and holds the testresults
@@ -35,9 +37,7 @@ public class TestCase {
 
 	private boolean ignoreTcSpecificData = false;
 
-	public enum TestCaseEnum {
-		XMLElementsAsOWLClasses, XMlAttributesAsOWLProperties, XMLElementFailOWLClassRestrictions,
-	}
+	
 
 	/**
 	 * @param ontology
@@ -153,6 +153,10 @@ public class TestCase {
 		executeTest(TestCaseEnum.XMLElementsAsOWLClasses);
 		executeTest(TestCaseEnum.XMlAttributesAsOWLProperties);
 		executeTest(TestCaseEnum.XMLElementFailOWLClassRestrictions);
+	}
+	
+	public Map<OWLConformanceClassEnum, List<BPMNElement>> getConformanceClasses() {
+		return OWLTester.getConformanceClassOfElements(ontology, processModel, owl2bpmnMapping);
 	}
 
 	

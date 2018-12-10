@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
@@ -24,10 +27,14 @@ import com.sun.javafx.application.LauncherImpl;
 
 import at.fh.BPMN20OntologyTester.controller.BPMNModelHandler;
 import at.fh.BPMN20OntologyTester.controller.FxController;
+import at.fh.BPMN20OntologyTester.controller.OWLTester;
 import at.fh.BPMN20OntologyTester.controller.Owl2BpmnNamingMapper;
+import at.fh.BPMN20OntologyTester.controller.OwlConformanceClassHandler;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
+import at.fh.BPMN20OntologyTester.model.BPMNElement;
 import at.fh.BPMN20OntologyTester.model.BPMNModel;
 import at.fh.BPMN20OntologyTester.model.OWLModel;
+import at.fh.BPMN20OntologyTester.model.enums.OWLConformanceClassEnum;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -52,7 +59,7 @@ public class MyTester  extends Application {
 		File file = File.createTempFile("model", null);
 		file.deleteOnExit();
 		
-		InputStream stream = new MyTester().getClass().getResourceAsStream("/resource/bpmn/ExampleProcessModel.bpmn");
+		InputStream stream = new MyTester().getClass().getResourceAsStream("/resource/bpmn/ExampleProcessModel1.bpmn");
 		
 		Files.copy(stream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);	
 		
@@ -93,12 +100,25 @@ public class MyTester  extends Application {
 			Owl2BpmnNamingMapper owl2xmlMapper = Owl2BpmnNamingMapper.getInstance();
 			owl2xmlMapper.loadMappingFromStream(MyTester.class.getResourceAsStream("/resource/owl/OWL2BPMNmapping.properties"));
 			
+			
+			//Initialize ConformanceClassMapping
+			OwlConformanceClassHandler ccHandler = OwlConformanceClassHandler.getInstance();
+			ccHandler.load(MyTester.class.getResourceAsStream("/resource/owl/OWLconformanceClasses.properties"));
+			
 			//Initialize Model
 			BPMNModel model = createBPMNModel();
 			
 			// Start the GUI - Ontology get initialized when OntologyTabFxController get
 			// initialized
-			LauncherImpl.launchApplication(MyTester.class, args);
+			//LauncherImpl.launchApplication(MyTester.class, args);
+			
+			
+			Map<OWLConformanceClassEnum, List<BPMNElement>> confClasses = OWLTester.getConformanceClassOfElements(ontology, model, owl2xmlMapper);
+			
+			System.out.println("Model conformance class: " + ccHandler.getHighestConformanceClass(confClasses));
+			for(OWLConformanceClassEnum confClass: confClasses.keySet()) {
+				System.out.println(confClass +": " + confClasses.get(confClass));
+			}
 
 			
 			

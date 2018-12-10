@@ -2,11 +2,15 @@ package at.fh.BPMN20OntologyTester;
 
 import java.io.IOException;
 
+import org.semanticweb.owlapi.model.OWLClass;
+
 import com.sun.javafx.application.LauncherImpl;
 
 import at.fh.BPMN20OntologyTester.controller.FxController;
 import at.fh.BPMN20OntologyTester.controller.Owl2BpmnNamingMapper;
+import at.fh.BPMN20OntologyTester.controller.OwlConformanceClassHandler;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
+import at.fh.BPMN20OntologyTester.model.OWLModel;
 import at.fh.BPMN20OntologyTester.model.TestCase;
 import at.fh.BPMN20OntologyTester.view.OwlTestSuiteTabTcResultFxController;
 import javafx.application.Application;
@@ -72,7 +76,9 @@ public class BPMN20OntologyTester extends Application {
 		try {
 			// Read and initialize Ontology - If an error occurred here just continue
 			// building the GUI
-			intitalizeAppData("/resource/owl/BPMN20.owl", "/resource/owl/OWL2BPMNmapping.properties");
+			intitalizeAppData("/resource/owl/BPMN20.owl", 
+							  "/resource/owl/OWL2BPMNmapping.properties",
+							  "/resource/owl/OWLconformanceClasses.properties");
 
 			// Load GUI- Scenes for from FXML, create a new tabs and add to tabPane of
 			// mainScene
@@ -90,7 +96,7 @@ public class BPMN20OntologyTester extends Application {
 		}
 	}
 
-	private void intitalizeAppData(String ontologyResourcePath, String owl2xmlMappingPath) {
+	private void intitalizeAppData(String ontologyResourcePath, String owl2xmlMappingPath, String conformanceClassMappingPath) {
 		try {
 			// Load Ontology from given resourcePath
 			OntologyHandler owlHandler = OntologyHandler.getInstance();
@@ -104,6 +110,13 @@ public class BPMN20OntologyTester extends Application {
 			if (!owl2xmlMapper.hasMappings())
 				throw new Exception(
 						"Warning! - Unable to read OWL2BPMN Mapping file from <" + owl2xmlMappingPath + ">");
+			
+			//Load Conformance Class mapping
+			OwlConformanceClassHandler confClassMapper = OwlConformanceClassHandler.getInstance();
+			confClassMapper.load(getClass().getResourceAsStream(conformanceClassMappingPath));
+			if (!confClassMapper.hasMappings())
+				throw new Exception(
+						"Warning! - Unable to read conformance Classes Mapping file from <" + owl2xmlMappingPath + ">");
 
 		} catch (Exception e) {
 			// Just continue, and print message to console.
@@ -166,9 +179,10 @@ public class BPMN20OntologyTester extends Application {
 		mainTabPane.getTabs().add(tab);
 	}
 
+
 	@Override
 	public void start(Stage stage) {
-
+		
 		stage.setTitle("BPMN2.0 Ontology Tester");
 		stage.setMaximized(true);
 		stage.setMinWidth(1024);
@@ -189,6 +203,8 @@ public class BPMN20OntologyTester extends Application {
 			// Start the GUI - Ontology get initialized when OntologyTabFxController get
 			// initialized
 			LauncherImpl.launchApplication(BPMN20OntologyTester.class, args);
+			
+			
 		} catch (Exception e) {
 			// If we reach this part, some crazy shit is going on because GUI was unable to
 			// start!

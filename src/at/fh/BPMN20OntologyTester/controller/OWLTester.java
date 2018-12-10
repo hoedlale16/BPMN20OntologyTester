@@ -18,9 +18,10 @@ import org.semanticweb.owlapi.model.OWLClass;
 import at.fh.BPMN20OntologyTester.model.BPMNElement;
 import at.fh.BPMN20OntologyTester.model.BPMNModel;
 import at.fh.BPMN20OntologyTester.model.FailedOWLClassRestriction;
-import at.fh.BPMN20OntologyTester.model.FailedOWLClassRestriction.RestrictionFailingLevelEnum;
+import at.fh.BPMN20OntologyTester.model.enums.OWLRestrictionFailingLevelEnum;
 import at.fh.BPMN20OntologyTester.model.OWLClassRestriction;
-import at.fh.BPMN20OntologyTester.model.OWLClassRestriction.DataRangeEnum;
+import at.fh.BPMN20OntologyTester.model.enums.OWLConformanceClassEnum;
+import at.fh.BPMN20OntologyTester.model.enums.OWLRestrictionDataRangeEnum;
 import at.fh.BPMN20OntologyTester.model.OWLModel;
 
 /**
@@ -142,6 +143,41 @@ public class OWLTester {
 		return failedNodes;
 
 	}
+	
+	/**
+	 * Returns List of Elements assigned to conformance class according ontology
+	 * @param ontology
+	 * @param model
+	 * @param owl2bpmnMapper
+	 * @return
+	 */
+	public static Map<OWLConformanceClassEnum, List<BPMNElement>> getConformanceClassOfElements(OWLModel ontology, BPMNModel model,
+			Owl2BpmnNamingMapper owl2bpmnMapper) {
+		
+		Map<OWLConformanceClassEnum, List<BPMNElement>> conformanceClasses = new HashMap<OWLConformanceClassEnum, List<BPMNElement>>();
+		
+		//Collect all conformance Classes of model
+		for(Process proc: model.getProcesses()) {
+			for(DomElement elem: model.getProcessElementsAsDomElements(proc)) {
+				String mappedOWLname = owl2bpmnMapper.getMappedNameFor(elem.getLocalName(),true);
+				OWLClass owlClass = ontology.getOWLClassByShortNameIgnoreCase(mappedOWLname);
+				
+				OWLConformanceClassEnum conformanceClass = ontology.getConformanceClassOfOWLClass(owlClass);
+				
+				if(conformanceClasses.containsKey(conformanceClass)) {
+					conformanceClasses.get(conformanceClass).add(new BPMNElement(elem));
+				} else {
+					ArrayList<BPMNElement> hs = new ArrayList<BPMNElement>();
+					hs.add(new BPMNElement(elem));
+					conformanceClasses.put(conformanceClass,hs);
+				}			
+			}
+		}
+		
+		return conformanceClasses;
+		//Determine the highest one
+		//return OwlConformanceClassHandler.getInstance().getHighestConformanceClass(conformanceClasses);		
+	}
 
 	/**
 	 * Helper method to check if given XML-Node meed the defined restrictions in the
@@ -239,7 +275,7 @@ public class OWLTester {
 						+ restriction.getOnProperty().getIRI().getShortForm()
 						+ "> and element not found in BPMN. This might be a mapping error as well!";
 				return Optional
-						.of(new FailedOWLClassRestriction(RestrictionFailingLevelEnum.WARNING, errMsg, restriction));
+						.of(new FailedOWLClassRestriction(OWLRestrictionFailingLevelEnum.WARNING, errMsg, restriction));
 			}
 		}
 
@@ -249,19 +285,19 @@ public class OWLTester {
 					+ "> <" + restriction.getCardinality() + "> times with Matchtype <"
 					+ restriction.getCardinalityType() + "> but element occured in BPMN <" + bpmnOccurance + "> times.";
 
-			return Optional.of(new FailedOWLClassRestriction(RestrictionFailingLevelEnum.ERROR, errMsg, restriction));
+			return Optional.of(new FailedOWLClassRestriction(OWLRestrictionFailingLevelEnum.ERROR, errMsg, restriction));
 		}
 
 		// Additional check for DataType if restriction affects an attribute in
 		// bpmnElement and DataRange is defined in OWL
-		if (restriction.getOnDataRange() != DataRangeEnum.Unkown && bpmnElement.hasAttribute(affectedXMLElementName)) {
+		if (restriction.getOnDataRange() != OWLRestrictionDataRangeEnum.Unkown && bpmnElement.hasAttribute(affectedXMLElementName)) {
 			String bpmnRawValue = bpmnElement.getAttribute(affectedXMLElementName);
 			if (!isRestrictionDataTypeMet(bpmnRawValue, restriction)) {
 				String errMsg = "Restriction expected dataType <" + restriction.getOnDataRange()
 						+ "> for xml-attribut <" + restriction.getOnProperty().getIRI().getShortForm() + "> but found <"
 						+ bpmnRawValue + ">";
 				return Optional
-						.of(new FailedOWLClassRestriction(RestrictionFailingLevelEnum.ERROR, errMsg, restriction));
+						.of(new FailedOWLClassRestriction(OWLRestrictionFailingLevelEnum.ERROR, errMsg, restriction));
 			}
 		}
 

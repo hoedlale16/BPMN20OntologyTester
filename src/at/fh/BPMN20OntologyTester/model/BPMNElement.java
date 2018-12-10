@@ -39,6 +39,7 @@ public class BPMNElement {
 		this.bpmnDomElement = bpmnDomElement;
 		this.failedRestrictions = failedRestrictions;
 		this.guiDisplayName = bpmnDomElement.getLocalName();
+
 	}
 	
 	public BPMNElement(DomElement bpmnDomElement,String guiDisplayName) {

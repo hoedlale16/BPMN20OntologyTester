@@ -3,6 +3,8 @@
  */
 package at.fh.BPMN20OntologyTester.model;
 
+import at.fh.BPMN20OntologyTester.model.enums.OWLRestrictionFailingLevelEnum;
+
 /**
  * This Class represents an failed Restriction between BPMN-Model and
  * OWL-Restriction. During the test the affected restriction was not able to met
@@ -17,12 +19,9 @@ public class FailedOWLClassRestriction {
 	private final String failingReason;
 	// Represents the OWLClass which failed
 	private final OWLClassRestriction restriction;
-	private final RestrictionFailingLevelEnum failingLevel;
+	private final OWLRestrictionFailingLevelEnum failingLevel;
 
-	public enum RestrictionFailingLevelEnum {
-		WARNING, ERROR;
-	}
-
+	
 	/**
 	 * @param failingReason
 	 * @param restriction
@@ -31,11 +30,11 @@ public class FailedOWLClassRestriction {
 		super();
 		this.failingReason = failingReason;
 		this.restriction = restriction;
-		this.failingLevel = RestrictionFailingLevelEnum.ERROR;
+		this.failingLevel = OWLRestrictionFailingLevelEnum.ERROR;
 
 	}
 
-	public FailedOWLClassRestriction(RestrictionFailingLevelEnum failLevel, String failingReason,
+	public FailedOWLClassRestriction(OWLRestrictionFailingLevelEnum failLevel, String failingReason,
 			OWLClassRestriction restriction) {
 		super();
 		this.failingReason = failingReason;
@@ -69,12 +68,12 @@ public class FailedOWLClassRestriction {
 		return restriction;
 	}
 
-	public RestrictionFailingLevelEnum getFailingLevel() {
+	public OWLRestrictionFailingLevelEnum getFailingLevel() {
 		return failingLevel;
 	}
 
 	public boolean isErrorFailure() {
-		if (failingLevel == RestrictionFailingLevelEnum.ERROR) {
+		if (failingLevel == OWLRestrictionFailingLevelEnum.ERROR) {
 			return true;
 		}
 

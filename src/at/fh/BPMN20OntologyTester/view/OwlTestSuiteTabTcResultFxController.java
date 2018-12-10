@@ -17,7 +17,7 @@ import at.fh.BPMN20OntologyTester.model.BPMNElement;
 import at.fh.BPMN20OntologyTester.model.FailedOWLClassRestriction;
 import at.fh.BPMN20OntologyTester.model.OWLModel;
 import at.fh.BPMN20OntologyTester.model.TestCase;
-import at.fh.BPMN20OntologyTester.model.TestCase.TestCaseEnum;
+import at.fh.BPMN20OntologyTester.model.enums.TestCaseEnum;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

@@ -3,6 +3,8 @@ package at.fh.BPMN20OntologyTester.view;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -10,33 +12,42 @@ import java.util.Optional;
 import org.camunda.bpm.model.bpmn.instance.Process;
 import org.semanticweb.owlapi.model.OWLProperty;
 
+import at.fh.BPMN20OntologyTester.BPMN20OntologyTester;
 import at.fh.BPMN20OntologyTester.controller.BPMNModelHandler;
 import at.fh.BPMN20OntologyTester.controller.FxController;
-import at.fh.BPMN20OntologyTester.controller.Owl2BpmnNamingMapper;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
+import at.fh.BPMN20OntologyTester.controller.OwlConformanceClassHandler;
 import at.fh.BPMN20OntologyTester.model.BPMNElement;
 import at.fh.BPMN20OntologyTester.model.BPMNModel;
 import at.fh.BPMN20OntologyTester.model.FailedOWLClassRestriction;
 import at.fh.BPMN20OntologyTester.model.OWLModel;
 import at.fh.BPMN20OntologyTester.model.TestCase;
-import at.fh.BPMN20OntologyTester.model.TestCase.TestCaseEnum;
+import at.fh.BPMN20OntologyTester.model.enums.TestCaseEnum;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
 
 /**
@@ -50,7 +61,7 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 
 	// GUI Element from Tab "BPMN2OWL"
 	@FXML
-	private Label lbBPMN2OWLModelName, lbBPMN2OWLProcessAmount;
+	private Label lbBPMN2OWLModelName, lbBPMN2OWLProcessAmount, lbBPMNConformanceClass;
 	@FXML
 	private TextArea taRestrictionDescription;
 	@FXML
@@ -117,30 +128,88 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 			if (selectedFile != null) {
 				
 				// Create Testcase with given BPMN
-				testcase = new TestCase(BPMNModelHandler.readModelFromFile(selectedFile));
+				//testcase = new TestCase(BPMNModelHandler.readModelFromFile(selectedFile));
+				loadProcessModel(selectedFile);
 				appendLog("Read BPMN-File <" + selectedFile.getAbsolutePath() + ">");
 
 				// Show loaded BPMN Model Data and Testresults
-				showModelOverview();
-				showTcResults();
+				//showModelOverview(testcase);
+				//showTcResults(testcase);
 			}
 		} catch (Exception e) {
 			appendLog("ERROR - Failed to load File <" + e.getMessage() + ">");
 			e.printStackTrace();
 		}
 	}
+	
+	
+	private void loadProcessModel(File f) {
+		// Use a seperate Thread to create TestResultTabs
+		Task<TestCase> ontologyTestsTask = new Task<TestCase>() {
+			@Override
+			public TestCase call() throws Exception {
+				this.updateMessage("Test <" + f.getName() + ">");
+				// Create Tab which triggers the execution of the test
+				TestCase testcase = new TestCase(BPMNModelHandler.readModelFromFile(f));
+				return testcase;
+			}
+		};
+
+		// Show loading screen while running
+		Stage loadingScreen= showLoadingScreenWhileTask(ontologyTestsTask);
+		loadingScreen.show();
+
+		//Trigger action after test results and tabs are created
+		ontologyTestsTask.setOnSucceeded(e -> {
+			//TestCase tescase = ontologyTestsTask.getValue();
+			this.testcase = ontologyTestsTask.getValue();
+			// Show loaded BPMN Model Data and Testresults
+			showModelOverview(testcase);
+			showTcResults(testcase);
+			
+			// Hide Loadingscreen and set overview log
+			loadingScreen.hide();
+		});
+		
+		//Start thread
+		new Thread(ontologyTestsTask).start();
+	}
+	
+	/**
+	 * Helper Method to create a Loading Screen while given task is running
+	 * @param task
+	 * @return
+	 */
+	private Stage showLoadingScreenWhileTask(Task<?> task) {
+		ProgressBar pBar = new ProgressBar();
+		pBar.progressProperty().bind(task.progressProperty());
+		pBar.setMinWidth(400);
+		Label statusLabel = new Label();
+		statusLabel.textProperty().bind(task.messageProperty());
+		statusLabel.setTextAlignment(TextAlignment.CENTER);
+		statusLabel.setAlignment(Pos.CENTER);
+		BorderPane root = new BorderPane(pBar,statusLabel,null,null,null);
+		
+		Stage loadingStage = new Stage();
+		loadingStage.setScene(new Scene(root));
+		loadingStage.setTitle("BPMN2.0 Ontology Tester");
+		loadingStage.setMinWidth(400);
+		loadingStage.setMinHeight(50);
+		
+		return loadingStage;
+	}
 
 	@FXML
 	private void onReset() {
 		testcase = null;
-		showModelOverview();
-		showTcResults();
+		showModelOverview(testcase);
+		showTcResults(testcase);
 	}
 
 	@FXML
 	private void onUpdateTestCaseResults() {
 		// Just refresh GUI
-		showTcResults();
+		showTcResults(testcase);
 	}
 
 	@FXML
@@ -227,20 +296,26 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 
 	}
 
-	private void showModelOverview() {
+	private void showModelOverview(TestCase testcase) {
 
 		// Reset GUI elements
 		lbBPMN2OWLModelName.setText("");
 		lbBPMN2OWLProcessAmount.setText("");
+		lbBPMNConformanceClass.setText("");
 		treeBPMN20OWL.setRoot(null);
 
 		// Show Elements for created testcase
 		if (testcase != null) {
+			
+			//Show model as Tree 
 			BPMNModel model = testcase.getProcessModel();
+			
 
 			// Set Label-Texts
 			lbBPMN2OWLModelName.setText(model.getModelDefinitions().getName());
 			lbBPMN2OWLProcessAmount.setText("" + testcase.getProcessModel().getProcesses().size());
+			OwlConformanceClassHandler confClassHandler = OwlConformanceClassHandler.getInstance();
+			lbBPMNConformanceClass.setText(""+confClassHandler.getHighestConformanceClass(testcase.getConformanceClasses()));
 
 			// Show Model as tree
 			TreeItem<String> rootItem = new TreeItem<String>(model.getModelDefinitions().getName());
@@ -265,7 +340,7 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 		}
 	}
 
-	private void showTcResults() {
+	private void showTcResults(TestCase testcase) {
 		// Clear TC-specific GUI elements and execute tests of testcase
 		xmlNodeNotFoundInOWL.clear();
 		xmlAttributesNotFoundInOWL.clear();

@@ -11,6 +11,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import at.fh.BPMN20OntologyTester.model.enums.OWLRestrictionCardinalityTypeEnum;
+import at.fh.BPMN20OntologyTester.model.enums.OWLRestrictionDataRangeEnum;
+
 /**
  * A Restriction class defines an owl:restriction Enttrie. There might be more
  * than one restriction on a class or property(e.g. Min/Max)
@@ -28,11 +31,11 @@ public class OWLClassRestriction {
 	// Cardinality defines how often the property must occurs. According the Type it
 	// is a range or a exact value
 	private int cardinality;
-	private CardinalityTypeEnum cardinalityType = CardinalityTypeEnum.Unkown;
+	private OWLRestrictionCardinalityTypeEnum cardinalityType = OWLRestrictionCardinalityTypeEnum.Unkown;
 
 	// Optionally set if Restriction affects an attribute. It defines the expected
 	// data-type for the property:
-	private DataRangeEnum onDataRange = DataRangeEnum.Unkown;
+	private OWLRestrictionDataRangeEnum onDataRange = OWLRestrictionDataRangeEnum.Unkown;
 
 	// Defines the affected OWL-Class.
 	// It explizit set with 'onClass', then restriction this OWL-Class, otherwise
@@ -44,17 +47,6 @@ public class OWLClassRestriction {
 	// comes from but good to know in GUI.
 	private OWLClass onClass;
 
-	public enum CardinalityTypeEnum {
-		MinCardinality, MaxCardinality, ExactCardinality, Unkown;
-	}
-
-	public enum DataRangeEnum {
-		DataRangeString, DataRangeBoolean, DataRangeInteger, Unkown
-	}
-
-	public enum AffectedXMLPartEnum {
-		ChildNodeRestriction, AttributeRestriction, Unkown
-	}
 
 	/**
 	 * Creates an OWLClassRestriction with given data of subClassOf-DomElement
@@ -79,7 +71,7 @@ public class OWLClassRestriction {
 			throw new Exception("OWLClassRestriciton requires link to an OWLProperty!");
 		}
 
-		if (cardinalityType.equals(CardinalityTypeEnum.Unkown)) {
+		if (cardinalityType.equals(OWLRestrictionCardinalityTypeEnum.Unkown)) {
 			throw new Exception("OWLClass requires valid CardinalityTypeEnum");
 		}
 
@@ -110,16 +102,16 @@ public class OWLClassRestriction {
 				break;
 			case "owl:minCardinality":
 			case "owl:minQualifiedCardinality":
-				cardinalityType = CardinalityTypeEnum.MinCardinality;
+				cardinalityType = OWLRestrictionCardinalityTypeEnum.MinCardinality;
 				cardinality = Integer.parseInt(childNode.getTextContent());
 				break;
 			case "owl:maxCardinality":
 			case "owl:maxQualifiedCardinality":
-				cardinalityType = CardinalityTypeEnum.MaxCardinality;
+				cardinalityType = OWLRestrictionCardinalityTypeEnum.MaxCardinality;
 				cardinality = Integer.parseInt(childNode.getTextContent());
 				break;
 			case "owl:qualifiedCardinality":
-				cardinalityType = CardinalityTypeEnum.ExactCardinality;
+				cardinalityType = OWLRestrictionCardinalityTypeEnum.ExactCardinality;
 				cardinality = Integer.parseInt(childNode.getTextContent());
 				break;
 
@@ -132,16 +124,16 @@ public class OWLClassRestriction {
 				String value = ((Element) childNode).getAttribute("rdf:resource");
 				switch (value) {
 				case "http://www.w3.org/2001/XMLSchema#string":
-					onDataRange = DataRangeEnum.DataRangeString;
+					onDataRange = OWLRestrictionDataRangeEnum.DataRangeString;
 					break;
 				case "http://www.w3.org/2001/XMLSchema#boolean":
-					onDataRange = DataRangeEnum.DataRangeBoolean;
+					onDataRange = OWLRestrictionDataRangeEnum.DataRangeBoolean;
 					break;
 				case "http://www.w3.org/2001/XMLSchema#integer":
-					onDataRange = DataRangeEnum.DataRangeInteger;
+					onDataRange = OWLRestrictionDataRangeEnum.DataRangeInteger;
 					break;
 				default:
-					onDataRange = DataRangeEnum.Unkown;
+					onDataRange = OWLRestrictionDataRangeEnum.Unkown;
 
 				}
 				break;
@@ -167,11 +159,11 @@ public class OWLClassRestriction {
 		return cardinality;
 	}
 
-	public CardinalityTypeEnum getCardinalityType() {
+	public OWLRestrictionCardinalityTypeEnum getCardinalityType() {
 		return cardinalityType;
 	}
 
-	public DataRangeEnum getOnDataRange() {
+	public OWLRestrictionDataRangeEnum getOnDataRange() {
 		return onDataRange;
 	}
 
@@ -186,7 +178,7 @@ public class OWLClassRestriction {
 				.append("cardinality=").append(cardinality).append(", ").append("cardinalityType=")
 				.append(cardinalityType);
 
-		if (onDataRange != DataRangeEnum.Unkown) {
+		if (onDataRange != OWLRestrictionDataRangeEnum.Unkown) {
 			sb.append(", onDataRage=").append(onDataRange);
 		}
 

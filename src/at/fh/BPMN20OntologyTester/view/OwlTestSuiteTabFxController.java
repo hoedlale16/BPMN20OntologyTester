@@ -3,8 +3,9 @@ package at.fh.BPMN20OntologyTester.view;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.apache.commons.io.FilenameUtils;
 import org.camunda.bpm.model.bpmn.instance.Process;
@@ -12,11 +13,7 @@ import org.camunda.bpm.model.bpmn.instance.Process;
 import at.fh.BPMN20OntologyTester.BPMN20OntologyTester;
 import at.fh.BPMN20OntologyTester.controller.BPMNModelHandler;
 import at.fh.BPMN20OntologyTester.controller.FxController;
-import at.fh.BPMN20OntologyTester.controller.Owl2BpmnNamingMapper;
-import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
 import at.fh.BPMN20OntologyTester.model.BPMNElement;
-import at.fh.BPMN20OntologyTester.model.BPMNModel;
-import at.fh.BPMN20OntologyTester.model.OWLModel;
 import at.fh.BPMN20OntologyTester.model.TestCase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -51,6 +48,9 @@ public class OwlTestSuiteTabFxController implements FxController {
 
 	@FXML
 	private TabPane tabPane;
+	
+	@FXML
+	private Tab tabOverview;
 
 	@FXML
 	private TextArea taTestLog;
@@ -166,13 +166,20 @@ public class OwlTestSuiteTabFxController implements FxController {
 			StringBuilder testSuiteLog = new StringBuilder();
 
 			Map<TestCase, Tab> testResultTabs = ontologyTestsTask.getValue();
+			List<Tab> testResults = new LinkedList<Tab>();
 			for (TestCase tc : testResultTabs.keySet()) {
 				// Append overview log and add created Tab to tapPane
 				appendOverviewLog(tc, testSuiteLog);
-				tabPane.getTabs().add(testResultTabs.get(tc));
+				testResults.add(testResultTabs.get(tc));
 			}
 			
-			//Hide Loadingscreen and set overview log
+			//Sort Tabs
+			testResults.sort((o1, o2) -> o1.getText().compareTo(o2.getText()));
+			tabPane.getTabs().clear();
+			tabPane.getTabs().add(tabOverview);
+			tabPane.getTabs().addAll(testResults);
+			
+			// Hide Loadingscreen and set overview log
 			loadingScreen.hide();
 			taTestLog.setText(testSuiteLog.toString());
 		});

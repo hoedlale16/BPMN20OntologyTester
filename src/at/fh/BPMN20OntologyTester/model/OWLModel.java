@@ -12,7 +12,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.semanticweb.HermiT.ReasonerFactory;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.OWLAnnotation;
@@ -28,14 +27,15 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLProperty;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
-import org.semanticweb.owlapi.reasoner.OWLReasoner;
-import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 import org.semanticweb.owlapi.search.EntitySearcher;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import at.fh.BPMN20OntologyTester.controller.OwlConformanceClassHandler;
+import at.fh.BPMN20OntologyTester.model.enums.OWLConformanceClassEnum;
 
 /**
  * Representation of an .owl File(XML) (Ontology)
@@ -240,12 +240,12 @@ public class OWLModel {
 		}
 		return false;
 	}
-	
+
 	public boolean existsOWLPropertyWithName(String name) {
 		Set<OWLProperty> props = new HashSet<OWLProperty>();
 		props.addAll(this.getDataProperties());
 		props.addAll(this.getObjectProperties());
-		
+
 		for (OWLProperty p : props) {
 			// in Model the names might be in lower case, so ignore case sensitive
 			if (p.getIRI().getShortForm().equalsIgnoreCase(name))
@@ -360,6 +360,28 @@ public class OWLModel {
 		return restrictions;
 	}
 
+	public OWLConformanceClassEnum getConformanceClassOfOWLClass(OWLClass owlClass) {
+
+		Set<OWLClass> conformanceClasses = new HashSet<OWLClass>();
+		Set<OWLClass> inheritedClasses = new HashSet<OWLClass>();
+
+		OwlConformanceClassHandler ccHandler = OwlConformanceClassHandler.getInstance();
+		
+		
+		// 1. Add given class and collect all inherited classes for given owlClass
+		inheritedClasses = getAllInheritedClassesOfClass(owlClass, inheritedClasses, true);
+		// 2. Filter for conformance Classes
+		inheritedClasses.stream().
+			filter(oc -> ccHandler.isOWLClassConformanceClass(oc)).
+				forEach(conformanceClasses::add);
+
+		OWLConformanceClassEnum confClass = OWLConformanceClassEnum.Unkown;
+		for(OWLClass c: conformanceClasses) {
+			confClass = ccHandler.getHigherConfClass(confClass,c);
+		}
+		return confClass;
+	}
+
 	/**
 	 * Helper class to collect all inherited Classes of given class. Goes through
 	 * all subclasess of given classes and calls the method recursively to return
@@ -418,7 +440,7 @@ public class OWLModel {
 						if (isNodeElementAndHasNameAndChilds(restrcitionNode, "owl:Restriction", true)) {
 							// JIHAAA we've found an restriction - Create an OWLCLassRestriction Object
 							OWLClassRestriction restriction = new OWLClassRestriction((Element) restrcitionNode,
-									owlClass,this);
+									owlClass, this);
 							restrictions.add(restriction);
 
 						}
