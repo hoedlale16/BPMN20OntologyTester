@@ -1,0 +1,1089 @@
+Testreport ob Ontology
+
+General OWL Data:
+ - OWL-Classes: 262
+ - OWL-DataProperties: 61
+ - OWL-ObjectProperties: 180
+
+General OWL Issues:
+ - Processmodel Conformance Class: FullConformance
+ - Number of XML-Nodes without OWL-Class: 9
+ - Number of XML-Attributes without OWL-Propertiy: 25
+ - Number of XML-Nodes which failed the OWL-Class Restriction: 71
+
+Detailed List of XML-Nodes without OWL-Classes:
+ - waypoint
+ - Bounds
+ - sourceRef
+ - targetRef
+ - extensionElements
+ - incoming
+ - text
+ - flowNodeRef
+ - outgoing
+
+Detailed List of XML-Attributes without OWL-Property
+ - distance
+ - isUnderline
+ - xmlns:xsi
+ - align
+ - isItalic
+ - metaValue
+ - ref
+ - xmlns
+ - propertyId
+ - height
+ - xmlns:bpmndi
+ - orientation
+ - xmlns:omgdc
+ - signavio:alignment
+ - xsi:schemaLocation
+ - isStrikeThrough
+ - valign
+ - metaKey
+ - isBold
+ - size
+ - x
+ - width
+ - y
+ - xmlns:signavio
+ - xmlns:omgdi
+
+Detailed List of XML-Nodes which failed OWL-Class Restriction:
+ - process
+   - laneSet
+     - [OWL-Class: Message] - ERR: Restriction expected element <messageRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: PartnerRole] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InteractionNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Participant] - ERR: Restriction expected element <innerParticipantRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CorrelationKey] - ERR: Restriction expected element <correlationKeyRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CorrelationProperty] - ERR: Restriction expected element <correlationPropertyRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Collaboration] - ERR: Restriction expected element <isClosed> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Interface] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <outputDataRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Process] - ERR: Restriction expected element <process> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <evaluatesToTypeRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Operation] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSets> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Process] - ERR: Restriction expected element <isExecutable> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Error] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FormalExpression] - ERR: Restriction expected element <dataPath> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Message] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Collaboration] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionDefinition] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ParticipantMultiplicity] - ERR: Restriction expected element <maximum> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: PartnerEntity] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <isRequired> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSets> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InteractionNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Resource] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FormalExpression] - ERR: Restriction expected element <messagePath> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: SequenceFlow] - ERR: Restriction expected element <isImmediate> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Lane] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CorrelationPropertyRetrievalExpression] - ERR: Restriction expected element <correlationPropertyRetrievalExpression> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: MessageFlow] - ERR: Restriction expected element <innerMessageFlowRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: MessageFlow] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Error] - ERR: Restriction expected element <errorCode> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <inputDataRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Participant] - ERR: Restriction expected element <participantRefs> <2> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <expression> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <parameterRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataState] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Message] - ERR: Restriction expected element <inMessageRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Category] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Operation] - ERR: Restriction expected element <operationRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Operation] - ERR: Restriction expected element <operations> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Process] - ERR: Restriction expected element <isClosed> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: MessageFlow] - ERR: Restriction expected element <outerMessageFlowRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ProcessType] - ERR: Restriction expected element <processType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Property] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Element] - ERR: Restriction expected element <body> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Participant] - ERR: Restriction expected element <outerParticipantRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - task
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSets> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemAwareElement] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: SequenceFlow] - ERR: Restriction expected element <isImmediate> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <isRequired> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <from> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSets> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <to> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <parameterRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <expression> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CatchEvent] - ERR: Restriction expected element <parallelMultiple> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Activity] - ERR: Restriction expected element <attachedToRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: BoundaryEvent] - ERR: Restriction expected element <cancelActivity> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+   - exclusiveGateway
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: SequenceFlow] - ERR: Restriction expected element <isImmediate> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - businessRuleTask
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <to> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSets> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <parameterRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSets> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CatchEvent] - ERR: Restriction expected element <parallelMultiple> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <from> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <isRequired> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: SequenceFlow] - ERR: Restriction expected element <isImmediate> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: BoundaryEvent] - ERR: Restriction expected element <cancelActivity> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <expression> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Activity] - ERR: Restriction expected element <attachedToRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - task
+     - [OWL-Class: Activity] - ERR: Restriction expected element <attachedToRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CatchEvent] - ERR: Restriction expected element <parallelMultiple> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <to> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: BoundaryEvent] - ERR: Restriction expected element <cancelActivity> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <isRequired> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: SequenceFlow] - ERR: Restriction expected element <isImmediate> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemAwareElement] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <from> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <parameterRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <expression> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSets> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSets> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - startEvent
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <to> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <from> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemAwareElement] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+   - intermediateThrowEvent
+     - [OWL-Class: Expression] - ERR: Restriction expected element <to> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemAwareElement] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <from> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - intermediateCatchEvent
+     - [OWL-Class: Expression] - ERR: Restriction expected element <to> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <from> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemAwareElement] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - intermediateCatchEvent
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemAwareElement] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <to> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <from> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - intermediateCatchEvent
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemAwareElement] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <from> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <to> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - task
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <isRequired> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <from> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <parameterRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSets> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Activity] - ERR: Restriction expected element <attachedToRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSets> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <expression> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: BoundaryEvent] - ERR: Restriction expected element <cancelActivity> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemAwareElement] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: SequenceFlow] - ERR: Restriction expected element <isImmediate> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CatchEvent] - ERR: Restriction expected element <parallelMultiple> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <to> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - task
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: SequenceFlow] - ERR: Restriction expected element <isImmediate> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <expression> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSets> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <from> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CatchEvent] - ERR: Restriction expected element <parallelMultiple> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemAwareElement] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: BoundaryEvent] - ERR: Restriction expected element <cancelActivity> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Activity] - ERR: Restriction expected element <attachedToRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSets> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <isRequired> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <parameterRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <to> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - exclusiveGateway
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: SequenceFlow] - ERR: Restriction expected element <isImmediate> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - exclusiveGateway
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: SequenceFlow] - ERR: Restriction expected element <isImmediate> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - intermediateThrowEvent
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemAwareElement] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <to> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <from> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - task
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Activity] - ERR: Restriction expected element <attachedToRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSets> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <expression> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CatchEvent] - ERR: Restriction expected element <parallelMultiple> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: BoundaryEvent] - ERR: Restriction expected element <cancelActivity> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <to> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSets> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: SequenceFlow] - ERR: Restriction expected element <isImmediate> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemAwareElement] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <isRequired> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <from> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <parameterRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - endEvent
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <from> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <to> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemAwareElement] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - task
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSets> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <isRequired> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: SequenceFlow] - ERR: Restriction expected element <isImmediate> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <expression> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CatchEvent] - ERR: Restriction expected element <parallelMultiple> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <from> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemAwareElement] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: BoundaryEvent] - ERR: Restriction expected element <cancelActivity> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSets> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <to> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <parameterRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Activity] - ERR: Restriction expected element <attachedToRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - intermediateThrowEvent
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <from> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemAwareElement] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <to> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - businessRuleTask
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSets> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <parameterRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: SequenceFlow] - ERR: Restriction expected element <isImmediate> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSets> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <expression> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <from> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: BoundaryEvent] - ERR: Restriction expected element <cancelActivity> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <to> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <isRequired> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CatchEvent] - ERR: Restriction expected element <parallelMultiple> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Activity] - ERR: Restriction expected element <attachedToRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - exclusiveGateway
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: SequenceFlow] - ERR: Restriction expected element <isImmediate> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - task
+     - [OWL-Class: BoundaryEvent] - ERR: Restriction expected element <cancelActivity> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <expression> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <to> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CatchEvent] - ERR: Restriction expected element <parallelMultiple> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemAwareElement] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <parameterRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSets> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <from> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Activity] - ERR: Restriction expected element <attachedToRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <isRequired> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: SequenceFlow] - ERR: Restriction expected element <isImmediate> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSets> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+   - endEvent
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <from> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemAwareElement] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <to> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - intermediateThrowEvent
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemAwareElement] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <from> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <to> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - intermediateCatchEvent
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <from> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <to> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemAwareElement] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - exclusiveGateway
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: SequenceFlow] - ERR: Restriction expected element <isImmediate> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - subProcess
+     - [OWL-Class: Operation] - ERR: Restriction expected element <operationRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Participant] - ERR: Restriction expected element <innerParticipantRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Participant] - ERR: Restriction expected element <outerParticipantRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Collaboration] - ERR: Restriction expected element <isClosed> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CorrelationKey] - ERR: Restriction expected element <correlationKeyRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: SequenceFlow] - ERR: Restriction expected element <isImmediate> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <to> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InteractionNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ParticipantMultiplicity] - ERR: Restriction expected element <maximum> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <from> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Message] - ERR: Restriction expected element <inMessageRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSets> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CatchEvent] - ERR: Restriction expected element <parallelMultiple> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <isRequired> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Participant] - ERR: Restriction expected element <participantRefs> <2> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InteractionNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CorrelationProperty] - ERR: Restriction expected element <correlationPropertyRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FormalExpression] - ERR: Restriction expected element <dataPath> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <outputDataRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSets> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Error] - ERR: Restriction expected element <errorCode> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Process] - ERR: Restriction expected element <isExecutable> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Message] - ERR: Restriction expected element <messageRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ProcessType] - ERR: Restriction expected element <processType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <parameterRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Activity] - ERR: Restriction expected element <attachedToRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <evaluatesToTypeRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <inputDataRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Process] - ERR: Restriction expected element <process> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: MessageFlow] - ERR: Restriction expected element <innerMessageFlowRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Element] - ERR: Restriction expected element <body> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CorrelationPropertyRetrievalExpression] - ERR: Restriction expected element <correlationPropertyRetrievalExpression> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: BoundaryEvent] - ERR: Restriction expected element <cancelActivity> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: MessageFlow] - ERR: Restriction expected element <outerMessageFlowRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FormalExpression] - ERR: Restriction expected element <messagePath> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemAwareElement] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Process] - ERR: Restriction expected element <isClosed> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Operation] - ERR: Restriction expected element <operations> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <expression> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - task
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Activity] - ERR: Restriction expected element <attachedToRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSets> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <isRequired> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSets> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ResourceParameter] - ERR: Restriction expected element <parameterRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: BoundaryEvent] - ERR: Restriction expected element <cancelActivity> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemAwareElement] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <expression> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CatchEvent] - ERR: Restriction expected element <parallelMultiple> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <to> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: SequenceFlow] - ERR: Restriction expected element <isImmediate> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <from> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - exclusiveGateway
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: SequenceFlow] - ERR: Restriction expected element <isImmediate> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - intermediateCatchEvent
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <to> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemAwareElement] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <from> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - intermediateThrowEvent
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <to> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Expression] - ERR: Restriction expected element <from> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataOutput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataInput] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: InputSet] - ERR: Restriction expected element <inputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemAwareElement] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: OutputSet] - ERR: Restriction expected element <outputSetRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - sequenceFlow
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - dataStoreReference
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <namespace> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: CategoryValue] - ERR: Restriction expected element <value> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemDefinition] - ERR: Restriction expected element <isCollection> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Import] - ERR: Restriction expected element <importType> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: DataStore] - ERR: Restriction expected element <isUnlimited> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ItemKind] - ERR: Restriction expected element <itemKind> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - association
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: BaseElement] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionDefinition] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - association
+     - [OWL-Class: BaseElement] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionDefinition] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <text> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: Documentation] - ERR: Restriction expected element <textFormat> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - textAnnotation
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionDefinition] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - textAnnotation
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <isReference> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <extensionAttributeDefinition> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionDefinition] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: ExtensionAttributeDefinition] - ERR: Restriction expected element <type> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
