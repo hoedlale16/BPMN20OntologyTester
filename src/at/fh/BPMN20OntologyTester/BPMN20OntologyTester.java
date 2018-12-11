@@ -86,6 +86,7 @@ public class BPMN20OntologyTester extends Application {
 			addNewTab("Ontology", loadScene("/resource/jfx/TabOntology.fxml", null), mainScene);	
 			addNewTab("Compare BPMN", loadScene("/resource/jfx/TabCompareBpmn2Owl.fxml", null), mainScene);
 			addNewTab("OWL Testsuite", loadScene("/resource/jfx/TabOwlTestSuite.fxml", null), mainScene);
+			addNewTab("Knowledge-DB", loadScene("/resource/jfx/TabOwlSparqlExecution.fxml", null), mainScene);
 			
 			//Load additional dialogs
 			owl2bpmnMappingDialogScene = loadScene("/resource/jfx/DialogOwl2BpmnMapping.fxml",null);

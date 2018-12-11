@@ -46,14 +46,14 @@ public class OntologyTabFxController implements FxController {
 	private void initialize() {
 
 		// Init local ontology variable
-		Optional<OWLModel> optOntology = OntologyHandler.getInstance().getLoadedOntology();
-		if (optOntology.isPresent()) {
-			appendLog("Read and initialized BPMN2.0 Ontology from ressource folder");
-			// Show loaded Ontology on GUI
-			showInitializedOntology(optOntology.get());
-		} else {
-			appendLog("Unable to load Ontology from ressource folder. Unable to verify ontology!");
-		}
+				Optional<OWLModel> optOntology = OntologyHandler.getInstance().getLoadedOntology();
+				if (optOntology.isPresent()) {
+					appendLog("Read and initialized BPMN2.0 Ontology from ressource folder");
+					// Show loaded Ontology on GUI
+					showInitializedOntology(optOntology.get());
+				} else {
+					appendLog("Unable to load Ontology from ressource folder. Unable to verify ontology!");
+				}
 
 
 		// Init local owl2bpmn varaibel

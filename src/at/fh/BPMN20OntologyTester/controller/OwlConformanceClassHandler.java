@@ -85,15 +85,16 @@ public class OwlConformanceClassHandler {
 	 * 1 .. DESCRIPTIVE
 	 * 2 .. ANALYTIC
 	 * 3 .. EXECUTIVE
+	 * 4 .. FULL
 	 * @param conformanceClass
 	 * @return
 	 */
 	public int getOWLClassConformancePriorioty(OWLConformanceClassEnum conformance) {
 		switch(conformance) {
-			case DescriptiveConformance: return 1;
-			case AnalyticConformance: return 2;
-			case ExecutiveConformance: return 3;
-			case FullConformance: return 4;
+			case FullConformance: return 1;
+			case ExecutiveConformance: return 2;
+			case AnalyticConformance: return 3;
+			case DescriptiveConformance: return 4;			
 			default: return 0;
 		}
 	}

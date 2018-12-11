@@ -51,16 +51,27 @@ public class OWLModel {
 
 	// Represents the File from which the OWL-API Object was create out
 	private final Document ontologyAsDOMDocument;
+	
+	private final File fileCreatedFrom;
 
 	public OWLModel(OWLOntology ontology, File ontologyFile) throws OWLOntologyCreationException {
 		try {
 			this.ontology = ontology;
 			this.ontologyAsDOMDocument = praseXMlFile(ontologyFile);
+			this.fileCreatedFrom = ontologyFile;
 		} catch (Exception e) {
 			// Simplify Exception Handling
 			throw new OWLOntologyCreationException(e);
 		}
 	}
+	
+	
+
+	public File getFileCreatedFrom() {
+		return fileCreatedFrom;
+	}
+
+
 
 	/**
 	 * Parses given XML-File and creates an DOM-Document out of it
