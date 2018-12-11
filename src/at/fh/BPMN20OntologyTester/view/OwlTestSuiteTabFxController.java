@@ -158,7 +158,7 @@ public class OwlTestSuiteTabFxController implements FxController {
 		};
 
 		// Show loading screen while running
-		Stage loadingScreen= showLoadingScreenWhileTask(ontologyTestsTask);
+		Stage loadingScreen= BPMN20OntologyTester.getLoadingScreenWhileTask(ontologyTestsTask);
 		loadingScreen.show();
 
 		//Trigger action after test results and tabs are created
@@ -218,30 +218,6 @@ public class OwlTestSuiteTabFxController implements FxController {
 				alert.showAndWait();
 			}
 		}
-	}
-	
-	/**
-	 * Helper Method to create a Loading Screen while given task is running
-	 * @param task
-	 * @return
-	 */
-	private Stage showLoadingScreenWhileTask(Task<?> task) {
-		ProgressBar pBar = new ProgressBar();
-		pBar.progressProperty().bind(task.progressProperty());
-		pBar.setMinWidth(400);
-		Label statusLabel = new Label();
-		statusLabel.textProperty().bind(task.messageProperty());
-		statusLabel.setTextAlignment(TextAlignment.CENTER);
-		statusLabel.setAlignment(Pos.CENTER);
-		BorderPane root = new BorderPane(pBar,statusLabel,null,null,null);
-		
-		Stage loadingStage = new Stage();
-		loadingStage.setScene(new Scene(root));
-		loadingStage.setTitle("BPMN2.0 Ontology Tester");
-		loadingStage.setMinWidth(400);
-		loadingStage.setMinHeight(50);
-		
-		return loadingStage;
 	}
 
 	/**

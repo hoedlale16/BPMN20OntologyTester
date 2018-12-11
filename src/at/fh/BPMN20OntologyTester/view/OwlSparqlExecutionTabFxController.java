@@ -21,6 +21,7 @@ import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.util.FileUtils;
 import org.semanticweb.owlapi.model.OWLClass;
 
+import at.fh.BPMN20OntologyTester.BPMN20OntologyTester;
 import at.fh.BPMN20OntologyTester.controller.FxController;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
 import at.fh.BPMN20OntologyTester.model.OWLModel;
@@ -123,7 +124,7 @@ public class OwlSparqlExecutionTabFxController implements FxController {
 			};
 	
 			// Show loading screen while running
-			Stage loadingScreen = showLoadingScreenWhileTask(executionTask);
+			Stage loadingScreen = BPMN20OntologyTester.getLoadingScreenWhileTask(executionTask);
 			loadingScreen.show();
 	
 			// Trigger action after test results and tabs are created
@@ -168,7 +169,6 @@ public class OwlSparqlExecutionTabFxController implements FxController {
 					.append("PREFIX ns: <http://www.reiter.at/ontology/bpmn2.0#>").append("\r\n")
 					.append("PREFIX owl: <http://www.w3.org/2002/07/owl#>").append("\r\n").append(queryString);
 
-			System.out.println("Execute Query: \n" + sb.toString());
 			Query query = QueryFactory.create(sb.toString());
 			qexec = QueryExecutionFactory.create(query, model);
 			ResultSet resultSet = qexec.execSelect();
@@ -193,31 +193,6 @@ public class OwlSparqlExecutionTabFxController implements FxController {
 			}
 		}
 		return sparqlResults;
-	}
-
-	/**
-	 * Helper Method to create a Loading Screen while given task is running
-	 * 
-	 * @param task
-	 * @return
-	 */
-	private Stage showLoadingScreenWhileTask(Task<?> task) {
-		ProgressBar pBar = new ProgressBar();
-		pBar.progressProperty().bind(task.progressProperty());
-		pBar.setMinWidth(400);
-		Label statusLabel = new Label();
-		statusLabel.textProperty().bind(task.messageProperty());
-		statusLabel.setTextAlignment(TextAlignment.CENTER);
-		statusLabel.setAlignment(Pos.CENTER);
-		BorderPane root = new BorderPane(pBar, statusLabel, null, null, null);
-
-		Stage loadingStage = new Stage();
-		loadingStage.setScene(new Scene(root));
-		loadingStage.setTitle("BPMN2.0 Ontology Tester");
-		loadingStage.setMinWidth(400);
-		loadingStage.setMinHeight(50);
-
-		return loadingStage;
 	}
 
 	private void appendLog(String text) {

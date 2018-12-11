@@ -14,12 +14,17 @@ import at.fh.BPMN20OntologyTester.model.OWLModel;
 import at.fh.BPMN20OntologyTester.model.TestCase;
 import at.fh.BPMN20OntologyTester.view.OwlTestSuiteTabTcResultFxController;
 import javafx.application.Application;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -50,6 +55,29 @@ public class BPMN20OntologyTester extends Application {
 
 		return dialog;
 	}
+	
+	public static Stage getLoadingScreenWhileTask(Task<?> task) {
+		ProgressBar pBar = new ProgressBar();
+		pBar.progressProperty().bind(task.progressProperty());
+		pBar.setMinWidth(400);
+		Label statusLabel = new Label();
+		statusLabel.textProperty().bind(task.messageProperty());
+		statusLabel.setTextAlignment(TextAlignment.CENTER);
+		statusLabel.setAlignment(Pos.CENTER);
+		BorderPane root = new BorderPane(pBar,statusLabel,null,null,null);
+		
+		Stage loadingStage = new Stage();
+		loadingStage.setScene(new Scene(root));
+		loadingStage.initStyle(StageStyle.UNDECORATED);
+		loadingStage.setResizable(false);
+		loadingStage.setTitle("BPMN2.0 Ontology Tester");
+		loadingStage.setMinWidth(400);
+		loadingStage.setMinHeight(50);
+		
+		return loadingStage;
+	}
+
+	
 	
 	public static Tab getTestSuiteTestResultTag(TestCase testcase) {
 		try {
