@@ -69,7 +69,7 @@
       <HBox alignment="BOTTOM_RIGHT" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btGenerateReport" mnemonicParsing="false" onAction="#onGenerateReport" styleClass="buttons" text="Generate Report" />
-            <Button fx:id="btConvertToOWL" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#onBPMN2OWL" styleClass="buttons" text="Convert to OWL" />
+            <Button fx:id="btConvertToOWL" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#onConvert2OWL" styleClass="buttons" text="Convert to OWL" />
          </children>
          <padding>
             <Insets top="10.0" />

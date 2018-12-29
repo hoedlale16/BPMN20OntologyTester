@@ -339,7 +339,7 @@ public class Owl2BpmnMapperFxController implements FxController {
 			}
 			
 		} else {
-			//No changes, nothing todo - just close
+			//No changes, nothing to do - just close
 			((Node)(event.getSource())).getScene().getWindow().hide();
 		}
 	}

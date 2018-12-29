@@ -244,8 +244,6 @@ public class OWLTester {
 		String affectedXMLElementName = owl2bpmnMapper.getMappedNameFor(originalOWLPropertyName, false);
 
 		boolean foundAsAttributeOrXmlTag = false;
-		// TODO: properly we need a mapping between PropertyNames of OWL and
-		// XMl-Tags/Attribute Names
 
 		// Determine the occurred cardinality in XML-Element.
 		int bpmnOccurance = 0;

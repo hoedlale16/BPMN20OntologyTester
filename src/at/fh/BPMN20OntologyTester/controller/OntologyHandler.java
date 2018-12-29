@@ -5,11 +5,22 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.formats.OWLXMLDocumentFormat;
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLDocumentFormat;
+import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 
+import at.fh.BPMN20OntologyTester.model.BPMNModel;
 import at.fh.BPMN20OntologyTester.model.OWLModel;
 
 /**
@@ -103,6 +114,56 @@ public class OntologyHandler {
 		} else {
 			return Optional.of(loadedOntology);
 		}
+	}
+	
+	
+	/**
+	 * Converts given process model to an ontology based on current loaded one.
+	 * @param processModel
+	 * @return
+	 */
+	public OWLOntology convertToOntology(BPMNModel processModel) throws Exception {
+		Optional<OWLModel> optloadedOWL = getLoadedOntology();
+		if(optloadedOWL.isPresent()) {
+			OWLOntology baseOntology = optloadedOWL.get().getOntology();
+			
+			//Create a new empty Ontology
+			OWLOntology newOntology = OWLManager.createOWLOntologyManager().createOntology();
+			
+			
+			//Get all Elements of process Model 
+			Set<String> elementNames = processModel.getAllElementsOfModel(true).
+										stream().map(d -> d.getLocalName()).collect(Collectors.toSet());
+			
+			//For each element, load all Axioms(Propertys,Classes,...) and add to new Ontology
+			for(String elem : elementNames) {
+				OWLEntity owlEntity = optloadedOWL.get().getEntityByShortName(elem);
+				if(owlEntity != null) {
+					Stream<OWLAxiom> axioms =baseOntology.referencingAxioms(owlEntity);
+					if(axioms != null)
+						newOntology.addAxioms(axioms);
+				}
+			}
+			
+			return newOntology;
+			
+			
+		} else {
+			throw new Exception("No base Ontology found!");
+		}
+	}
+	
+	public void saveOntology(File file, OWLOntology ontology) throws OWLOntologyStorageException {
+		//Create the manager
+		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+		
+		//Use the same format as the base(loaded) ontology
+		OWLOntology baseOntology = getLoadedOntology().get().getOntology();
+		OWLDocumentFormat format = manager.getOntologyFormat(baseOntology);
+		if(format == null) {
+			format = new OWLXMLDocumentFormat();
+		}
+		manager.saveOntology(ontology, format, IRI.create(file.toURI()));
 	}
 
 }

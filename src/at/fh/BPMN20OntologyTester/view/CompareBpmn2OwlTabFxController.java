@@ -3,20 +3,18 @@ package at.fh.BPMN20OntologyTester.view;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import org.camunda.bpm.model.bpmn.instance.Process;
+import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLProperty;
 
 import at.fh.BPMN20OntologyTester.BPMN20OntologyTester;
 import at.fh.BPMN20OntologyTester.controller.BPMNModelHandler;
 import at.fh.BPMN20OntologyTester.controller.FxController;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
-import at.fh.BPMN20OntologyTester.controller.OwlConformanceClassHandler;
 import at.fh.BPMN20OntologyTester.model.BPMNElement;
 import at.fh.BPMN20OntologyTester.model.BPMNModel;
 import at.fh.BPMN20OntologyTester.model.FailedOWLClassRestriction;
@@ -27,28 +25,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 
 /**
  * Handles user interactions on tab "BPMN2OWL"
@@ -186,8 +178,37 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 	}
 
 	@FXML
-	private void onBPMN2OWL() {
-		appendLog("TODO - Method onBPMN2OWL not implemented yet! (Tab BPMN2OWL)");
+	private void onConvert2OWL() {
+		if(testcase != null) {
+			try {
+				BPMNModel processModel = testcase.getProcessModel();
+				
+				FileChooser chooser = new FileChooser();
+				chooser.setTitle("Export ProcessModel as ontology");
+				chooser.getExtensionFilters().add(new ExtensionFilter("Ontology", "*.owl"));
+				
+				String fileName = processModel.getFileFromWhomModelWasCreated().getName();
+				//Remove extension
+				fileName = fileName.substring(0, fileName.lastIndexOf("."));
+				chooser.setInitialFileName(fileName+".owl");
+	
+				// Handle selected file
+				File selectedFile = chooser.showSaveDialog(null);
+				if (selectedFile != null) {		
+					
+					OWLOntology newOntology = OntologyHandler.getInstance().convertToOntology(processModel);
+					OntologyHandler.getInstance().saveOntology(selectedFile, newOntology);
+					appendLog("Converted BPMN-Process model to ontology <" + selectedFile.getAbsolutePath() + ">");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error!");
+				alert.setHeaderText("Error while exporting process model as Ontology");
+				alert.setContentText("ERROR - Failed to convert process model to ontology <" + e.getMessage() + ">");
+				alert.showAndWait();
+			} 
+		}
 	}
 
 	@FXML

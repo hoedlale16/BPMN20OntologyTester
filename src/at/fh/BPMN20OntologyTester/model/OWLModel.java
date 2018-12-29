@@ -64,8 +64,6 @@ public class OWLModel {
 			throw new OWLOntologyCreationException(e);
 		}
 	}
-	
-	
 
 	public File getFileCreatedFrom() {
 		return fileCreatedFrom;

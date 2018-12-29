@@ -6,7 +6,10 @@ package at.fh.BPMN20OntologyTester.view;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.apache.jena.query.Query;
@@ -25,19 +28,14 @@ import at.fh.BPMN20OntologyTester.BPMN20OntologyTester;
 import at.fh.BPMN20OntologyTester.controller.FxController;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
 import at.fh.BPMN20OntologyTester.model.OWLModel;
+import at.fh.BPMN20OntologyTester.model.OwlSparqlQueryFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 /**
@@ -81,11 +79,8 @@ public class OwlSparqlExecutionTabFxController implements FxController {
 
 		String selectedClass = cbClasses.getSelectionModel().getSelectedItem();
 		if (selectedClass != null && !selectedClass.isEmpty()) {
-			String attributesWithRestrictions = "SELECT ?onProperty WHERE { ns:" + selectedClass
-					+ " rdfs:subClassOf ?subClasses . " + " ?subClasses (owl:Restriction)* ?restriction . "
-					+ " ?restriction owl:onProperty ?onProperty . }";
-
-			taSparqlQuery.setText(attributesWithRestrictions);
+			String query = OwlSparqlQueryFactory.getAttributesWithRestrictions(selectedClass);
+			taSparqlQuery.setText(query);
 		} else {
 			appendLog("No class selected! Select one from ComboBox");
 		}
@@ -96,10 +91,9 @@ public class OwlSparqlExecutionTabFxController implements FxController {
 	private void onLoadQueryAllInheritedClasses() {
 		String selectedClass = cbClasses.getSelectionModel().getSelectedItem();
 		if (selectedClass != null && !selectedClass.isEmpty()) {
-			String allInhertidedClasses = "SELECT ?superClass WHERE { ns:" + selectedClass
-					+ " rdfs:subClassOf ?superClass . }";
+			String query = OwlSparqlQueryFactory.getAllInhertiedClasses(selectedClass);
 
-			taSparqlQuery.setText(allInhertidedClasses);
+			taSparqlQuery.setText(query);
 		} else {
 			appendLog("No class selected! Select one from ComboBox");
 		}
@@ -115,9 +109,9 @@ public class OwlSparqlExecutionTabFxController implements FxController {
 			OWLModel ontology = OntologyHandler.getInstance().getLoadedOntology().get();
 	
 			// Use a sepaerate Thread to execute Query
-			Task<List<String>> executionTask = new Task<List<String>>() {
+			Task<Map<String,List<String>>> executionTask = new Task<Map<String,List<String>>>() {
 				@Override
-				public List<String> call() throws Exception {
+				public Map<String,List<String>> call() throws Exception {
 					this.updateMessage("Execute query");
 					return execSPARQLselect(ontology, query);
 				}
@@ -130,9 +124,18 @@ public class OwlSparqlExecutionTabFxController implements FxController {
 			// Trigger action after test results and tabs are created
 			executionTask.setOnSucceeded(e -> {
 				taResults.clear();
-				for (String s : executionTask.getValue()) {
-					taResults.appendText(s + "\n");
-				}
+				
+				//Show results
+				executionTask.getValue().forEach( (q,r) -> {
+					taSparqlQuery.setText(q);
+
+					if(r.isEmpty()) {
+						taResults.setText("No results found!");
+					} else {
+						r.forEach( s-> taResults.appendText(s +"\n"));
+					}
+				});
+				
 	
 				// Hide Loadingscreen and set overview log
 				loadingScreen.hide();
@@ -142,6 +145,9 @@ public class OwlSparqlExecutionTabFxController implements FxController {
 			executionTask.setOnFailed(e -> {
 				appendLog("Error occured while executing query: " + executionTask.getException().getMessage());
 	
+				
+				taResults.setText("Error in Query!");
+				
 				// Hide Loadingscreen and set overview log
 				loadingScreen.hide();
 				btExecute.setDisable(false);
@@ -154,45 +160,67 @@ public class OwlSparqlExecutionTabFxController implements FxController {
 		}
 	}
 
-	private List<String> execSPARQLselect(OWLModel ontology, String queryString) throws FileNotFoundException {
+	private Map<String,List<String>> execSPARQLselect(OWLModel ontology, String queryString) throws FileNotFoundException {
 
-		List<String> sparqlResults = new ArrayList<String>();
+		Map<String, List<String>> results = new HashMap<String,List<String>>();
+		
 		QueryExecution qexec = null;
 		try {
 			// Create Model from given Ontology
 			Model model = ModelFactory.createOntologyModel();
 			model.read(new FileInputStream(ontology.getFileCreatedFrom()), FileUtils.langXML);
-
-			// Build Query and execute it
-			StringBuilder sb = new StringBuilder();
-			sb.append("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>").append("\r\n")
-					.append("PREFIX ns: <http://www.reiter.at/ontology/bpmn2.0#>").append("\r\n")
-					.append("PREFIX owl: <http://www.w3.org/2002/07/owl#>").append("\r\n").append(queryString);
-
-			Query query = QueryFactory.create(sb.toString());
+		
+			Query query = QueryFactory.create(queryString);
 			qexec = QueryExecutionFactory.create(query, model);
 			ResultSet resultSet = qexec.execSelect();
 
 			// Collect Results of Query
+			List<String> queryResults = new ArrayList<String>();
 			while (resultSet.hasNext()) {
 				QuerySolution soln = resultSet.nextSolution();
+						
+				//Collect all variable-results of row and build a single string representing the row
+				StringBuilder sb = new StringBuilder();
+				Iterator<String> varIterator = soln.varNames();
+				while(varIterator.hasNext()) {
+					RDFNode n = soln.get(varIterator.next());
+					if (n.isLiteral())
+						sb.append(n.asLiteral().getLexicalForm());
 
+					if (n.isResource()) {
+						if (n.isURIResource())
+							sb.append(n.asResource().getURI());
+					}	
+					
+					if(varIterator.hasNext()) {
+						sb.append(", ");
+					}
+				}	
+				
+				String rowResult = sb.toString();
+				if(! rowResult.isEmpty())
+					queryResults.add(rowResult);
+
+				
 				// Get a result variable by name.
-				RDFNode n = soln.get(soln.varNames().next());
+				/*RDFNode n = soln.get(soln.varNames().next());
 				if (n.isLiteral())
-					sparqlResults.add(n.asLiteral().getLexicalForm());
+					queryResults.add(n.asLiteral().getLexicalForm());
 
 				if (n.isResource()) {
 					if (n.isURIResource())
-						sparqlResults.add(n.asResource().getURI());
-				}
+						queryResults.add(n.asResource().getURI());
+				}*/
 			}
+			
+			//Add result 
+			results.put(queryString, queryResults);
 		} finally {
 			if (qexec != null) {
 				qexec.close();
 			}
 		}
-		return sparqlResults;
+		return results;
 	}
 
 	private void appendLog(String text) {

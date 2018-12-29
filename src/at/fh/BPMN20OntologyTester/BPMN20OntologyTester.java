@@ -2,15 +2,12 @@ package at.fh.BPMN20OntologyTester;
 
 import java.io.IOException;
 
-import org.semanticweb.owlapi.model.OWLClass;
-
 import com.sun.javafx.application.LauncherImpl;
 
 import at.fh.BPMN20OntologyTester.controller.FxController;
+import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
 import at.fh.BPMN20OntologyTester.controller.Owl2BpmnNamingMapper;
 import at.fh.BPMN20OntologyTester.controller.OwlConformanceClassHandler;
-import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
-import at.fh.BPMN20OntologyTester.model.OWLModel;
 import at.fh.BPMN20OntologyTester.model.TestCase;
 import at.fh.BPMN20OntologyTester.view.OwlTestSuiteTabTcResultFxController;
 import javafx.application.Application;
