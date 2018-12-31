@@ -68,7 +68,7 @@ public class OWLClassRestriction {
 
 		// Validate data
 		if (onProperty == null) {
-			throw new Exception("OWLClassRestriciton requires link to an OWLProperty!");
+			throw new Exception("OWLClassRestriciton <"+domElement.getLocalName()+"> requires link to an OWLProperty!");
 		}
 
 		if (cardinalityType.equals(OWLRestrictionCardinalityTypeEnum.Unkown)) {

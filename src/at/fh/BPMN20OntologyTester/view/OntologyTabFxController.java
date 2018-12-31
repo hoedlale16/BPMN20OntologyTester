@@ -1,5 +1,6 @@
 package at.fh.BPMN20OntologyTester.view;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -14,11 +15,15 @@ import at.fh.BPMN20OntologyTester.model.OWLModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 /**
  * Handels user interactions on tab "Ontology"
@@ -38,30 +43,50 @@ public class OntologyTabFxController implements FxController {
 	private ComboBox<String> cbOWLEntities;
 	@FXML
 	private TextArea taOntDescription;
+	
+	
+	private ObservableList<String> undocItems = FXCollections.observableArrayList();
+	private ObservableList<String> entities = FXCollections.observableArrayList();
+	private ObservableList<String> restItems = FXCollections.observableArrayList();
 
 	public OntologyTabFxController() {
 	}
 
 	@FXML
 	private void initialize() {
+				
+		lstUnDocumentedEntities.setItems(undocItems);
+		cbOWLEntities.setItems(entities);
+		lstRestrictions.setItems(restItems);
+		
+		//Clear content - loaded when ontology is initialized
+		undocItems.clear();
+		entities.clear();
+		restItems.clear();
+		taOntDescription.clear();
 
 		// Init local ontology variable
-				Optional<OWLModel> optOntology = OntologyHandler.getInstance().getLoadedOntology();
-				if (optOntology.isPresent()) {
-					appendLog("Read and initialized BPMN2.0 Ontology from ressource folder");
-					// Show loaded Ontology on GUI
-					showInitializedOntology(optOntology.get());
-				} else {
-					appendLog("Unable to load Ontology from ressource folder. Unable to verify ontology!");
-				}
-
+		Optional<OWLModel> optOntology = OntologyHandler.getInstance().getLoadedOntology();
+		if (optOntology.isPresent()) {
+			String filePath = optOntology.get().getFileCreatedFrom().getAbsolutePath();
+			
+			//Hide bad hack loading file from resource directory
+			if (filePath.endsWith(".tmp"))
+				filePath = "/resource/owl/BPMN20.owl";
+			
+			appendLog("Read and initialized BPMN2.0 Ontology from <" + filePath + ">");
+			// Show loaded Ontology on GUI
+			showInitializedOntology(optOntology.get());
+		} else {
+			appendLog("Unable to load Ontology from ressource folder. Unable to verify ontology!");
+		}
 
 		// Init local owl2bpmn varaibel
 		if (!Owl2BpmnNamingMapper.getInstance().hasMappings())
 			appendLog("Found no mappings for OWL2BPMN convertion");
 		else
-			appendLog(
-					"Loaded <" + Owl2BpmnNamingMapper.getInstance().getLoadedMapping().size() + "> OWL2BPMN mapping entries");
+			appendLog("Loaded <" + Owl2BpmnNamingMapper.getInstance().getLoadedMapping().size()
+					+ "> OWL2BPMN mapping entries");
 
 	}
 
@@ -75,21 +100,20 @@ public class OntologyTabFxController implements FxController {
 			lbDataProperties.setText("" + ontology.getDataProperties().size());
 
 			// show Classes without rdfs:comment annotation
-			ObservableList<String> undocItems = FXCollections.observableArrayList();
+			
 			for (OWLEntity e : ontology.getUnDocumentedEntities()) {
 				undocItems.add(e.getIRI().getShortForm());
 			}
 			lbDescUndocEntities.setText("Undocumented Entities (" + undocItems.size() + ")");
 			Collections.sort(undocItems);
-			lstUnDocumentedEntities.setItems(undocItems);
 
 			// Show entities which rdfs:comment annotation
-			ObservableList<String> entities = FXCollections.observableArrayList();
+			
 			for (OWLEntity e : ontology.getAllEntities()) {
 				entities.add(e.getIRI().getShortForm());
 			}
 			Collections.sort(entities);
-			cbOWLEntities.setItems(entities);
+			
 		}
 	}
 
@@ -100,8 +124,8 @@ public class OntologyTabFxController implements FxController {
 	private void onShowOntologyEntityDetails() {
 		String strSelItem = cbOWLEntities.getSelectionModel().getSelectedItem();
 		if (strSelItem != null && !strSelItem.isEmpty()) {
-			
-			//When we can select something, the ontology must be present
+
+			// When we can select something, the ontology must be present
 			OWLModel ontology = OntologyHandler.getInstance().getLoadedOntology().get();
 			OWLEntity entity = ontology.getEntityByShortName(strSelItem);
 
@@ -112,10 +136,8 @@ public class OntologyTabFxController implements FxController {
 			taOntDescription.setText(description);
 
 			// Show Restriction for class
+			restItems.clear();
 			if (entity.isOWLClass()) {
-
-				ObservableList<String> restItems = FXCollections.observableArrayList();
-
 				try {
 					for (OWLClassRestriction r : ontology.getAllOWLClassRestrictionOfOWLClass(entity.asOWLClass(),
 							true)) {
@@ -130,9 +152,38 @@ public class OntologyTabFxController implements FxController {
 					restItems.add("No Restrictions for Class found");
 
 				Collections.sort(restItems);
-				lstRestrictions.setItems(restItems);
+				
 			}
 
+		}
+	}
+
+	@FXML
+	private void onLoadAnotherOntology() {
+		try {
+			FileChooser chooser = new FileChooser();
+			chooser.setTitle("Load BPMN2.0 Ontology");
+
+			chooser.getExtensionFilters().add(new ExtensionFilter("BPMN 2.0 Ontology", "*.owl"));
+
+			// Handle selected file
+			File selectedFile = chooser.showOpenDialog(null);
+
+			if (selectedFile != null) {
+				OntologyHandler.getInstance().loadOntology(selectedFile);
+				//Refresh content for new loaded Ontology
+				initialize();
+				
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("New Ontology loaded!");
+				alert.setHeaderText("New ontology initializied");
+				alert.setContentText("Take care to reexecute loading of process models on other register cards to get a valid result");
+				alert.showAndWait();
+				
+			}
+		} catch (Exception e) {
+			appendLog("ERROR - Failed to loading Ontoogy from File <" + e.getMessage() + ">");
+			e.printStackTrace();
 		}
 	}
 
@@ -149,7 +200,6 @@ public class OntologyTabFxController implements FxController {
 			appendLog("Error while open mapping dialog: " + e.getMessage());
 		}
 	}
-	
 
 	private void appendLog(String text) {
 		MainSceneFxController.getInstance().appendLog(text);

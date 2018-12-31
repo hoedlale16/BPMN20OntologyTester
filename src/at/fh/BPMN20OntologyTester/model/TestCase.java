@@ -37,7 +37,6 @@ public class TestCase {
 	private final Map<Process, List<BPMNElement>> resultsXmlNodesFailOWLRestrictions = new HashMap<Process, List<BPMNElement>>();
 
 	private boolean ignoreTcSpecificData = false;
-
 	
 
 	/**
@@ -73,6 +72,7 @@ public class TestCase {
 			throw new Exception("No process model given! - unable to create testcase!");
 		}
 	}
+	
 	
 	/**
 	 * Creates a TestCase with given proessModel. 
@@ -132,13 +132,13 @@ public class TestCase {
 		case XMLElementsAsOWLClasses: {
 			resultsXmlNodesWithoutOWLClass.clear();
 			resultsXmlNodesWithoutOWLClass.addAll(OWLTester.testXMLNodesExsistAsOWLClasses(ontology, processModel,
-					owl2bpmnMapping, ignoreTcSpecificData));
+					owl2bpmnMapping));
 			break;
 		}
 		case XMlAttributesAsOWLProperties: {
 			resultsXmlAttributesWithoutOWLProperty.clear();
 			resultsXmlAttributesWithoutOWLProperty.addAll(OWLTester.testXMLAttributesExsistAsOWLProperties(ontology,
-					processModel, owl2bpmnMapping, ignoreTcSpecificData));
+					processModel, owl2bpmnMapping));
 			break;
 		}
 		case XMLElementFailOWLClassRestrictions: {

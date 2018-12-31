@@ -64,7 +64,7 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 	private TreeView<BPMNElement> treeBPMNfailedRestrictions;
 
 	@FXML
-	private CheckBox cbIgnoreExtensionElements, cbIgnoreWarningRestrictions;
+	private CheckBox cbIgnoreWarningRestrictions;
 
 	@FXML
 	private Button btLoadBPMN, btGenerateReport, btConvertToOWL;
@@ -349,35 +349,39 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 	};
 
 	private void testXmlNodesNotExistInOWL(TestCase testcase) {
-		// Determine if Childs of ExteniosnElement should be ignored or not.
-		testcase.setIgnoreTcSpecificData(cbIgnoreExtensionElements.isSelected());
-
 		//Execute tests and show result
 		testcase.executeTest(TestCaseEnum.XMLElementsAsOWLClasses);
 		
-		testcase.getResultsXmlNodesWithoutOWLClass().forEach(e -> {
-			//if (!xmlNodeNotFoundInOWL.contains(e.getDomLocalName())) {
-				xmlNodeNotFoundInOWL.add(e.getDomLocalName());
-			//}
-		});
-		Collections.sort(xmlNodeNotFoundInOWL);
-		appendLog("Found <" + xmlNodeNotFoundInOWL.size()
-				+ "> XML-Nodes in BPMN which have no OWL-Class in the ontology!");
+		if(testcase.getResultsXmlNodesWithoutOWLClass().isEmpty()) {
+			xmlNodeNotFoundInOWL.add("No issues found!");
+		} else {
+			testcase.getResultsXmlNodesWithoutOWLClass().forEach(e -> {
+				//if (!xmlNodeNotFoundInOWL.contains(e.getDomLocalName())) {
+					xmlNodeNotFoundInOWL.add(e.getDomLocalName());
+				//}
+			});
+			Collections.sort(xmlNodeNotFoundInOWL);
+			appendLog("Found <" + xmlNodeNotFoundInOWL.size()
+					+ "> XML-Nodes in BPMN which have no OWL-Class in the ontology!");
+		}
 	}
 
 	private void testXmlAttriubtesNotExistinOWL(TestCase testcase) {
-		testcase.setIgnoreTcSpecificData(cbIgnoreExtensionElements.isSelected());
-
 		//Execute tests and show result
 		testcase.executeTest(TestCaseEnum.XMlAttributesAsOWLProperties);
-		testcase.getResultsXmlAttributesWithoutOWLProperty().forEach(attr -> {
-			xmlAttributesNotFoundInOWL.add((String) attr);
-		});
-
-		Collections.sort(xmlAttributesNotFoundInOWL);
-		appendLog("Found <" + xmlAttributesNotFoundInOWL.size()
-				+ "> XML-Attributes in BPMN which have no OWL-Property in the ontology!");
-
+		
+		if(testcase.getResultsXmlAttributesWithoutOWLProperty().isEmpty()) {
+			xmlAttributesNotFoundInOWL.add("No issues found!");
+		} else {
+		
+			testcase.getResultsXmlAttributesWithoutOWLProperty().forEach(attr -> {
+				xmlAttributesNotFoundInOWL.add((String) attr);
+			});
+	
+			Collections.sort(xmlAttributesNotFoundInOWL);
+			appendLog("Found <" + xmlAttributesNotFoundInOWL.size()
+					+ "> XML-Attributes in BPMN which have no OWL-Property in the ontology!");
+		}
 	}
 
 	private void testXmlNodesFailRestrictions(TestCase testcase) {

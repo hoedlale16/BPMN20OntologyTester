@@ -48,7 +48,7 @@ public class BPMN20OntologyTester extends Application {
 		dialog.setResizable(false);
 
 		// Set Icon and Display stage...
-		dialog.getIcons().add(new Image(BPMN20OntologyTester.class.getResource("/resource/pics/logo.jpg").toString()));
+		dialog.getIcons().add(new Image(BPMN20OntologyTester.class.getResource("/resource/appData/logo.jpg").toString()));
 
 		return dialog;
 	}
@@ -76,7 +76,7 @@ public class BPMN20OntologyTester extends Application {
 
 	
 	
-	public static Tab getTestSuiteTestResultTag(TestCase testcase) {
+	public static Tab getTestSuiteTestResultTab(TestCase testcase) {
 		try {
 			Tab tab = new Tab();
 			String tabName = testcase.getProcessModel().getFileFromWhomModelWasCreated().getName();
@@ -89,7 +89,7 @@ public class BPMN20OntologyTester extends Application {
 		
 			return tab;
 		} catch (Exception e) {
-			//Sollte in Produktionsbetrieg benau nie passieren, daher nur auf die Console im Fall des Falls
+			//Sollte in Produktionsbetrieb nie passieren, daher nur auf die Console im Fall des Falls
 			System.out.println("Error initializing Application: " + e.getMessage());
 			e.printStackTrace();
 		}
@@ -214,7 +214,7 @@ public class BPMN20OntologyTester extends Application {
 		stage.setMinWidth(1024);
 		stage.setMinHeight(768);
 
-		stage.getIcons().add(new Image(getClass().getResource("/resource/pics/logo.jpg").toString()));
+		stage.getIcons().add(new Image(getClass().getResource("/resource/appData/logo.jpg").toString()));
 
 		stage.setScene(mainScene);
 		stage.show();

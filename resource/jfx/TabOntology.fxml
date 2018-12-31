@@ -141,4 +141,14 @@
          </padding>
       </HBox>
    </bottom>
+   <top>
+      <HBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#onLoadAnotherOntology" styleClass="buttons" text="Load another Ontology" />
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="15.0" />
+         </BorderPane.margin>
+      </HBox>
+   </top>
 </BorderPane>

@@ -144,7 +144,7 @@ public class OwlTestSuiteTabFxController implements FxController {
 					this.updateMessage("Test <" + f.getName() + ">");
 					// Create Tab which triggers the execution of the test
 					TestCase testcase = new TestCase(BPMNModelHandler.readModelFromFile(f));
-					Tab tab = BPMN20OntologyTester.getTestSuiteTestResultTag(testcase);
+					Tab tab = BPMN20OntologyTester.getTestSuiteTestResultTab(testcase);
 					testResultTabs.put(testcase, tab);
 				}
 				return testResultTabs;

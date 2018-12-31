@@ -3,6 +3,7 @@ package at.fh.BPMN20OntologyTester.model;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -46,15 +47,24 @@ public class BPMNModel {
 	private final File fileCreatedFrom;
 	private final Document rawDOMDocument;
 	private OWLConformanceClassEnum conformanceClass;
+	
+	private final List<String> allowedElementNamespacesForBPMN20;
 
 	public BPMNModel(BpmnModelInstance model, File file) throws Exception {
 		try {
 			this.model = model;
 			this.fileCreatedFrom = file;
 			this.rawDOMDocument = praseXMlFile(file);
+			this.allowedElementNamespacesForBPMN20 = Arrays.asList(
+											 "http://www.omg.org/spec/BPMN/20100524/MODEL", 
+			                                 "http://www.omg.org/spec/BPMN/20100524/DI");
 		}catch (Exception e) {
 			throw new Exception ("unable to parse raw XML Doucment for model!");
 		}
+	}
+	
+	public List<String> getAllowedNameSpaceURisForBPMN20() {
+		return this.allowedElementNamespacesForBPMN20;
 	}
 	
 	/**
@@ -209,21 +219,25 @@ public class BPMNModel {
 
 	/**
 	 * Returns a Set of Elements which occure in the model. Required to check if the
-	 * ontolgy has an entry for all of this elements
+	 * ontology has an entry for all of this elements
+	 * 
+	 * @param ignoreFromExtensionElementsField - Flag to ignore content of 'exteionsElements'
 	 * 
 	 * @return
 	 */
-	public Set<DomElement> getAllElementsOfModel(boolean ignoreFromExtensionElementsField) {
+	public Set<DomElement> getAllElementsOfModel() {
 		Set<DomElement> elements = new HashSet<DomElement>();
 
 		DomDocument doc = model.getDocument();
-		addElementToSet(doc.getRootElement(), elements, ignoreFromExtensionElementsField);
-
+		for(String nsURI: getAllowedNameSpaceURisForBPMN20()) {
+			elements.addAll(doc.getElementsByNameNs(nsURI, "*"));
+		}		
 		return elements;
 	}
 	
 	public Set<String> getAllAttributesOfModel() {
 		Set<String> xmlAttributes = new HashSet<String>();
+		
 		
 		//Collect all occurred attributes in this model
 		getAllAttributesOfNode(rawDOMDocument.getDocumentElement(), xmlAttributes);
@@ -233,35 +247,6 @@ public class BPMNModel {
 	
 	public DomElement getModelDefinitionAsDomElement() {
 		return model.getDocument().getRootElement();
-	}
-
-
-
-	/**
-	 * Helper Method to add an Element and his childs to the element Set in a
-	 * recursive way
-	 * 
-	 * @param element
-	 * @param elementSet
-	 */
-	private void addElementToSet(DomElement element, Set<DomElement> elementSet,boolean ignoreExtenionElements) {
-		elementSet.add(element);
-		
-		if(! "extensionElements".equals(element.getLocalName())) {
-			
-			// Iterate over all Childs and add them now...
-			for (DomElement e : element.getChildElements()) {
-				// calls this method for all recursivle to add all the children which is Element
-				addElementToSet(e, elementSet,ignoreExtenionElements);
-			}
-		} else {
-			//Check if we are allowed to add elemets from extensionElementsFiled as well
-			if (! ignoreExtenionElements) {
-				for (DomElement e : element.getChildElements()) {	
-					addElementToSet(e, elementSet,ignoreExtenionElements);
-				}
-			}
-		}
 	}
 	
 	/**
@@ -273,11 +258,13 @@ public class BPMNModel {
 	 */
 	private void getAllAttributesOfNode(Element element, Set<String> attributeSet) {
 
-		//Add all attributes of curent given element
-		NamedNodeMap attributes = element.getAttributes();
-		for (int i = 0; i < attributes.getLength(); i++) {
-			Node attribute = attributes.item(i);
-			attributeSet.add(attribute.getNodeName());
+		//Add all attributes of curent given element if namespace of element is allowed
+		if(getAllowedNameSpaceURisForBPMN20().contains(element.getNamespaceURI())) {			
+			NamedNodeMap attributes = element.getAttributes();
+			for (int i = 0; i < attributes.getLength(); i++) {
+				Node attribute = attributes.item(i);
+				attributeSet.add(attribute.getNodeName());
+			}
 		}
 
 		// Now add all childs in a recursive way

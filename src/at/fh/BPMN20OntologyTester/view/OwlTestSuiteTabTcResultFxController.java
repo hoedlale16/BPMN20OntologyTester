@@ -50,7 +50,7 @@ public class OwlTestSuiteTabTcResultFxController implements FxController {
 	private TreeView<BPMNElement> treeBPMNfailedRestrictions;
 
 	@FXML
-	private CheckBox cbIgnoreExtensionElements, cbIgnoreWarningRestrictions;
+	private CheckBox cbIgnoreWarningRestrictions;
 
 	// Initialized when tab is created
 	private final TestCase testcase;
@@ -148,30 +148,33 @@ public class OwlTestSuiteTabTcResultFxController implements FxController {
 	};
 
 	private void testXmlNodesNotExistInOWL(TestCase testcase) {
-		// Determine if Childs of ExteniosnElement should be ignored or not.
-		testcase.setIgnoreTcSpecificData(cbIgnoreExtensionElements.isSelected());
-
 		//Execute tests and show result
 		testcase.executeTest(TestCaseEnum.XMLElementsAsOWLClasses);
 		
-		testcase.getResultsXmlNodesWithoutOWLClass().forEach(e -> {
-			//if (!xmlNodeNotFoundInOWL.contains(e.getDomLocalName())) {
-				xmlNodeNotFoundInOWL.add(e.getDomLocalName());
-			//}
-		});
-		Collections.sort(xmlNodeNotFoundInOWL);
+		if(testcase.getResultsXmlNodesWithoutOWLClass().isEmpty()) {
+			xmlNodeNotFoundInOWL.add("No issues found!");
+		} else {
+			testcase.getResultsXmlNodesWithoutOWLClass().forEach(e -> {
+					xmlNodeNotFoundInOWL.add(e.getDomLocalName());
+	
+			});
+			Collections.sort(xmlNodeNotFoundInOWL);
+		}
 	}
 
 	private void testXmlAttriubtesNotExistinOWL(TestCase testcase) {
-		testcase.setIgnoreTcSpecificData(cbIgnoreExtensionElements.isSelected());
-
 		//Execute tests and show result
 		testcase.executeTest(TestCaseEnum.XMlAttributesAsOWLProperties);
-		testcase.getResultsXmlAttributesWithoutOWLProperty().forEach(attr -> {
-			xmlAttributesNotFoundInOWL.add((String) attr);
-		});
-
-		Collections.sort(xmlAttributesNotFoundInOWL);
+		
+		if(testcase.getResultsXmlAttributesWithoutOWLProperty().isEmpty()) {
+			xmlAttributesNotFoundInOWL.add("No issues found!");
+		} else {
+		
+			testcase.getResultsXmlAttributesWithoutOWLProperty().forEach(attr -> {
+				xmlAttributesNotFoundInOWL.add((String) attr);
+			});
+			Collections.sort(xmlAttributesNotFoundInOWL);
+		}
 
 	}
 

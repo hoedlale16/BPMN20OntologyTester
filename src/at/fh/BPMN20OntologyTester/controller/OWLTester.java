@@ -51,12 +51,12 @@ public class OWLTester {
 	 * @return
 	 */
 	public static Set<BPMNElement> testXMLNodesExsistAsOWLClasses(OWLModel ontology, BPMNModel model,
-			Owl2BpmnNamingMapper owl2bpmnMapper, boolean ignoreExtensionElements) {
+			Owl2BpmnNamingMapper owl2bpmnMapper) {
 		Set<BPMNElement> notFoundInOWL = new HashSet<BPMNElement>();
 
 		// Each XML-Node must exist as OWL-Class in the Ontology.
 		// Each Attribute of an XML-Test must exist as OWL-Property in the Ontology
-		Set<DomElement> elements = model.getAllElementsOfModel(ignoreExtensionElements);
+		Set<DomElement> elements = model.getAllElementsOfModel();
 		for (DomElement element : elements) {
 
 			String mappedOWLname = owl2bpmnMapper.getMappedNameFor(element.getLocalName(), true);
@@ -86,7 +86,7 @@ public class OWLTester {
 	 * @return
 	 */
 	public static Set<String> testXMLAttributesExsistAsOWLProperties(OWLModel ontology, BPMNModel model,
-			Owl2BpmnNamingMapper owl2bpmnMapper, boolean ignoreExtensionElements) {
+			Owl2BpmnNamingMapper owl2bpmnMapper) {
 		Set<String> notFoundInOWL = new HashSet<String>();
 		
 		for(String xmlAttr: model.getAllAttributesOfModel()) {
