@@ -132,7 +132,7 @@ public class OntologyHandler {
 			
 			
 			//Get all Elements of process Model 
-			Set<String> elementNames = processModel.getAllElementsOfModel(true).
+			Set<String> elementNames = processModel.getAllElementsOfModel().
 										stream().map(d -> d.getLocalName()).collect(Collectors.toSet());
 			
 			//For each element, load all Axioms(Propertys,Classes,...) and add to new Ontology
