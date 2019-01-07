@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
 import java.util.Properties;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.semanticweb.owlapi.model.OWLEntity;
 
@@ -133,12 +135,11 @@ public class Owl2BpmnNamingMapper {
 	 * @return
 	 */
 	public Optional<String> getXmlElementName(String owlEntityName) {
-		if (owl2xmlMapping.containsValue(owlEntityName)) {
-			for (Object v : owl2xmlMapping.values()) {
-				String key = (String) v;
-				if (key.endsWith(owlEntityName))
-					return Optional.of(key);
-			}
+		
+		for(String key: getKeys()) {
+			String value = owl2xmlMapping.getProperty(key);
+			if(value.equals(owlEntityName))
+				return Optional.of(key);
 		}
 
 		return Optional.empty();
@@ -197,6 +198,11 @@ public class Owl2BpmnNamingMapper {
 		return owl2xmlMapping;
 	}
 	
+	public Set<String> getKeys() {
+		
+		return owl2xmlMapping.keySet().stream().map( Object::toString).collect(Collectors.toSet());
+	}
+		
 	/**
 	 * Return true if mappings exists or false if no mappings exists
 	 * @return

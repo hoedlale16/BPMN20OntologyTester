@@ -270,8 +270,7 @@ public class OWLTester {
 			// When not it might be a problem in the OWL-Naming as well
 			if ((!foundAsAttributeOrXmlTag) && restriction.getCardinality() == 0) {
 				String errMsg = "Restriction did not expect element <"
-						+ restriction.getOnProperty().getIRI().getShortForm()
-						+ "> and element not found in BPMN. This might be a mapping error as well!";
+						+ affectedXMLElementName + "> and element not found in BPMN. This might be a mapping error as well!";
 				return Optional
 						.of(new FailedOWLClassRestriction(OWLRestrictionFailingLevelEnum.WARNING, errMsg, restriction));
 			}
@@ -279,7 +278,7 @@ public class OWLTester {
 
 		// We've found an XML-Element - check if cardinality of restriction is met
 		if (!isRestrictionCardinaltyMet(bpmnOccurance, restriction)) {
-			String errMsg = "Restriction expected element <" + restriction.getOnProperty().getIRI().getShortForm()
+			String errMsg = "Restriction expected element <" + affectedXMLElementName
 					+ "> <" + restriction.getCardinality() + "> times with Matchtype <"
 					+ restriction.getCardinalityType() + "> but element occured in BPMN <" + bpmnOccurance + "> times.";
 
