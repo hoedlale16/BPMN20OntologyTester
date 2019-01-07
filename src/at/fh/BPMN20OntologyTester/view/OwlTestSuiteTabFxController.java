@@ -229,13 +229,15 @@ public class OwlTestSuiteTabFxController implements FxController {
 				.append("> XML-Attribut without OWL-Property").append("\n");
 
 		int totalXmlNodesFailedRestrictions = 0;
+		int totalXmlNodesFailed = 0;
 		for (Process proc : testcase.getResultsXmlNodesFailOWLRestrictions().keySet()) {
 			for (BPMNElement element : testcase.getResultsXmlNodesFailOWLRestrictions().get(proc)) {
+				totalXmlNodesFailed++;
 				totalXmlNodesFailedRestrictions += element.getFailedRestrictions().size();
 			}
 		}
-		testSuiteLog.append("  <").append(totalXmlNodesFailedRestrictions)
-				.append("> XML-Nodes which failed defined OWL-Restrictions").append("\n");
+		testSuiteLog.append("  <").append( totalXmlNodesFailed)
+				.append("> XML-Nodes which failed defined OWL-Restrictions <" + totalXmlNodesFailedRestrictions + ">").append("\n");
 
 		testSuiteLog.append("----------------------------").append("\n");
 	}
