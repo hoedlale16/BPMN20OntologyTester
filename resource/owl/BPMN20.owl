@@ -112,13 +112,14 @@ artifacts: Artifact [0..*] This attribute provides the list of Artifacts that ar
 
 
     <!-- http://www.reiter.at/ontology/bpmn2.0#assignment -->
-
+    <!--hoedlale16: 'assigment' is a XML-Element and represented as OWL-Class 'Assignment' -->
+    <!--
     <owl:ObjectProperty rdf:about="http://www.reiter.at/ontology/bpmn2.0#assignment">
         <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Specifies one or more data elements Assignments. By using an
 Assignment, single data structure elements can be assigned from the
 source structure to the target structure.</rdfs:comment>
     </owl:ObjectProperty>
-    
+    -->
 
 
     <!-- http://www.reiter.at/ontology/bpmn2.0#associationDirection -->
@@ -856,11 +857,12 @@ ResourceParameter.</rdfs:comment>
 
 
     <!-- http://www.reiter.at/ontology/bpmn2.0#extensionAttributeDefinition -->
-
+    <!-- hoedlale16: Property not required in OWL -->
+    <!--
     <owl:ObjectProperty rdf:about="http://www.reiter.at/ontology/bpmn2.0#extensionAttributeDefinition">
         <rdfs:comment>Defines the extension attribute for which this value is being provided.</rdfs:comment>
     </owl:ObjectProperty>
-    
+    -->
 
 
     <!-- http://www.reiter.at/ontology/bpmn2.0#extensionAttributeDefinitions -->
@@ -909,12 +911,10 @@ Note that:
     
 
 
-    <!-- http://www.reiter.at/ontology/bpmn2.0#flowNodeRef -->
-
+    <!-- http://www.reiter.at/ontology/bpmn2.0#flowNodeRef -->    
     <owl:ObjectProperty rdf:about="http://www.reiter.at/ontology/bpmn2.0#flowNodeRef">
         <rdfs:comment>The list of FlowNodes partitioned into this Lane according to the partitionElement defined as part of the Lane element.</rdfs:comment>
     </owl:ObjectProperty>
-    
 
 
     <!-- http://www.reiter.at/ontology/bpmn2.0#font -->
@@ -960,11 +960,12 @@ technology representing that operation, such as a WSDL operation.</rdfs:comment>
 
 
     <!-- http://www.reiter.at/ontology/bpmn2.0#import -->
-
+    <!-- hoedlale16: XML-Element 'import' represented as XML-Element not as XMl-Attribte -->
+    <!--
     <owl:ObjectProperty rdf:about="http://www.reiter.at/ontology/bpmn2.0#import">
         <rdfs:comment>Identifies the location of the data structure and its format. If the importType attribute is left unspecified, the typeLanguage specified in the Definitions that contains this ItemDefinition is assumed.</rdfs:comment>
     </owl:ObjectProperty>
-    
+    -->
 
 
     <!-- http://www.reiter.at/ontology/bpmn2.0#imports -->
@@ -3144,17 +3145,34 @@ them available for use by elements within this Definitions.</rdfs:comment>
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <!--hoedlale16: Defualt Value 'false', therefore no qualifiedCardinality required -->
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isForCompensation"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isForCompensation"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        
+        <!--hoedlale16: Defualt Value '1', therefore no qualifiedCardinality required -->
+        <rdfs:subClassOf>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#startQuantity"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#startQuantity"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -3578,8 +3596,7 @@ depicted in the current diagram because it is inside a black box Pool. The Messa
 being the BPMNShape depicting the Pool to connect it to the boundary of that black box Pool.
 BPMNEdge also contains an optional label of type BPMNLabel that can be nested in the edge when it has a visible
 textual label with its own bounding box.
-All BPMNEdge elements are owned directly by a BPMNPlane (that is the root element in a BPMNDiagram). The
-waypoints of BPMNEdge are always relative to that plane’s origin point and are REQUIRED to be positive coordinates.
+All BPMNEdge elements are owned directly by a BPMNPlane (that is the root element in a BPMNDiagram). The waypoints of BPMNEdge are always relative to that plane’s origin point and are REQUIRED to be positive coordinates.
 Abstract Syntax
 • Figure 12.4 - BPMN Edge
 Generalizations
@@ -4003,11 +4020,22 @@ Table 12.3 – BPMNShape XML schema
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#documentation"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Documentation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <!-- hoedlale16: extensionsDefinition are represented as XML-Element 'extensionElements' 
+              and not as xml-attribute -->
+        <!--
+        <rdfs:subClassOf>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#extensionDefinitions"/>
                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#ExtensionDefinition"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        -->
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#extensionValues"/>
@@ -4451,6 +4479,8 @@ relationship to RootElement. Table 8.22 displays the additional model associatio
                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Category"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <!--hoedlale16: XML-Element must have a value. The value is represented in the body of the XML-Element. 
+                        Ontology just checks Syntax 
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#value"/>
@@ -4458,6 +4488,7 @@ relationship to RootElement. Table 8.22 displays the additional model associatio
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        -->
         <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Categories, which have user-defined semantics, can be used for documentation or analysis purposes. For example, FlowElements can be categorized as being customer oriented vs. support oriented. Furthermore, the cost and time of Activities per Category can be calculated.
 Groups are one way in which Categories of objects can be visually displayed on the diagram. That is, a Group is a visual depiction of a single CategoryValue.
 
@@ -5451,6 +5482,9 @@ Table 8.5). Table 8.34 displays the additional model associations of the Correla
         <rdfs:subClassOf rdf:resource="http://www.reiter.at/ontology/bpmn2.0#CommonExecutableProcessModelingConformance"/>
         <rdfs:subClassOf rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Data"/>
         <rdfs:subClassOf rdf:resource="http://www.reiter.at/ontology/bpmn2.0#DescriptiveProcessModelingConformance"/>
+        
+        <!--hoedlale16: 'assigment' is a XML-Element to assign Data-Elements not an XML-Attribute-->
+        <!--
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#assignment"/>
@@ -5458,6 +5492,7 @@ Table 8.5). Table 8.34 displays the additional model associations of the Correla
                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Assignment"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        -->
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#sourceRef"/>
@@ -5563,10 +5598,18 @@ The DataAssociation element inherits the attributes and model associations of Ba
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <!-- hoedlale16: isCollection has a default value of 'false' (Standard: 8.3.10 Item Definition). -->
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isCollection"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isCollection"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -5635,10 +5678,18 @@ Table 10.64), but does not contain any additional attributes or model associatio
         <rdfs:subClassOf rdf:resource="http://www.reiter.at/ontology/bpmn2.0#DescriptiveProcessModelingConformance"/>
         <rdfs:subClassOf rdf:resource="http://www.reiter.at/ontology/bpmn2.0#FlowElement"/>
         <rdfs:subClassOf rdf:resource="http://www.reiter.at/ontology/bpmn2.0#ItemAwareElement"/>
+        <!-- hoedlale16: isCollection has a default value of 'false' (Standard: 8.3.10 Item Definition). -->
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isCollection"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isCollection"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -5713,7 +5764,7 @@ Reference element.</rdfs:comment>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#outputSetRefs"/>
-                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#OutputSet"/>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -5738,10 +5789,18 @@ Reference element.</rdfs:comment>
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <!-- hoedlale16: isCollection has a default value of 'false' (Standard: 8.3.10 Item Definition). -->
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isCollection"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isCollection"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -5835,10 +5894,18 @@ presents the additional attributes and model associations of the DataObject elem
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <!-- hoedlale16: Default-value 'false' for attribute isUnlimited. Therefore min/max restriction -->
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isUnlimited"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isUnlimited"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -5912,6 +5979,7 @@ connector (see the figure to the right).</rdfs:comment>
     <owl:Class rdf:about="http://www.reiter.at/ontology/bpmn2.0#Definitions">
         <rdfs:subClassOf rdf:resource="http://www.reiter.at/ontology/bpmn2.0#BaseElement"/>
         <rdfs:subClassOf rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Infrastructure"/>
+        
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#diagrams"/>
@@ -5924,13 +5992,6 @@ connector (see the figure to the right).</rdfs:comment>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#extensions"/>
                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Extension"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#imports"/>
-                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
-                <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Import"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -6063,6 +6124,8 @@ The Definitions element inherits the attributes and model associations of BaseEl
     <owl:Class rdf:about="http://www.reiter.at/ontology/bpmn2.0#Documentation">
         <rdfs:subClassOf rdf:resource="http://www.reiter.at/ontology/bpmn2.0#BaseElement"/>
         <rdfs:subClassOf rdf:resource="http://www.reiter.at/ontology/bpmn2.0#DescriptiveProcessModelingConformance"/>
+        <!-- hoedlale16: Restriction not needed because documentation is expected to appear in the body of the documentation-element. The attributes 'text' and 'textFormat' not expected for element -->
+        <!--
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#text"/>
@@ -6077,6 +6140,7 @@ The Definitions element inherits the attributes and model associations of BaseEl
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        -->
         <rdfs:comment>All BPMN elements that inherit from the BaseElement will have the capability, through the Documentation
 element, to have one (1) or more text descriptions of that element.
 The Documentation element inherits the attributes and model associations of BaseElement (see Table 8.5). Table
@@ -6595,11 +6659,25 @@ Expression inherits the attributes and model associations of BaseElement (see Ta
         <rdfs:subClassOf rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Foundation"/>
         <rdfs:subClassOf>
             <owl:Restriction>
+                <!-- hoedlale16: Because of default-value(fale) not explizit required attribute -->
+                <!-- Reconfigured: Instead of exact check to min/max (0-1) -->
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isReference"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isReference"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        
+        <!-- hoedlale16: OWL does not check XMl-Syntax, just Entity-Semantic. -->
+        <!-- Each XML-Attribute consist of a name and has a type (by XML-Syntax.-->
+        <!-- Restriction in OWL not needed -->
+        <!--
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#name"/>
@@ -6614,6 +6692,7 @@ Expression inherits the attributes and model associations of BaseElement (see Ta
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        -->
         <rdfs:comment>The ExtensionAttributeDefinition defines new attributes. This type is not applicable when the XML schema interchange is used; since the XSD mechanisms for supporting “AnyAttribute” and “Any” type already satisfy this requirement.</rdfs:comment>
     </owl:Class>
     
@@ -6637,6 +6716,10 @@ Expression inherits the attributes and model associations of BaseElement (see Ta
                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Element"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <!-- hoedlale16: 
+        According to the stanrdsa 'extensionAttriubteDefinitions' are specific attributes to make up the extension. The attributes are childs of the XMl-Element 'extensionElements') which are not described (=customized). Furhtermore the cardinality is 0..* and not qualified. in the standard (8.2.3 Extensibility - Table 8.8 – ExtensionDefinition attributes) 
+        -->
+        <!--
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#extensionAttributeDefinition"/>
@@ -6644,6 +6727,7 @@ Expression inherits the attributes and model associations of BaseElement (see Ta
                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#ExtensionAttributeDefinition"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        -->
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#value"/>
@@ -6674,6 +6758,8 @@ Expression inherits the attributes and model associations of BaseElement (see Ta
                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#ExtensionAttributeDefinition"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <!-- hoedlale16: name represented by XML-Element-Tag - Not a attribute of XML-Element -->
+        <!--
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#name"/>
@@ -6681,6 +6767,7 @@ Expression inherits the attributes and model associations of BaseElement (see Ta
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        -->
         <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">The ExtensionDefinition class defines and groups additional attributes. This type is not applicable when the XML
 schema interchange is used, since XSD Complex Types already satisfy this requirement.
 Table 8.8 presents the attributes and model associations for the ExtensionDefinition element.</rdfs:comment>
@@ -6700,6 +6787,8 @@ Table 8.8 presents the attributes and model associations for the ExtensionDefini
                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Auditing"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <!--hoedlale16: Category is a XML-Element not a XML-Attribute. if XML-Element exists it must fullfill the CategoryValue restrictions (Table 8.44 – FlowElement attributes) -->
+        <!--
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#categoryValueRef"/>
@@ -6707,6 +6796,7 @@ Table 8.8 presents the attributes and model associations for the ExtensionDefini
                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#CategoryValue"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        -->
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#monitoring"/>
@@ -6777,6 +6867,7 @@ Table 8.8 presents the attributes and model associations for the ExtensionDefini
 
     <owl:Class rdf:about="http://www.reiter.at/ontology/bpmn2.0#FlowNode">
         <rdfs:subClassOf rdf:resource="http://www.reiter.at/ontology/bpmn2.0#FlowElement"/>
+        <!-- hoedlale16: Table 8.52 – FlowNode model associations -->
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#incoming"/>
@@ -7143,6 +7234,14 @@ associations of ThrowEvent (see Table 10.84), but does not have any additional a
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#location"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <!-- hoedlale16: Class Import is optional, therefore restriction needs to be min/max instead of exact -->
+        <rdfs:subClassOf>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#importType"/>
                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
@@ -7155,13 +7254,7 @@ associations of ThrowEvent (see Table 10.84), but does not have any additional a
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#location"/>
-                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
+        
         <rdfs:comment>The Import class is used when referencing external element, either BPMN elements contained in other BPMN
 Definitions or non-BPMN elements. Imports MUST be explicitly defined.</rdfs:comment>
     </owl:Class>
@@ -7449,16 +7542,16 @@ An Intermediate Event that is placed within the normal flow of a Process can be 
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#dataState"/>
+                <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#itemSubjectRef"/>
                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#DataState"/>
+                <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#ItemDefinition"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#itemSubjectRef"/>
+                <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#dataState"/>
                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#ItemDefinition"/>
+                <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#DataState"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Several elements in BPMN are subject to store or convey items during process execution. These elements are referenced generally as “item-aware elements.” This is similar to the variable construct common to many languages. As with variables, these elements have an ItemDefinition.
@@ -7475,6 +7568,9 @@ Table 10.51 presents the additional model associations of the ItemAwareElement e
         <rdfs:subClassOf rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Common"/>
         <rdfs:subClassOf rdf:resource="http://www.reiter.at/ontology/bpmn2.0#CommonExecutableProcessModelingConformance"/>
         <rdfs:subClassOf rdf:resource="http://www.reiter.at/ontology/bpmn2.0#RootElement"/>
+        <!-- hoedlale16: 'import' is a XML-Element and as a result represented by an Element 
+              If the element exists, it must fullfill the defined restriction. -->
+        <!--
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#import"/>
@@ -7484,25 +7580,37 @@ Table 10.51 presents the additional model associations of the ItemAwareElement e
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#import"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Import"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        -->
+        <rdfs:subClassOf>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#structureRef"/>
                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Element"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        
+        <!--hoedlale16: Attribute 'itemKind' is allowed to occure 0..1 [Standard: Figure 8.25 - ItemDefinition class diagram] -->
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#itemKind"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#ItemKind"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#import"/>
+                <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#itemKind"/>
                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Import"/>
+                <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#ItemKind"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        
+        
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#structureRef"/>
@@ -7510,10 +7618,18 @@ Table 10.51 presents the additional model associations of the ItemAwareElement e
                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Element"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <!-- hoedlale16: isCollection has a default value of 'false' (Standard: 8.3.10 Item Definition). -->
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isCollection"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isCollection"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -9530,9 +9646,15 @@ Table 10.9 presents the additional model associations of the Send Task.</rdfs:co
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
+            <!-- hoedlale16: isImmediate is an optional flag. Change cardinality from exact to min/max(1) -->
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isImmediate"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+            </owl:Restriction>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isImmediate"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
             </owl:Restriction>
         </rdfs:subClassOf>
