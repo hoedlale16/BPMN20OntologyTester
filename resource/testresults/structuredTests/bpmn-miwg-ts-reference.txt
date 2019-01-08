@@ -1,0 +1,65 @@
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\A.1.0.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <3> XML-Nodes which failed defined OWL-Restrictions <6>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\A.2.0.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <6> XML-Nodes which failed defined OWL-Restrictions <12>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\A.2.1.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <6> XML-Nodes which failed defined OWL-Restrictions <12>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\A.3.0.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <7> XML-Nodes which failed defined OWL-Restrictions <16>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\A.4.0.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <7> XML-Nodes which failed defined OWL-Restrictions <13>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\A.4.1.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <8> XML-Nodes which failed defined OWL-Restrictions <14>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\B.1.0.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <20> XML-Nodes which failed defined OWL-Restrictions <46>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\B.2.0.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <55> XML-Nodes which failed defined OWL-Restrictions <138>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\C.1.0.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <13> XML-Nodes which failed defined OWL-Restrictions <27>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\C.1.1.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <10> XML-Nodes which failed defined OWL-Restrictions <23>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\C.2.0.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <14> XML-Nodes which failed defined OWL-Restrictions <29>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\C.3.0.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <10> XML-Nodes which failed defined OWL-Restrictions <22>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\C.4.0.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <26> XML-Nodes which failed defined OWL-Restrictions <53>
+----------------------------

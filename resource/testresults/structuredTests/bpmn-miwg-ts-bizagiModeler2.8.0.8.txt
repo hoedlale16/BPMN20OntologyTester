@@ -1,0 +1,25 @@
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Bizagi Modeler 2.8.0.8\A.1.0-roundtrip.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <6> XML-Nodes which failed defined OWL-Restrictions <9>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Bizagi Modeler 2.8.0.8\A.2.0-roundtrip.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <7> XML-Nodes which failed defined OWL-Restrictions <13>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Bizagi Modeler 2.8.0.8\A.3.0-roundtrip.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <8> XML-Nodes which failed defined OWL-Restrictions <17>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Bizagi Modeler 2.8.0.8\A.4.0-roundtrip.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <8> XML-Nodes which failed defined OWL-Restrictions <15>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Bizagi Modeler 2.8.0.8\A.4.1-roundtrip.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <9> XML-Nodes which failed defined OWL-Restrictions <16>
+----------------------------

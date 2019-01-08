@@ -1,0 +1,45 @@
+Testreport ob Ontology
+
+General OWL Data:
+ - OWL-Classes: 263
+ - OWL-DataProperties: 61
+ - OWL-ObjectProperties: 178
+
+General OWL Issues:
+ - Processmodel Conformance Class: DescriptiveConformance
+ - Number of XML-Nodes without OWL-Class: 0
+ - Number of XML-Attributes without OWL-Propertiy: 0
+ - Number of XML-Nodes which failed the OWL-Class Restriction: 9
+
+Detailed List of XML-Nodes without OWL-Classes:
+
+Detailed List of XML-Attributes without OWL-Property
+
+Detailed List of XML-Nodes which failed OWL-Class Restriction:
+ - process
+   - laneSet
+     - [OWL-Class: Lane] - ERR: Restriction expected element <name> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - task
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - task
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - task
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - exclusiveGateway
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - task
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - task
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - task
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+   - task
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <sourceRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+     - [OWL-Class: FlowNode] - ERR: Restriction expected element <targetRef> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.

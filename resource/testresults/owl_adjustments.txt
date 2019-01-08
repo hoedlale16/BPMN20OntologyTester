@@ -1,0 +1,368 @@
+115c115,116
+< 
+---
+>     <!--hoedlale16: 'assigment' is a XML-Element and represented as OWL-Class 'Assignment' -->
+>     <!--
+121c122
+<     
+---
+>     -->
+859c860,861
+< 
+---
+>     <!-- hoedlale16: Property not required in OWL -->
+>     <!--
+863c865
+<     
+---
+>     -->
+912,914c914,915
+<     <!-- http://www.reiter.at/ontology/bpmn2.0#flowNodeRefs -->
+< 
+<     <owl:ObjectProperty rdf:about="http://www.reiter.at/ontology/bpmn2.0#flowNodeRefs">
+---
+>     <!-- http://www.reiter.at/ontology/bpmn2.0#flowNodeRef -->    
+>     <owl:ObjectProperty rdf:about="http://www.reiter.at/ontology/bpmn2.0#flowNodeRef">
+917d917
+<     
+967,968d966
+<     
+< 
+1205c1203
+<     <!-- http://www.reiter.at/ontology/bpmn2.0#lanes -->
+---
+>     <!-- http://www.reiter.at/ontology/bpmn2.0#lane -->
+1207c1205
+<     <owl:ObjectProperty rdf:about="http://www.reiter.at/ontology/bpmn2.0#lanes">
+---
+>     <owl:ObjectProperty rdf:about="http://www.reiter.at/ontology/bpmn2.0#lane">
+3139a3138
+>         <!--hoedlale16: Defualt Value '1' for atttribute 'completionQuantity' (Table 10.3 - Activity attributes).  -->
+3143c3142
+<                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+---
+>                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+3146a3146
+>         <!--hoedlale16: Defualt Value 'false', therefore no qualifiedCardinality required -->
+3150c3150
+<                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+---
+>                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+3153a3154,3155
+>         
+>         <!--hoedlale16: Defualt Value '1', therefore no qualifiedCardinality required -->
+3157c3159,3166
+<                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+---
+>                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+>                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+>             </owl:Restriction>
+>         </rdfs:subClassOf>
+>         <rdfs:subClassOf>
+>             <owl:Restriction>
+>                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#startQuantity"/>
+>                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+3581,3582c3590
+< All BPMNEdge elements are owned directly by a BPMNPlane (that is the root element in a BPMNDiagram). The
+< waypoints of BPMNEdge are always relative to that plane’s origin point and are REQUIRED to be positive coordinates.
+---
+> All BPMNEdge elements are owned directly by a BPMNPlane (that is the root element in a BPMNDiagram). The waypoints of BPMNEdge are always relative to that plane’s origin point and are REQUIRED to be positive coordinates.
+4005a4014,4023
+>                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#documentation"/>
+>                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+>                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Documentation"/>
+>             </owl:Restriction>
+>         </rdfs:subClassOf>
+>         <!-- hoedlale16: extensionsDefinition are represented as XML-Element 'extensionElements' 
+>               and not as xml-attribute -->
+>         <!-- -->
+>         <rdfs:subClassOf>
+>             <owl:Restriction>
+4010a4029,4030
+>         <!-- -->
+> 
+4358a4379,4380
+>         <!-- hoedlale16: parallelMultiple has a default value 'false'. (Table 10.104 – CatchEvent XML schema) 
+>                          Changed Restriction from qualified to min/max --> 
+4362c4384
+<                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+---
+>                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+4453a4476,4477
+>         <!--hoedlale16: XML-Element must have a value. The value is represented in the body of the XML-Element. 
+>                         Ontology just checks Syntax 
+4460a4485
+>         -->
+5453a5479,5481
+>         
+>         <!--hoedlale16: 'assigment' is a XML-Element to assign Data-Elements not an XML-Attribute-->
+>         <!-- -->
+5460a5489,5490
+>         <!-- -->
+> 
+5565a5596
+>         <!-- hoedlale16: isCollection has a default value of 'false' (Standard: 8.3.10 Item Definition). -->
+5569c5600,5607
+<                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+---
+>                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+>                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+>             </owl:Restriction>
+>         </rdfs:subClassOf>
+>         <rdfs:subClassOf>
+>             <owl:Restriction>
+>                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isCollection"/>
+>                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+5637a5676
+>         <!-- hoedlale16: isCollection has a default value of 'false' (Standard: 8.3.10 Item Definition). -->
+5641c5680,5687
+<                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+---
+>                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+>                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+>             </owl:Restriction>
+>         </rdfs:subClassOf>
+>         <rdfs:subClassOf>
+>             <owl:Restriction>
+>                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isCollection"/>
+>                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+5716c5762
+<                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+---
+>                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+5740a5787
+>         <!-- hoedlale16: isCollection has a default value of 'false' (Standard: 8.3.10 Item Definition). -->
+5744c5791,5798
+<                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+---
+>                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+>                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+>             </owl:Restriction>
+>         </rdfs:subClassOf>
+>         <rdfs:subClassOf>
+>             <owl:Restriction>
+>                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isCollection"/>
+>                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+5837a5892
+>         <!-- hoedlale16: Default-value 'false' for attribute isUnlimited. Therefore min/max restriction -->
+5841c5896,5903
+<                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+---
+>                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+>                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+>             </owl:Restriction>
+>         </rdfs:subClassOf>
+>         <rdfs:subClassOf>
+>             <owl:Restriction>
+>                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isUnlimited"/>
+>                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+5914a5977
+>         
+5931,5937d5993
+<                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#imports"/>
+<                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+<                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Import"/>
+<             </owl:Restriction>
+<         </rdfs:subClassOf>
+<         <rdfs:subClassOf>
+<             <owl:Restriction>
+6065a6122,6123
+>         <!-- hoedlale16: Restriction not needed because documentation is expected to appear in the body of the documentation-element. The attributes 'text' and 'textFormat' not expected for element -->
+>         <!--
+6079a6138
+>         -->
+6597a6657,6658
+>                 <!-- hoedlale16: Because of default-value(fale) not explizit required attribute -->
+>                 <!-- Reconfigured: Instead of exact check to min/max (0-1) -->
+6599c6660
+<                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+---
+>                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+6604a6666,6677
+>                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isReference"/>
+>                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+>                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+>             </owl:Restriction>
+>         </rdfs:subClassOf>
+>         
+>         <!-- hoedlale16: OWL does not check XMl-Syntax, just Entity-Semantic. -->
+>         <!-- Each XML-Attribute consist of a name and has a type (by XML-Syntax.-->
+>         <!-- Restriction in OWL not needed -->
+>         <!--
+>         <rdfs:subClassOf>
+>             <owl:Restriction>
+6616a6690
+>         -->
+6639a6714,6717
+>         <!-- hoedlale16: 
+>         According to the standard 'extensionAttriubteDefinitions' are specific attributes to make up the extension. The attributes are childs of the XMl-Element 'extensionElements') which are not described (=customized). Furhtermore the cardinality is 0..* and not qualified. in the standard (8.2.3 Extensibility - Table 8.8 – ExtensionDefinition attributes) 
+>         -->
+>         <!--
+6646a6725
+>         -->
+6676a6756,6757
+>         <!-- hoedlale16: name represented by XML-Element-Tag - Not a attribute of XML-Element -->
+>         <!--
+6683a6765
+>         -->
+6702a6785,6786
+>         <!--hoedlale16: Category is a XML-Element not a XML-Attribute. if XML-Element exists it must fullfill the CategoryValue restrictions (Table 8.44 – FlowElement attributes) -->
+>         <!-- -->
+6709a6794
+>         <!-- -->
+6779a6865
+>         <!-- hoedlale16: Table 8.52 – FlowNode model associations -->
+6795,6796c6881
+< Figure 8.35) instead of the individual associations of the elements that can connect to Sequence Flows (see the section
+< above). Only the Gateway, Activity, Choreography Activity, and Event elements can connect to Sequence Flows
+---
+> Figure 8.35) instead of the individual associations of the elements that can connect to Sequence Flows (see the section above). Only the Gateway, Activity, Choreography Activity, and Event elements can connect to Sequence Flows
+7147,7148c7232,7233
+<                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#importType"/>
+<                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+---
+>                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#location"/>
+>                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+7151a7237
+>         <!-- hoedlale16: Class Import is optional, therefore restriction needs to be min/max instead of exact -->
+7154c7240
+<                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#namespace"/>
+---
+>                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#importType"/>
+7161,7162c7247,7248
+<                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#location"/>
+<                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+---
+>                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#namespace"/>
+>                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+7165a7252
+>         
+7453c7540
+<                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#dataState"/>
+---
+>                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#itemSubjectRef"/>
+7455c7542
+<                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#DataState"/>
+---
+>                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#ItemDefinition"/>
+7460c7547
+<                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#itemSubjectRef"/>
+---
+>                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#dataState"/>
+7462c7549
+<                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#ItemDefinition"/>
+---
+>                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#DataState"/>
+7478a7566,7568
+>         <!-- hoedlale16: 'import' is a XML-Element and as a result represented by an Element 
+>               If the element exists, it must fullfill the defined restriction. -->
+>         <!-- -->
+7487a7578,7585
+>                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#import"/>
+>                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+>                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Import"/>
+>             </owl:Restriction>
+>         </rdfs:subClassOf>
+>         <!-- -->
+>         <rdfs:subClassOf>
+>             <owl:Restriction>
+7492a7591,7592
+>         
+>         <!--hoedlale16: Attribute 'itemKind' is allowed to occure 0..1 [Standard: Figure 8.25 - ItemDefinition class diagram] -->
+7496c7596
+<                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+---
+>                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+7502c7602
+<                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#import"/>
+---
+>                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#itemKind"/>
+7504c7604
+<                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Import"/>
+---
+>                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#ItemKind"/>
+7506a7607,7608
+>         
+>         
+7513a7616
+>         <!-- hoedlale16: isCollection has a default value of 'false' (Standard: 8.3.10 Item Definition). -->
+7517c7620,7627
+<                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+---
+>                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+>                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+>             </owl:Restriction>
+>         </rdfs:subClassOf>
+>         <rdfs:subClassOf>
+>             <owl:Restriction>
+>                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isCollection"/>
+>                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+7581c7691
+<                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#flowNodeRefs"/>
+---
+>                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#flowNodeRef"/>
+7651c7761
+<                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#lanes"/>
+---
+>                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#lane"/>
+7665,7667c7775,7777
+<                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#process"/>
+<                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+<                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Process"/>
+---
+>                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#parentLane"/>
+>                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+>                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Lane"/>
+7669a7780,7781
+>         <!-- hoedlale16: The UML of LaneSet in Standard (Figure 10.126) shows that a Process contains a laneSets and not a laneSet contains a process -->
+>         <!--
+7672,7674c7784,7786
+<                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#parentLane"/>
+<                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+<                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Lane"/>
+---
+>                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#process"/>
+>                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+>                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Process"/>
+7676a7789
+>         -->
+8932a9046
+>         <!-- hoedlale16: 'Attribute 'processType' has default value 'none' (Table 10.1 – Process Attributes) -->
+8936c9050
+<                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+---
+>                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+8960a9075
+>         <!-- hoedlale16: 'isClosed 'processType' has default value 'false' (Table 10.1 – Process Attributes) -->
+8964c9079
+<                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+---
+>                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+8967a9083
+>         <!-- hoedlale16: Attribute 'isExecutable' is optional. (Table 10.1 – Process Attributes & Model Associations)-->
+8971c9087,9094
+<                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+---
+>                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+>                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+>             </owl:Restriction>
+>         </rdfs:subClassOf>
+>         <rdfs:subClassOf>
+>             <owl:Restriction>
+>                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isExecutable"/>
+>                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+9533a9657
+>             <!-- hoedlale16: isImmediate is an optional flag. Change cardinality from exact to min/max(1) -->
+9536c9660,9665
+<                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+---
+>                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+>                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+>             </owl:Restriction>
+>             <owl:Restriction>
+>                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isImmediate"/>
+>                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+9996a10126
+>         <!-- hoedlale16: ThrowEvents might have multiple inputs. [e.G. 10.4.3 End Event]
+10003a10134
+>         -->

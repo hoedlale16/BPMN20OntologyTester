@@ -1,0 +1,50 @@
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\actiBPM 3.E-8\A.1.0-export.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <3> XML-Nodes which failed defined OWL-Restrictions <12>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\actiBPM 3.E-8\A.1.0-roundtrip.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <3> XML-Nodes which failed defined OWL-Restrictions <12>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\actiBPM 3.E-8\A.2.0-export.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <6> XML-Nodes which failed defined OWL-Restrictions <20>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\actiBPM 3.E-8\A.2.0-roundtrip.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <6> XML-Nodes which failed defined OWL-Restrictions <20>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\actiBPM 3.E-8\A.3.0-roundtrip.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <7> XML-Nodes which failed defined OWL-Restrictions <28>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\actiBPM 3.E-8\A.4.0-export.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <7> XML-Nodes which failed defined OWL-Restrictions <26>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\actiBPM 3.E-8\A.4.0-roundtrip.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <7> XML-Nodes which failed defined OWL-Restrictions <25>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\actiBPM 3.E-8\A.4.1-roundtrip.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <8> XML-Nodes which failed defined OWL-Restrictions <26>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\actiBPM 3.E-8\B.1.0-export.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <16> XML-Nodes which failed defined OWL-Restrictions <60>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\actiBPM 3.E-8\B.2.0-export.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <53> XML-Nodes which failed defined OWL-Restrictions <218>
+----------------------------
