@@ -2,6 +2,7 @@ package at.fh.BPMN20OntologyTester.view;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -159,19 +160,24 @@ public class OwlTestSuiteTabFxController implements FxController {
 		ontologyTestsTask.setOnSucceeded(e -> {
 			StringBuilder testSuiteLog = new StringBuilder();
 
-			Map<TestCase, Tab> testResultTabs = ontologyTestsTask.getValue();
-			List<Tab> testResults = new LinkedList<Tab>();
-			for (TestCase tc : testResultTabs.keySet()) {
+			Map<TestCase, Tab> testResults = ontologyTestsTask.getValue();
+			//Sort testResults
+			List<TestCase> testResultTestCases = new ArrayList<TestCase>(); 
+			testResultTestCases.addAll(testResults.keySet());
+			testResultTestCases.sort((tc1, tc2) -> 
+				tc1.getFileNameOfProcessMOdelCreatedOf().compareTo(tc2.getFileNameOfProcessMOdelCreatedOf())
+			);
+			
+			//Add testResultTabs according previous sorting
+			List<Tab> testResultTabs = new LinkedList<Tab>();
+			for (TestCase tc : testResultTestCases) {
 				// Append overview log and add created Tab to tapPane
 				appendOverviewLog(tc, testSuiteLog);
-				testResults.add(testResultTabs.get(tc));
+				testResultTabs.add(testResults.get(tc));
 			}
-			
-			//Sort Tabs
-			testResults.sort((o1, o2) -> o1.getText().compareTo(o2.getText()));
 			tabPane.getTabs().clear();
 			tabPane.getTabs().add(tabOverview);
-			tabPane.getTabs().addAll(testResults);
+			tabPane.getTabs().addAll(testResultTabs);
 			
 			// Hide Loadingscreen and set overview log
 			loadingScreen.hide();
@@ -190,6 +196,7 @@ public class OwlTestSuiteTabFxController implements FxController {
 				chooser.setTitle("Export Testsuite report");
 
 				chooser.getExtensionFilters().add(new ExtensionFilter("Testsuite Report", "*.txt"));
+				
 
 				// Handle selected file
 				File selectedFile = chooser.showSaveDialog(null);

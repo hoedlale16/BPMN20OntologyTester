@@ -112,32 +112,28 @@ public class OWLTester {
 	 * @throws Exception
 	 */
 	public static Map<Process, List<BPMNElement>> testXMLNodesMeedOWLClassRestrictions(OWLModel ontology,
-			BPMNModel model, Owl2BpmnNamingMapper owl2bpmnMapper, boolean ignoreWarningRestrictions) {
+			BPMNModel model, Owl2BpmnNamingMapper owl2bpmnMapper, boolean ignoreWarningRestrictions) throws Exception {
 
 		Map<Process, List<BPMNElement>> failedNodes = new HashMap<Process, List<BPMNElement>>();
 
-		try {
-			for (Process proc : model.getProcesses()) {
+		for (Process proc : model.getProcesses()) {
 
-				List<BPMNElement> failedNodesOfProcess = new ArrayList<BPMNElement>();
+			List<BPMNElement> failedNodesOfProcess = new ArrayList<BPMNElement>();
 
-				// Iterate over all processChilds and test it against their restrictions
-				for (DomElement domElement : model.getProcessElementsAsDomElements(proc)) {
+			// Iterate over all processChilds and test it against their restrictions
+			for (DomElement domElement : model.getProcessElementsAsDomElements(proc)) {
 
-					Set<FailedOWLClassRestriction> failedRestrictions = OWLTester.getFailedOWLClassRestricionsOfXmlNode(
-							domElement, ontology, owl2bpmnMapper, ignoreWarningRestrictions);
-					if (!failedRestrictions.isEmpty()) {
-						failedNodesOfProcess.add(new BPMNElement(domElement, failedRestrictions));
-					}
-				}
-
-				// If Process has Elements which failed restricoitns add them to map
-				if (!failedNodesOfProcess.isEmpty()) {
-					failedNodes.put(proc, failedNodesOfProcess);
+				Set<FailedOWLClassRestriction> failedRestrictions = OWLTester.getFailedOWLClassRestricionsOfXmlNode(
+						domElement, ontology, owl2bpmnMapper, ignoreWarningRestrictions);
+				if (!failedRestrictions.isEmpty()) {
+					failedNodesOfProcess.add(new BPMNElement(domElement, failedRestrictions));
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+
+			// If Process has Elements which failed restricoitns add them to map
+			if (!failedNodesOfProcess.isEmpty()) {
+				failedNodes.put(proc, failedNodesOfProcess);
+			}
 		}
 
 		return failedNodes;

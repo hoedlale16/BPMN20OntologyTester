@@ -140,14 +140,18 @@ public class OwlTestSuiteTabTcResultFxController implements FxController {
 		treeBPMNfailedRestrictions.setRoot(null);
 		taRestrictionDescription.setText("");
 
-		if (testcase != null) {
-			testXmlNodesNotExistInOWL(testcase);
-			testXmlAttriubtesNotExistinOWL(testcase);
-			testXmlNodesFailRestrictions(testcase);
+		try {
+			if (testcase != null) {
+				testXmlNodesNotExistInOWL(testcase);
+				testXmlAttriubtesNotExistinOWL(testcase);
+				testXmlNodesFailRestrictions(testcase);
+			}
+		} catch (Exception e) {
+			MainSceneFxController.getInstance().appendLog("Error - Error occured while tests: " + e.getMessage());
 		}
 	};
 
-	private void testXmlNodesNotExistInOWL(TestCase testcase) {
+	private void testXmlNodesNotExistInOWL(TestCase testcase) throws Exception {
 		//Execute tests and show result
 		testcase.executeTest(TestCaseEnum.XMLElementsAsOWLClasses);
 		
@@ -162,7 +166,7 @@ public class OwlTestSuiteTabTcResultFxController implements FxController {
 		}
 	}
 
-	private void testXmlAttriubtesNotExistinOWL(TestCase testcase) {
+	private void testXmlAttriubtesNotExistinOWL(TestCase testcase) throws Exception {
 		//Execute tests and show result
 		testcase.executeTest(TestCaseEnum.XMlAttributesAsOWLProperties);
 		
@@ -178,7 +182,7 @@ public class OwlTestSuiteTabTcResultFxController implements FxController {
 
 	}
 
-	private void testXmlNodesFailRestrictions(TestCase testcase) {
+	private void testXmlNodesFailRestrictions(TestCase testcase) throws Exception {
 		
 		testcase.setIgnoreTcSpecificData(cbIgnoreWarningRestrictions.isSelected());
 

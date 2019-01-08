@@ -65,21 +65,30 @@ public class OWLClassRestriction {
 		} catch (Exception e) {
 			throw new Exception("OWLClassRestriction failed: Error while parsing domElement");
 		}
-
-		// Validate data
-		if (onProperty == null) {
-			throw new Exception("OWLClassRestriciton <"+domElement.getLocalName()+"> requires link to an OWLProperty!");
-		}
-
-		if (cardinalityType.equals(OWLRestrictionCardinalityTypeEnum.Unkown)) {
-			throw new Exception("OWLClass requires valid CardinalityTypeEnum");
-		}
-
+		
 		if (onClass == null) {
 			// Element 'onClass' not found, restriction is directly associated to given
 			// OWLClass
 			this.onClass = owlClassOfRestriction;
 		}
+
+		// Validate data
+		if (onProperty == null) {
+			throw new Exception("OWLClassRestriciton for onClass <" + 
+								onClass.getIRI().getShortForm() +
+								"> in OWL-Class<" + owlClassOfRestriction.getIRI().getShortForm() +
+								"> has no link to an OWLProperty! " + 
+								"Either property does not exit in ontology or 'onProperty' not set!");
+		}
+
+		if (cardinalityType.equals(OWLRestrictionCardinalityTypeEnum.Unkown)) {
+			throw new Exception("OWLClassRestriciton for onClass <" + 
+								onClass.getIRI().getShortForm() +
+								"> in OWL-Class<" + owlClassOfRestriction.getIRI().getShortForm() +
+								"> requires valid Cardinality type!");
+		}
+
+		
 	}
 
 	/**

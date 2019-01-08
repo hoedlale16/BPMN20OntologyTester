@@ -102,6 +102,10 @@ public class TestCase {
 	public BPMNModel getProcessModel() {
 		return processModel;
 	}
+	
+	public String getFileNameOfProcessMOdelCreatedOf() {
+		return processModel.getFileFromWhomModelWasCreated().getName();
+	}
 
 	public Owl2BpmnNamingMapper getOwl2bpmnMapping() {
 		return owl2bpmnMapping;
@@ -127,7 +131,7 @@ public class TestCase {
 		return resultsXmlNodesFailOWLRestrictions;
 	}
 
-	public void executeTest(TestCaseEnum testcase) {
+	public void executeTest(TestCaseEnum testcase) throws Exception {
 		switch (testcase) {
 		case XMLElementsAsOWLClasses: {
 			resultsXmlNodesWithoutOWLClass.clear();
@@ -150,7 +154,7 @@ public class TestCase {
 		}
 	}
 
-	public void executeAllTests() {
+	public void executeAllTests() throws Exception {
 		executeTest(TestCaseEnum.XMLElementsAsOWLClasses);
 		executeTest(TestCaseEnum.XMlAttributesAsOWLProperties);
 		executeTest(TestCaseEnum.XMLElementFailOWLClassRestrictions);

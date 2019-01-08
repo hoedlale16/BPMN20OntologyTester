@@ -219,6 +219,9 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 				chooser.setTitle("Export Testcase report");
 	
 				chooser.getExtensionFilters().add(new ExtensionFilter("TestcaseReport", "*.txt"));
+				String fileName = testcase.getFileNameOfProcessMOdelCreatedOf();
+				fileName = fileName.substring(0, fileName.lastIndexOf("."));
+				chooser.setInitialFileName(fileName);
 	
 				// Handle selected file
 				File selectedFile = chooser.showSaveDialog(null);
@@ -341,14 +344,18 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 		treeBPMNfailedRestrictions.setRoot(null);
 		taRestrictionDescription.setText("");
 
-		if (testcase != null) {
-			testXmlNodesNotExistInOWL(testcase);
-			testXmlAttriubtesNotExistinOWL(testcase);
-			testXmlNodesFailRestrictions(testcase);
+		try {
+			if (testcase != null) {
+				testXmlNodesNotExistInOWL(testcase);
+				testXmlAttriubtesNotExistinOWL(testcase);
+				testXmlNodesFailRestrictions(testcase);
+			}
+		} catch (Exception e) {
+			appendLog("Error - Error occured while tests: " + e.getMessage());
 		}
 	};
 
-	private void testXmlNodesNotExistInOWL(TestCase testcase) {
+	private void testXmlNodesNotExistInOWL(TestCase testcase) throws Exception {
 		//Execute tests and show result
 		testcase.executeTest(TestCaseEnum.XMLElementsAsOWLClasses);
 		
@@ -366,7 +373,7 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 		}
 	}
 
-	private void testXmlAttriubtesNotExistinOWL(TestCase testcase) {
+	private void testXmlAttriubtesNotExistinOWL(TestCase testcase) throws Exception {
 		//Execute tests and show result
 		testcase.executeTest(TestCaseEnum.XMlAttributesAsOWLProperties);
 		
@@ -384,7 +391,7 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 		}
 	}
 
-	private void testXmlNodesFailRestrictions(TestCase testcase) {
+	private void testXmlNodesFailRestrictions(TestCase testcase) throws Exception {
 		
 		testcase.setIgnoreTcSpecificData(cbIgnoreWarningRestrictions.isSelected());
 

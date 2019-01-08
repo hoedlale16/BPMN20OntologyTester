@@ -21,6 +21,7 @@ import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLLiteral;
+import org.semanticweb.owlapi.model.OWLObjectMinCardinality;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectRestriction;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -528,13 +529,23 @@ public class OWLModel {
 			// (=ObjectRestriction)
 			if (a.getSuperClass() instanceof OWLObjectRestriction) {
 				OWLObjectRestriction r = (OWLObjectRestriction) a.getSuperClass();
-				r.signature().forEach(s -> {
-					if (s instanceof OWLClass) {
-						subClasses.add(s.asOWLClass());
+				
+				if( r instanceof OWLObjectMinCardinality) {
+					if( ((OWLObjectMinCardinality)r).getCardinality() != 0) {
+						r.signature().forEach(s -> {
+							if (s instanceof OWLClass)
+								subClasses.add(s.asOWLClass());
+						});
 					}
-				});
+						
+				} else {
+				//Just add required inhertiances
+					r.signature().forEach(s -> {
+						if (s instanceof OWLClass)
+							subClasses.add(s.asOWLClass()); 
+						});
+				}
 			}
-
 		}
 
 		return subClasses;

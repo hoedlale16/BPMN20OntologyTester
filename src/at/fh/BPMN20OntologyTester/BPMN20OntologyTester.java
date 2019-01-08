@@ -79,14 +79,10 @@ public class BPMN20OntologyTester extends Application {
 	public static Tab getTestSuiteTestResultTab(TestCase testcase) {
 		try {
 			Tab tab = new Tab();
-			String tabName = testcase.getProcessModel().getFileFromWhomModelWasCreated().getName();
-			tab.setText(tabName);
+			tab.setText(testcase.getFileNameOfProcessMOdelCreatedOf());
 			OwlTestSuiteTabTcResultFxController controller = new OwlTestSuiteTabTcResultFxController(testcase);
-			
-			Scene scene = loadScene("/resource/jfx/TabOwlTestsuiteTabTCResult.fxml",controller);
-			
-			tab.setContent(scene.getRoot());
-		
+			Scene scene = loadScene("/resource/jfx/TabOwlTestsuiteTabTCResult.fxml",controller);		
+			tab.setContent(scene.getRoot());		
 			return tab;
 		} catch (Exception e) {
 			//Sollte in Produktionsbetrieb nie passieren, daher nur auf die Console im Fall des Falls
@@ -101,7 +97,7 @@ public class BPMN20OntologyTester extends Application {
 		try {
 			// Read and initialize Ontology - If an error occurred here just continue
 			// building the GUI
-			intitalizeAppData("/resource/owl/BPMN20.owl", 
+			intitalizeAppData("/resource/owl/BPMN20_v1.0.1.owl", 
 							  "/resource/owl/OWL2BPMNmapping.properties",
 							  "/resource/owl/OWLconformanceClasses.properties");
 
