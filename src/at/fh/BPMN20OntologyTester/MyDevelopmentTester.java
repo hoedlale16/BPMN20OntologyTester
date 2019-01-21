@@ -7,6 +7,9 @@ import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.Optional;
+
+import org.semanticweb.owlapi.model.OWLClass;
 
 import at.fh.BPMN20OntologyTester.controller.BPMNModelHandler;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
@@ -64,11 +67,14 @@ public class MyDevelopmentTester {
 			System.out.println("---- Start -----");
 			// Initialize all required data
 			initAdditionalAppData();		
-			OWLModel ontology = createOntology("/resource/owl/BPMN20.owl");
+			OWLModel ontology = createOntology("/resource/owl/BPMN20_v1.0.1.owl");
 			BPMNModel model = createBPMNModel("/resource/bpmn/ExampleProcessModel1.bpmn");
 			
-			//-- RUN developer tests here!---
-			System.out.println("Run some Tests");
+			//-- RUN developer tests here!-Optional<T>ystem.out.println("Run some Tests");
+			Optional<OWLClass> owlClass = ontology.getOWLClassByShortNameIgnoreCase("LaneSet");
+			ontology.getAllOWLClassRestrictionOfOWLClass(owlClass.get());
+			
+			
 		
 			System.out.println("---- Done -----");
 		} catch (Exception e) {

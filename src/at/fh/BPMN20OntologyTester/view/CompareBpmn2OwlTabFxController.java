@@ -6,10 +6,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import org.camunda.bpm.model.bpmn.instance.Process;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLProperty;
+import org.w3c.dom.Element;
+
+import com.github.andrewoma.dexx.collection.HashSet;
 
 import at.fh.BPMN20OntologyTester.BPMN20OntologyTester;
 import at.fh.BPMN20OntologyTester.controller.BPMNModelHandler;
@@ -21,6 +25,7 @@ import at.fh.BPMN20OntologyTester.model.FailedOWLClassRestriction;
 import at.fh.BPMN20OntologyTester.model.OWLModel;
 import at.fh.BPMN20OntologyTester.model.TestCase;
 import at.fh.BPMN20OntologyTester.model.enums.TestCaseEnum;
+import at.fh.BPMN20OntologyTester.view.dto.BPMNElementV2;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -61,7 +66,7 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 	@FXML
 	private TreeView<String> treeBPMN20OWL;
 	@FXML
-	private TreeView<BPMNElement> treeBPMNfailedRestrictions;
+	private TreeView<BPMNElementV2> treeBPMNfailedRestrictions;
 
 	@FXML
 	private CheckBox cbIgnoreWarningRestrictions;
@@ -120,7 +125,6 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 			if (selectedFile != null) {
 				
 				// Create Testcase with given BPMN
-				//testcase = new TestCase(BPMNModelHandler.readModelFromFile(selectedFile));
 				loadAndTestProcessModel(selectedFile);
 				appendLog("Read BPMN-File <" + selectedFile.getAbsolutePath() + ">");
 			}
@@ -157,6 +161,12 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 			showTcResults(testcase);
 			
 			// Hide Loadingscreen and set overview log
+			loadingScreen.hide();
+		});
+		
+		ontologyTestsTask.setOnFailed( e -> {
+			appendLog("Error occured: " + ontologyTestsTask.getException().getMessage());
+			ontologyTestsTask.getException().printStackTrace();
 			loadingScreen.hide();
 		});
 		
@@ -253,7 +263,7 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 		// Accept clicks only on node cells, and not on empty spaces of the TreeView
 		if (node instanceof Text || (node instanceof TreeCell && ((TreeCell) node).getText() != null)) {
 
-			BPMNElement selectedNode = treeBPMNfailedRestrictions.getSelectionModel().getSelectedItem().getValue();
+			BPMNElementV2 selectedNode = treeBPMNfailedRestrictions.getSelectionModel().getSelectedItem().getValue();
 
 			// Show failed restrictions for selectedNode
 			failedRestrictionsOfXmlNode.clear();
@@ -268,7 +278,7 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 	@FXML
 	private void onHandleClickedOnFailedRestriction(MouseEvent event) {
 
-		TreeItem<BPMNElement> curSelElementFailedRestriction = treeBPMNfailedRestrictions.getSelectionModel()
+		TreeItem<BPMNElementV2> curSelElementFailedRestriction = treeBPMNfailedRestrictions.getSelectionModel()
 				.getSelectedItem();
 
 		// Get selected Error-Test of faild Restriction
@@ -277,7 +287,7 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 		if (curSelElementFailedRestriction != null && selItem != null) {
 
 			// Get selected BPMN-Element of tree with failed restrictions
-			BPMNElement selectedBPMNElement = curSelElementFailedRestriction.getValue();
+			BPMNElementV2 selectedBPMNElement = curSelElementFailedRestriction.getValue();
 			// Get FailedRestriction Object with error text. Assume the error text is
 			// unique!
 			Optional<FailedOWLClassRestriction> rest = selectedBPMNElement.getFailedRestrictionWithErrorText(selItem);
@@ -352,6 +362,7 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 			}
 		} catch (Exception e) {
 			appendLog("Error - Error occured while tests: " + e.getMessage());
+			e.printStackTrace();
 		}
 	};
 
@@ -397,33 +408,25 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 
 		//Execute tests and show result
 		testcase.executeTest(TestCaseEnum.XMLElementFailOWLClassRestrictions);	
-		Map<Process, List<BPMNElement>> elementsFailedRestrictions = testcase.getResultsXmlNodesFailOWLRestrictions();
+		Map<Element,Set<FailedOWLClassRestriction>> elementsFailedRestrictions = testcase.getResultsXmlNodesFailOWLRestrictions();
 		int totalFailedElements = 0;
+
 
 		// Build Tree to show results
 		if (!elementsFailedRestrictions.isEmpty()) {
-			TreeItem<BPMNElement> rootItem = new TreeItem<BPMNElement>(
-					new BPMNElement(testcase.getProcessModel().getModelDefinitionAsDomElement()));
-
+			TreeItem<BPMNElementV2> rootItem = new TreeItem<BPMNElementV2>(new BPMNElementV2("Failures"));
 			rootItem.setExpanded(true);
-			for (Process proc : elementsFailedRestrictions.keySet()) {
-				TreeItem<BPMNElement> procItem = new TreeItem<BPMNElement>(
-						new BPMNElement(proc.getDomElement(), proc.getName()));
-				procItem.setExpanded(true);
 
-				// Now show failed elements
-				for (BPMNElement element : elementsFailedRestrictions.get(proc)) {
-					String guiDisplayName = element.getDomLocalName() + "(Err: "
-							+ element.getFailedRestrictions().size() + ")";
+			for (Element elem: elementsFailedRestrictions.keySet()) {
+				String guiDisplayName = elem.getTagName().substring(elem.getTagName().indexOf(":")+1) + "(Err: "
+							+ elementsFailedRestrictions.get(elem).size() + ")";
 
-					element.setGUIDisplayName(guiDisplayName);
-					TreeItem<BPMNElement> failedelement = new TreeItem<BPMNElement>(element);
-					procItem.getChildren().add(failedelement);
-
-					totalFailedElements++;
-				}
+				BPMNElementV2 ev2 = new BPMNElementV2(elem,elementsFailedRestrictions.get(elem),guiDisplayName);
 				
-				rootItem.getChildren().add(procItem);
+				TreeItem<BPMNElementV2> treeItem = new TreeItem<BPMNElementV2>(ev2);
+				rootItem.getChildren().add(treeItem);
+				totalFailedElements++;
+
 			}
 			treeBPMNfailedRestrictions.setRoot(rootItem);
 			treeBPMNfailedRestrictions.refresh();

@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.apache.commons.io.FilenameUtils;
 import org.camunda.bpm.model.bpmn.instance.Process;
+import org.w3c.dom.Element;
 
 import at.fh.BPMN20OntologyTester.BPMN20OntologyTester;
 import at.fh.BPMN20OntologyTester.controller.BPMNModelHandler;
@@ -184,6 +185,12 @@ public class OwlTestSuiteTabFxController implements FxController {
 			taTestLog.setText(testSuiteLog.toString());
 		});
 		
+		ontologyTestsTask.setOnFailed( e -> {
+			appendLog("Error occured: " + ontologyTestsTask.getException().getMessage());
+			ontologyTestsTask.getException().printStackTrace();
+			loadingScreen.hide();
+		});
+		
 		//Start thread
 		new Thread(ontologyTestsTask).start();
 	}
@@ -237,11 +244,9 @@ public class OwlTestSuiteTabFxController implements FxController {
 
 		int totalXmlNodesFailedRestrictions = 0;
 		int totalXmlNodesFailed = 0;
-		for (Process proc : testcase.getResultsXmlNodesFailOWLRestrictions().keySet()) {
-			for (BPMNElement element : testcase.getResultsXmlNodesFailOWLRestrictions().get(proc)) {
-				totalXmlNodesFailed++;
-				totalXmlNodesFailedRestrictions += element.getFailedRestrictions().size();
-			}
+		for (Element elem : testcase.getResultsXmlNodesFailOWLRestrictions().keySet()) {
+			totalXmlNodesFailed++;
+			totalXmlNodesFailedRestrictions += testcase.getResultsXmlNodesFailOWLRestrictions().get(elem).size();
 		}
 		testSuiteLog.append("  <").append( totalXmlNodesFailed)
 				.append("> XML-Nodes which failed defined OWL-Restrictions <" + totalXmlNodesFailedRestrictions + ">").append("\n");

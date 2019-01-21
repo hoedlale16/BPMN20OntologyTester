@@ -121,7 +121,7 @@ public class BPMNModel {
 	public List<Process> getProcesses() {
 		return (List<Process>) model.getModelElementsByType(Process.class);
 	}
-
+		
 	/**
 	 * Return process object for given name
 	 * @param name

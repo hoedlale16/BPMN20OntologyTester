@@ -49,7 +49,11 @@ public class FailedOWLClassRestriction {
 
 	public String getFormattedFailingReason() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("[OWL-Class: ").append(restriction.getOnClass().getIRI().getShortForm()).append("] - ");
+		if(restriction.getOnClass().isPresent()) {
+			sb.append("[OWL-Class: ").append(restriction.getOnClass().get().getIRI().getShortForm()).append("] - ");
+		} else {
+			sb.append("[OWL-Property: ").append(restriction.getOnProperty().getIRI().getShortForm()).append("] - ");
+		}
 
 		switch (failingLevel) {
 		case ERROR:

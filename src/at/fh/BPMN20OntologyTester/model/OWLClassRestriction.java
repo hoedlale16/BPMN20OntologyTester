@@ -5,11 +5,18 @@ package at.fh.BPMN20OntologyTester.model;
 
 import java.util.Optional;
 
+import org.semanticweb.owlapi.model.OWLCardinalityRestriction;
 import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLDataExactCardinality;
+import org.semanticweb.owlapi.model.OWLDataMaxCardinality;
+import org.semanticweb.owlapi.model.OWLDataMinCardinality;
+import org.semanticweb.owlapi.model.OWLDataRestriction;
+import org.semanticweb.owlapi.model.OWLObjectExactCardinality;
+import org.semanticweb.owlapi.model.OWLObjectMaxCardinality;
+import org.semanticweb.owlapi.model.OWLObjectMinCardinality;
+import org.semanticweb.owlapi.model.OWLObjectRestriction;
 import org.semanticweb.owlapi.model.OWLProperty;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.semanticweb.owlapi.model.OWLRestriction;
 
 import at.fh.BPMN20OntologyTester.model.enums.OWLRestrictionCardinalityTypeEnum;
 import at.fh.BPMN20OntologyTester.model.enums.OWLRestrictionDataRangeEnum;
@@ -46,37 +53,26 @@ public class OWLClassRestriction {
 	// to fulfill the restriction anyway.It doesn't matter where the restriction
 	// comes from but good to know in GUI.
 	private OWLClass onClass;
+	
+	
+	// Determines if Restriction must fulfilled by XML-Attribute
+	// or XML-Child-Element
+	private final boolean fulfilledbyXMLAttribute;
 
-
-	/**
-	 * Creates an OWLClassRestriction with given data of subClassOf-DomElement
-	 * 
-	 * @param domElement
-	 *            domElement of XML-Tag 'subClassOf of ontology
-	 * @param owlClassOfRestriction
-	 *            OWL-Class where domElement(restricion) is found
-	 * @param ontology
-	 * 				ontology where restriciton is found from to create links for onClass/onProperty
-	 * @throws Exception
-	 */
-	public OWLClassRestriction(Element domElement, OWLClass owlClassOfRestriction, OWLModel ontology) throws Exception {
-		try {
-			parseDomElement(domElement, owlClassOfRestriction, ontology);
-		} catch (Exception e) {
-			throw new Exception("OWLClassRestriction failed: Error while parsing domElement");
+	public OWLClassRestriction(OWLRestriction owlRestriction,OWLModel ontology) throws Exception {
+		
+		parseOWLRestriction(owlRestriction);
+		if (onClass == null) {
+			this.fulfilledbyXMLAttribute = true;
+		} else {
+			this.fulfilledbyXMLAttribute = false;
 		}
 		
-		if (onClass == null) {
-			// Element 'onClass' not found, restriction is directly associated to given
-			// OWLClass
-			this.onClass = owlClassOfRestriction;
-		}
-
 		// Validate data
 		if (onProperty == null) {
 			throw new Exception("OWLClassRestriciton for onClass <" + 
 								onClass.getIRI().getShortForm() +
-								"> in OWL-Class<" + owlClassOfRestriction.getIRI().getShortForm() +
+								"> in OWL-Class<" + owlRestriction.getProperty().toString() +
 								"> has no link to an OWLProperty! " + 
 								"Either property does not exit in ontology or 'onProperty' not set!");
 		}
@@ -84,79 +80,86 @@ public class OWLClassRestriction {
 		if (cardinalityType.equals(OWLRestrictionCardinalityTypeEnum.Unkown)) {
 			throw new Exception("OWLClassRestriciton for onClass <" + 
 								onClass.getIRI().getShortForm() +
-								"> in OWL-Class<" + owlClassOfRestriction.getIRI().getShortForm() +
+								"> in OWL-Class<" + owlRestriction.getProperty().toString() +
 								"> requires valid Cardinality type!");
 		}
-
 		
+		if(onClass != null && onDataRange != OWLRestrictionDataRangeEnum.Unkown) {
+			throw new Exception("OWLClassRestriciton for onClass <" + 
+					onClass.getIRI().getShortForm() +
+					"> in OWL-Class<" + owlRestriction.getProperty().toString() +
+					"> affects an XML-Attribute and XML-Element!");
+		}
 	}
 
-	/**
-	 * Helper method to parse given DOm-Object to get a restriction
-	 * 
-	 * @param domElement
-	 * @throws Exception
-	 */
-	private void parseDomElement(Element domElement, OWLClass owlClassOfRestriction, OWLModel ontology) throws Exception {
-		NodeList childs = domElement.getChildNodes();
-		for (int i = 0; i < childs.getLength(); i++) {
-
-			Node childNode = childs.item(i);
-			switch (childNode.getNodeName()) {
-			case "owl:onProperty":
-				String propertyIRI = ((Element) childNode).getAttribute("rdf:resource");
-				Optional<OWLProperty> optProp = ontology.getPropertyByIRI(propertyIRI);
-				if (optProp.isPresent())
-					onProperty = optProp.get();
-				break;
-			case "owl:minCardinality":
-			case "owl:minQualifiedCardinality":
-				cardinalityType = OWLRestrictionCardinalityTypeEnum.MinCardinality;
-				cardinality = Integer.parseInt(childNode.getTextContent());
-				break;
-			case "owl:maxCardinality":
-			case "owl:maxQualifiedCardinality":
-				cardinalityType = OWLRestrictionCardinalityTypeEnum.MaxCardinality;
-				cardinality = Integer.parseInt(childNode.getTextContent());
-				break;
-			case "owl:qualifiedCardinality":
-				cardinalityType = OWLRestrictionCardinalityTypeEnum.ExactCardinality;
-				cardinality = Integer.parseInt(childNode.getTextContent());
-				break;
-
-			case "owl:onDataRange":
-				// BPMN2.0 Ontology currently defines DataRanges in
-				// - http://www.w3.org/2001/XMLSchema#string
-				// - http://www.w3.org/2001/XMLSchema#boolean
-				// - http://www.w3.org/2001/XMLSchema#integer
-
-				String value = ((Element) childNode).getAttribute("rdf:resource");
-				switch (value) {
-				case "http://www.w3.org/2001/XMLSchema#string":
-					onDataRange = OWLRestrictionDataRangeEnum.DataRangeString;
-					break;
-				case "http://www.w3.org/2001/XMLSchema#boolean":
-					onDataRange = OWLRestrictionDataRangeEnum.DataRangeBoolean;
-					break;
-				case "http://www.w3.org/2001/XMLSchema#integer":
-					onDataRange = OWLRestrictionDataRangeEnum.DataRangeInteger;
-					break;
-				default:
-					onDataRange = OWLRestrictionDataRangeEnum.Unkown;
-
+	@SuppressWarnings("rawtypes")
+	private void parseOWLRestriction(OWLRestriction owlRestriction) throws Exception{
+		try {
+			// Get Cardinality and Cardinality type
+			if(owlRestriction instanceof OWLCardinalityRestriction) {
+				this.cardinality = ((OWLCardinalityRestriction) owlRestriction).getCardinality();		
+				 
+				//Determine cardinality type
+				this.cardinalityType =  OWLRestrictionCardinalityTypeEnum.Unkown;
+				if( owlRestriction instanceof OWLDataExactCardinality ||  
+					owlRestriction instanceof OWLObjectExactCardinality ) {
+						this.cardinalityType =  OWLRestrictionCardinalityTypeEnum.ExactCardinality;
+				} 
+				if( owlRestriction instanceof OWLDataMinCardinality ||  
+					owlRestriction instanceof OWLObjectMinCardinality ) {
+					this.cardinalityType =  OWLRestrictionCardinalityTypeEnum.MinCardinality;
 				}
-				break;
-			case "owl:onClass":
-				String onClassIRI = ((Element) childNode).getAttribute("rdf:resource");
-
-				Optional<OWLClass> optClass = ontology.getOWLClassByIRI(onClassIRI);
-				if (optClass.isPresent())
-					onClass = optClass.get();
-				break;
-			case "#text":
-				// No glue where this comes from, ignore it...
-				break;
+				if( owlRestriction instanceof OWLDataMaxCardinality ||  
+					owlRestriction instanceof OWLObjectMaxCardinality ) {
+					this.cardinalityType =  OWLRestrictionCardinalityTypeEnum.MaxCardinality;
+				}
 			}
+			
+			if(owlRestriction.isDataRestriction()) {
+				OWLDataRestriction dr = (OWLDataRestriction)owlRestriction;
+				dr.datatypesInSignature().forEach( d -> {
+					this.onDataRange = determineDataRangeEnum(d.toString());
+				});
+				
+				this.onProperty = owlRestriction.getProperty().asOWLDataProperty();
+				
+				
+			}
+			if(owlRestriction.isObjectRestriction()) {
+				OWLObjectRestriction or = (OWLObjectRestriction)owlRestriction;
+				or.classesInSignature().forEach( c -> {
+					this.onClass = c.asOWLClass();
+				});
+				
+				this.onProperty = owlRestriction.getProperty().asOWLObjectProperty();
+			}
+					
+			} catch (Exception e) {
+			throw new Exception("OWLClassRestriction failed: Error while parsing domElement");
+		}
+	}
+	
+	/**
+	 * BPMN2.0 Ontology currently defines DataRanges in
+	 *  - http://www.w3.org/2001/XMLSchema#string
+	 *  - http://www.w3.org/2001/XMLSchema#boolean
+ 	 *  - http://www.w3.org/2001/XMLSchema#integer
+	 * @param value
+	 * @return
+	 */
+	private OWLRestrictionDataRangeEnum determineDataRangeEnum(String value) {
+		switch (value) {
+		case "xsd:string":
+		case "http://www.w3.org/2001/XMLSchema#string": 
+			return OWLRestrictionDataRangeEnum.DataRangeString;
+		case "xsd:boolean":
+		case "http://www.w3.org/2001/XMLSchema#boolean":
+			return OWLRestrictionDataRangeEnum.DataRangeBoolean;
+		case "xsd:integer":
+		case "http://www.w3.org/2001/XMLSchema#integer":
+			return OWLRestrictionDataRangeEnum.DataRangeInteger;
+		default:
+			return OWLRestrictionDataRangeEnum.Unkown;
 		}
 	}
 
@@ -176,14 +179,23 @@ public class OWLClassRestriction {
 		return onDataRange;
 	}
 
-	public OWLClass getOnClass() {
-		return onClass;
+	public Optional<OWLClass> getOnClass() {
+		if(onClass != null)
+			return Optional.of(onClass);
+		
+		return Optional.empty();
 	}
 
+	public boolean isFulfilledByAttribute() {
+		return this.fulfilledbyXMLAttribute;
+	}
+	
 	public String toFormattedToString() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("OWLClassRestriction [").append("onProperty=").append(onProperty.getIRI().getShortForm()).append(", ")
+		sb.append("OWLClassRestriction fulfilled by XMl-Attribute <")
+				.append(this.fulfilledbyXMLAttribute).append("> [")
+				.append("onProperty=").append(onProperty.getIRI().getShortForm()).append(", ")
 				.append("cardinality=").append(cardinality).append(", ").append("cardinalityType=")
 				.append(cardinalityType);
 

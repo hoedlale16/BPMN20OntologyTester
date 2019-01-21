@@ -1,15 +1,16 @@
 /**
  * 
  */
-package at.fh.BPMN20OntologyTester.model;
+package at.fh.BPMN20OntologyTester.view.dto;
 
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.camunda.bpm.model.xml.instance.DomElement;
 import org.w3c.dom.Element;
+
+import at.fh.BPMN20OntologyTester.model.FailedOWLClassRestriction;
 
 /**
  * Represents a simple BPMN-Element (e.g. startEvent, task, process)
@@ -19,49 +20,60 @@ import org.w3c.dom.Element;
  * University of applied Sciences FH JOANNEUM
  *
  */
-public class BPMNElement {
+public class BPMNElementV2 {
 	
-	private final DomElement bpmnDomElement;
+	private final Element bpmnElement;
 	private final Set<FailedOWLClassRestriction> failedRestrictions;
 	private String guiDisplayName;
 	
 	/**
-	 * @param bpmnDomElement
+	 * @param bpmnElement
 	 * @param failedRestrictions
 	 */
-	public BPMNElement(DomElement bpmnDomElement, Set<FailedOWLClassRestriction> failedRestrictions, String guiDisplayName) {
+	public BPMNElementV2(Element bpmnElement, Set<FailedOWLClassRestriction> failedRestrictions, String guiDisplayName) {
 		super();
-		this.bpmnDomElement = bpmnDomElement;
+		this.bpmnElement = bpmnElement;
 		this.failedRestrictions = failedRestrictions;
 		this.guiDisplayName = guiDisplayName;
 	}
-	public BPMNElement(DomElement bpmnDomElement, Set<FailedOWLClassRestriction> failedRestrictions) {
+	public BPMNElementV2(Element bpmnElement, Set<FailedOWLClassRestriction> failedRestrictions) {
 		super();
-		this.bpmnDomElement = bpmnDomElement;
+		this.bpmnElement = bpmnElement;
 		this.failedRestrictions = failedRestrictions;
-		this.guiDisplayName = bpmnDomElement.getLocalName();
+		this.guiDisplayName = bpmnElement.getLocalName();
 
 	}
 
 	
 	
-	public BPMNElement(DomElement bpmnDomElement,String guiDisplayName) {
+	public BPMNElementV2(Element bpmnElement,String guiDisplayName) {
 		super();
-		this.bpmnDomElement = bpmnDomElement;
+		this.bpmnElement = bpmnElement;
 		this.failedRestrictions = new HashSet<FailedOWLClassRestriction>();
 		this.guiDisplayName = guiDisplayName;
 	}
 	
-	public BPMNElement(DomElement bpmnDomElement) {
+	public BPMNElementV2(Element bpmnElement) {
 		super();
-		this.bpmnDomElement = bpmnDomElement;
+		this.bpmnElement = bpmnElement;
 		this.failedRestrictions = new HashSet<FailedOWLClassRestriction>();
-		this.guiDisplayName = bpmnDomElement.getLocalName();
+		this.guiDisplayName = bpmnElement.getLocalName();
 	}
 	
 	
-	public DomElement getBpmnDomElement() {
-		return bpmnDomElement;
+	/**
+	 * @param string
+	 */
+	public BPMNElementV2(String guiDisplayName) {
+		super();
+		this.bpmnElement = null;
+		this.failedRestrictions = new HashSet<FailedOWLClassRestriction>();
+		this.guiDisplayName = guiDisplayName;
+	}
+	
+	
+	public Element getBpmnElement() {
+		return bpmnElement;
 	}
 	
 	/**
@@ -105,7 +117,7 @@ public class BPMNElement {
 	}
 	
 	public String getDomLocalName() {
-		return bpmnDomElement.getLocalName();
+		return bpmnElement.getLocalName();
 	}
 	
 	public void addFailedRestriction(FailedOWLClassRestriction r) {
@@ -125,8 +137,8 @@ public class BPMNElement {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		//To compare two BPMNElements for us at bpmnDomElement just the localname is important
-		result = prime * result + ((bpmnDomElement == null) ? 0 : bpmnDomElement.getLocalName().hashCode());
+		//To compare two BPMNElements for us at bpmnElement just the localname is important
+		result = prime * result + ((bpmnElement == null) ? 0 : bpmnElement.getLocalName().hashCode());
 		result = prime * result + ((failedRestrictions == null) ? 0 : failedRestrictions.hashCode());
 		result = prime * result + ((guiDisplayName == null) ? 0 : guiDisplayName.hashCode());
 		return result;
@@ -139,11 +151,11 @@ public class BPMNElement {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		BPMNElement other = (BPMNElement) obj;
-		if (bpmnDomElement == null) {
-			if (other.bpmnDomElement != null)
+		BPMNElementV2 other = (BPMNElementV2) obj;
+		if (bpmnElement == null) {
+			if (other.bpmnElement != null)
 				return false;
-		} else if (!bpmnDomElement.getLocalName().equals(other.bpmnDomElement.getLocalName()))
+		} else if (!bpmnElement.getLocalName().equals(other.bpmnElement.getLocalName()))
 			return false;
 		if (failedRestrictions == null) {
 			if (other.failedRestrictions != null)

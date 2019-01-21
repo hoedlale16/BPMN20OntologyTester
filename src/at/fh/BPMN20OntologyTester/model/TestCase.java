@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.camunda.bpm.model.bpmn.instance.Process;
+import org.w3c.dom.Element;
 
 import at.fh.BPMN20OntologyTester.controller.OWLTester;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
@@ -34,7 +35,7 @@ public class TestCase {
 	// Holds the testresults
 	private final Set<BPMNElement> resultsXmlNodesWithoutOWLClass = new HashSet<BPMNElement>();
 	private final Set<String> resultsXmlAttributesWithoutOWLProperty = new HashSet<String>();
-	private final Map<Process, List<BPMNElement>> resultsXmlNodesFailOWLRestrictions = new HashMap<Process, List<BPMNElement>>();
+	private final Map<Element,Set<FailedOWLClassRestriction>> resultsXmlNodesFailOWLRestrictions = new HashMap<Element,Set<FailedOWLClassRestriction>>();
 
 	private boolean ignoreTcSpecificData = false;
 	
@@ -127,7 +128,7 @@ public class TestCase {
 		return resultsXmlAttributesWithoutOWLProperty;
 	}
 
-	public Map<Process, List<BPMNElement>> getResultsXmlNodesFailOWLRestrictions() {
+	public Map<Element,Set<FailedOWLClassRestriction>> getResultsXmlNodesFailOWLRestrictions() {
 		return resultsXmlNodesFailOWLRestrictions;
 	}
 
@@ -179,8 +180,8 @@ public class TestCase {
 	public String getTestResultReport() {
 		StringBuilder sb = new StringBuilder();
 		int totalFailedOWLClassRestrictions = 0;
-		for(Process p : resultsXmlNodesFailOWLRestrictions.keySet()) {
-			totalFailedOWLClassRestrictions += resultsXmlNodesFailOWLRestrictions.get(p).size();
+		for(Element e : resultsXmlNodesFailOWLRestrictions.keySet()) {
+			totalFailedOWLClassRestrictions += resultsXmlNodesFailOWLRestrictions.get(e).size();
 		}
 		
 		sb.append("Testreport ob Ontology").append("\n").append("\n");
@@ -206,13 +207,10 @@ public class TestCase {
 		}
 		sb.append("\n");
 		sb.append("Detailed List of XML-Nodes which failed OWL-Class Restriction:").append("\n");
-		for(Process proc: resultsXmlNodesFailOWLRestrictions.keySet()) {
-			sb.append(" - ").append(proc.getDomElement().getLocalName()).append("\n");
-			for(BPMNElement node: resultsXmlNodesFailOWLRestrictions.get(proc)) {
-				sb.append("   - ").append(node.getDomLocalName()).append("\n");
-				for(FailedOWLClassRestriction fr : node.getFailedRestrictions()) {
-					sb.append("     - ").append(fr.getFormattedFailingReason()).append("\n");
-				}
+		for(Element e: resultsXmlNodesFailOWLRestrictions.keySet()) {
+			sb.append(" - ").append(e.getTagName().substring(e.getTagName().indexOf(":"))).append("\n");
+			for(FailedOWLClassRestriction fcr: resultsXmlNodesFailOWLRestrictions.get(e)) {
+					sb.append("   - ").append(fcr.getFormattedFailingReason()).append("\n");
 			}
 		}
 		

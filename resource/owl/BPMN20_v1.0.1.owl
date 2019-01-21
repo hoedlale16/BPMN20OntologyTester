@@ -112,14 +112,11 @@ artifacts: Artifact [0..*] This attribute provides the list of Artifacts that ar
 
 
     <!-- http://www.reiter.at/ontology/bpmn2.0#assignment -->
-    <!--hoedlale16: 'assigment' is a XML-Element and represented as OWL-Class 'Assignment' -->
-    <!--
     <owl:ObjectProperty rdf:about="http://www.reiter.at/ontology/bpmn2.0#assignment">
         <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Specifies one or more data elements Assignments. By using an
 Assignment, single data structure elements can be assigned from the
 source structure to the target structure.</rdfs:comment>
     </owl:ObjectProperty>
-    -->
 
 
     <!-- http://www.reiter.at/ontology/bpmn2.0#associationDirection -->
@@ -857,12 +854,9 @@ ResourceParameter.</rdfs:comment>
 
 
     <!-- http://www.reiter.at/ontology/bpmn2.0#extensionAttributeDefinition -->
-    <!-- hoedlale16: Property not required in OWL -->
-    <!--
     <owl:ObjectProperty rdf:about="http://www.reiter.at/ontology/bpmn2.0#extensionAttributeDefinition">
         <rdfs:comment>Defines the extension attribute for which this value is being provided.</rdfs:comment>
     </owl:ObjectProperty>
-    -->
 
 
     <!-- http://www.reiter.at/ontology/bpmn2.0#extensionAttributeDefinitions -->
@@ -3152,7 +3146,7 @@ them available for use by elements within this Definitions.</rdfs:comment>
             </owl:Restriction>
         </rdfs:subClassOf>
         
-        <!--hoedlale16: Defualt Value '1', therefore no qualifiedCardinality required -->
+        <!--<: Defualt Value '1', therefore no qualifiedCardinality required -->
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#startQuantity"/>
@@ -4016,9 +4010,6 @@ Table 12.3 – BPMNShape XML schema
                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Documentation"/>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <!-- hoedlale16: extensionsDefinition are represented as XML-Element 'extensionElements' 
-              and not as xml-attribute -->
-        <!-- -->
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#extensionDefinitions"/>
@@ -4026,7 +4017,6 @@ Table 12.3 – BPMNShape XML schema
                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#ExtensionDefinition"/>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <!-- -->
 
         <rdfs:subClassOf>
             <owl:Restriction>
@@ -5477,8 +5467,6 @@ Table 8.5). Table 8.34 displays the additional model associations of the Correla
         <rdfs:subClassOf rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Data"/>
         <rdfs:subClassOf rdf:resource="http://www.reiter.at/ontology/bpmn2.0#DescriptiveProcessModelingConformance"/>
         
-        <!--hoedlale16: 'assigment' is a XML-Element to assign Data-Elements not an XML-Attribute-->
-        <!-- -->
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#assignment"/>
@@ -5486,7 +5474,6 @@ Table 8.5). Table 8.34 displays the additional model associations of the Correla
                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Assignment"/>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <!-- -->
 
         <rdfs:subClassOf>
             <owl:Restriction>
@@ -6654,7 +6641,7 @@ Expression inherits the attributes and model associations of BaseElement (see Ta
         <rdfs:subClassOf rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Foundation"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <!-- hoedlale16: Because of default-value(fale) not explizit required attribute -->
+                <!-- hoedlale16: Because of default-value(false) not explizit required attribute -->
                 <!-- Reconfigured: Instead of exact check to min/max (0-1) -->
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#isReference"/>
                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
@@ -6782,8 +6769,6 @@ Table 8.8 presents the attributes and model associations for the ExtensionDefini
                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Auditing"/>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <!--hoedlale16: Category is a XML-Element not a XML-Attribute. if XML-Element exists it must fullfill the CategoryValue restrictions (Table 8.44 – FlowElement attributes) -->
-        <!-- -->
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#categoryValueRef"/>
@@ -6791,7 +6776,6 @@ Table 8.8 presents the attributes and model associations for the ExtensionDefini
                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#CategoryValue"/>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <!-- -->
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#monitoring"/>
@@ -7563,9 +7547,6 @@ Table 10.51 presents the additional model associations of the ItemAwareElement e
         <rdfs:subClassOf rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Common"/>
         <rdfs:subClassOf rdf:resource="http://www.reiter.at/ontology/bpmn2.0#CommonExecutableProcessModelingConformance"/>
         <rdfs:subClassOf rdf:resource="http://www.reiter.at/ontology/bpmn2.0#RootElement"/>
-        <!-- hoedlale16: 'import' is a XML-Element and as a result represented by an Element 
-              If the element exists, it must fullfill the defined restriction. -->
-        <!-- -->
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#import"/>

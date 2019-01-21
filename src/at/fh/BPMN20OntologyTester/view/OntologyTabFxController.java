@@ -139,13 +139,13 @@ public class OntologyTabFxController implements FxController {
 			restItems.clear();
 			if (entity.isOWLClass()) {
 				try {
-					for (OWLClassRestriction r : ontology.getAllOWLClassRestrictionOfOWLClass(entity.asOWLClass(),
-							true)) {
+					for (OWLClassRestriction r : ontology.getAllOWLClassRestrictionOfOWLClass(entity.asOWLClass())) {
 						restItems.add(r.toFormattedToString());
 					}
 				} catch (Exception e) {
 					appendLog("Error occured while parsing OWL-Restrictions for class <"
 							+ entity.getIRI().getShortForm() + ">");
+					e.printStackTrace();
 				}
 
 				if (restItems.isEmpty())
