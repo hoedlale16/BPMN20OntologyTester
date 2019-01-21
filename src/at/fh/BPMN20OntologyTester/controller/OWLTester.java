@@ -119,7 +119,9 @@ public class OWLTester {
 
 		Map<Element, Set<FailedOWLClassRestriction>> failedNodes = new HashMap<Element, Set<FailedOWLClassRestriction>>();
 
+		//Return a List of all Elements from the document
 		NodeList nodeList = model.getRawDOMDocument().getElementsByTagName("*");
+		
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Node node = nodeList.item(i);
 			if (node.getNodeType() == node.ELEMENT_NODE) {
