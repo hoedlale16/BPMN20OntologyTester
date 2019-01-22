@@ -10252,7 +10252,7 @@ Table 8.5) through its relationship to the EventDefinition element (see page 260
                 <owl:onClass rdf:resource="http://www.reiter.at/ontology/bpmn2.0#Text"/>
             </owl:Restriction>
         </rdfs:subClassOf>
-        -->
+
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.reiter.at/ontology/bpmn2.0#textFormat"/>

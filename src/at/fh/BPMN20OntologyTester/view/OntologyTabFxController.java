@@ -8,23 +8,22 @@ import org.semanticweb.owlapi.model.OWLEntity;
 
 import at.fh.BPMN20OntologyTester.BPMN20OntologyTester;
 import at.fh.BPMN20OntologyTester.controller.FxController;
-import at.fh.BPMN20OntologyTester.controller.XmlElement2OWLClassesMapper;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
-import at.fh.BPMN20OntologyTester.controller.XmlAttribute2OWLPropertyMapper;
+import at.fh.BPMN20OntologyTester.controller.XmlElement2OWLClassesMapper;
 import at.fh.BPMN20OntologyTester.model.OWLClassRestriction;
 import at.fh.BPMN20OntologyTester.model.OWLModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 
 /**
  * Handels user interactions on tab "Ontology"

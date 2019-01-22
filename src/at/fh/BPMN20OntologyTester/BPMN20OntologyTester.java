@@ -116,7 +116,6 @@ public class BPMN20OntologyTester extends Application {
 			
 		} catch (Exception e) {
 			System.out.println("Error initializing Application: " + e.getMessage());
-			e.printStackTrace();
 		}
 	}
 
@@ -132,19 +131,10 @@ public class BPMN20OntologyTester extends Application {
 
 			// Load OWL2XML Mapping files from given resourcePath
 			XmlElement2OWLClassesMapper xmlElem2owlClassMapper = XmlElement2OWLClassesMapper.getInstance();
-			XmlAttribute2OWLPropertyMapper xmlAttr2owlPropMapper = XmlAttribute2OWLPropertyMapper.getInstance();
-			
+			XmlAttribute2OWLPropertyMapper xmlAttr2owlPropMapper = XmlAttribute2OWLPropertyMapper.getInstance();		
 			xmlElem2owlClassMapper.loadMappingFromStream(getClass().getResourceAsStream(xmlElements2owlClassesMappingPath));
 			xmlAttr2owlPropMapper.loadMappingFromStream(getClass().getResourceAsStream(xmlAttribute2owlPropertiesMappingPath));
-
-			if (!xmlElem2owlClassMapper.hasMappings())
-				throw new Exception(
-						 "Warning! - xmlElement2owlClass Mapping from file<" + xmlElements2owlClassesMappingPath + "> has no content");
-			if (!xmlAttr2owlPropMapper.hasMappings())
-			throw new Exception(
-			  "Warning! - xmlAttriubte2owlProperty Mapping from file<" + xmlAttribute2owlPropertiesMappingPath + "> has no content");
-						
-			
+	
 			//Load Conformance Class mapping
 			OwlConformanceClassHandler confClassMapper = OwlConformanceClassHandler.getInstance();
 			confClassMapper.load(getClass().getResourceAsStream(conformanceClassMappingPath));
@@ -154,8 +144,7 @@ public class BPMN20OntologyTester extends Application {
 
 		} catch (Exception e) {
 			// Just continue, and print message to console.
-			System.out.println("Error while initializing AppData:" +e.getMessage());
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 

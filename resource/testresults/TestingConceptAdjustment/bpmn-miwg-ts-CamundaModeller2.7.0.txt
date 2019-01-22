@@ -1,0 +1,100 @@
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Camunda Modeler 2.7.0\A.1.0-export.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <0> XML-Nodes which failed defined OWL-Restrictions <0>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Camunda Modeler 2.7.0\A.1.0-roundtrip.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <0> XML-Nodes which failed defined OWL-Restrictions <0>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Camunda Modeler 2.7.0\A.2.0-export.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <2> XML-Nodes which failed defined OWL-Restrictions <2>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Camunda Modeler 2.7.0\A.2.0-roundtrip.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <2> XML-Nodes which failed defined OWL-Restrictions <2>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Camunda Modeler 2.7.0\A.3.0-export.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <1> XML-Nodes which failed defined OWL-Restrictions <1>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Camunda Modeler 2.7.0\A.3.0-roundtrip.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <1> XML-Nodes which failed defined OWL-Restrictions <1>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Camunda Modeler 2.7.0\A.4.0-export.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <1> XML-Nodes which failed defined OWL-Restrictions <1>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Camunda Modeler 2.7.0\A.4.0-roundtrip.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <5> XML-Nodes which failed defined OWL-Restrictions <5>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Camunda Modeler 2.7.0\A.4.1-export.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <0> XML-Nodes which failed defined OWL-Restrictions <0>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Camunda Modeler 2.7.0\A.4.1-roundtrip.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <1> XML-Nodes which failed defined OWL-Restrictions <1>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Camunda Modeler 2.7.0\B.1.0-roundtrip.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <7> XML-Nodes which failed defined OWL-Restrictions <7>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Camunda Modeler 2.7.0\B.2.0-roundtrip.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <13> XML-Nodes which failed defined OWL-Restrictions <13>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Camunda Modeler 2.7.0\C.1.0-export.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <9> XML-Nodes which failed defined OWL-Restrictions <10>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Camunda Modeler 2.7.0\C.1.0-roundtrip.bpmn>
+  <3> XML-Nodes wihtout OWL-Class
+  <2> XML-Attribut without OWL-Property
+  <7> XML-Nodes which failed defined OWL-Restrictions <7>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Camunda Modeler 2.7.0\C.1.1-export.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <7> XML-Nodes which failed defined OWL-Restrictions <7>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Camunda Modeler 2.7.0\C.1.1-roundtrip.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <1> XML-Nodes which failed defined OWL-Restrictions <1>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Camunda Modeler 2.7.0\C.2.0-export.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <5> XML-Nodes which failed defined OWL-Restrictions <5>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Camunda Modeler 2.7.0\C.2.0-roundtrip.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <10> XML-Nodes which failed defined OWL-Restrictions <10>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Camunda Modeler 2.7.0\C.3.0-export.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <7> XML-Nodes which failed defined OWL-Restrictions <7>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Camunda Modeler 2.7.0\C.3.0-roundtrip.bpmn>
+  <4> XML-Nodes wihtout OWL-Class
+  <3> XML-Attribut without OWL-Property
+  <0> XML-Nodes which failed defined OWL-Restrictions <0>
+----------------------------
