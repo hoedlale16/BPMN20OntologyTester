@@ -29,9 +29,6 @@ import org.semanticweb.owlapi.model.OWLRestriction;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 import org.semanticweb.owlapi.search.EntitySearcher;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import at.fh.BPMN20OntologyTester.controller.OwlConformanceClassHandler;
@@ -61,7 +58,9 @@ public class OWLModel {
 			this.fileCreatedFrom = ontologyFile;
 		} catch (Exception e) {
 			// Simplify Exception Handling
+			e.printStackTrace();
 			throw new OWLOntologyCreationException(e);
+			
 		}
 	}
 

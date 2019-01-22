@@ -4,12 +4,10 @@
 package at.fh.BPMN20OntologyTester.view;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import org.camunda.bpm.model.bpmn.instance.Process;
 import org.semanticweb.owlapi.model.OWLProperty;
 import org.w3c.dom.Element;
 
@@ -20,12 +18,10 @@ import at.fh.BPMN20OntologyTester.model.FailedOWLClassRestriction;
 import at.fh.BPMN20OntologyTester.model.OWLModel;
 import at.fh.BPMN20OntologyTester.model.TestCase;
 import at.fh.BPMN20OntologyTester.model.enums.TestCaseEnum;
-import at.fh.BPMN20OntologyTester.view.dto.BPMNElementV2;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeCell;
@@ -50,10 +46,7 @@ public class OwlTestSuiteTabTcResultFxController implements FxController {
 	@FXML
 	private TreeView<String> treeBPMN20OWL;
 	@FXML
-	private TreeView<BPMNElementV2> treeBPMNfailedRestrictions;
-
-	@FXML
-	private CheckBox cbIgnoreWarningRestrictions;
+	private TreeView<BPMNElement> treeBPMNfailedRestrictions;
 
 	// Initialized when tab is created
 	private final TestCase testcase;
@@ -95,12 +88,12 @@ public class OwlTestSuiteTabTcResultFxController implements FxController {
 		// Accept clicks only on node cells, and not on empty spaces of the TreeView
 		if (node instanceof Text || (node instanceof TreeCell && ((TreeCell) node).getText() != null)) {
 
-			BPMNElementV2 selectedNode = treeBPMNfailedRestrictions.getSelectionModel().getSelectedItem().getValue();
+			BPMNElement selectedNode = treeBPMNfailedRestrictions.getSelectionModel().getSelectedItem().getValue();
 
 			// Show failed restrictions for selectedNode
 			failedRestrictionsOfXmlNode.clear();
 			for (FailedOWLClassRestriction r : selectedNode
-					.getFailedRestrictions(cbIgnoreWarningRestrictions.isSelected())) {
+					.getFailedRestrictions()) {
 				failedRestrictionsOfXmlNode.add(r.getFormattedFailingReason());
 			}
 		}
@@ -110,7 +103,7 @@ public class OwlTestSuiteTabTcResultFxController implements FxController {
 	@FXML
 	private void onHandleClickedOnFailedRestriction(MouseEvent event) {
 
-		TreeItem<BPMNElementV2> curSelElementFailedRestriction = treeBPMNfailedRestrictions.getSelectionModel()
+		TreeItem<BPMNElement> curSelElementFailedRestriction = treeBPMNfailedRestrictions.getSelectionModel()
 				.getSelectedItem();
 
 		// Get selected Error-Test of faild Restriction
@@ -119,7 +112,7 @@ public class OwlTestSuiteTabTcResultFxController implements FxController {
 		if (curSelElementFailedRestriction != null && selItem != null) {
 
 			// Get selected BPMN-Element of tree with failed restrictions
-			BPMNElementV2 selectedBPMNElement = curSelElementFailedRestriction.getValue();
+			BPMNElement selectedBPMNElement = curSelElementFailedRestriction.getValue();
 			// Get FailedRestriction Object with error text. Assume the error text is
 			// unique!
 			Optional<FailedOWLClassRestriction> rest = selectedBPMNElement.getFailedRestrictionWithErrorText(selItem);
@@ -188,28 +181,32 @@ public class OwlTestSuiteTabTcResultFxController implements FxController {
 
 	private void testXmlNodesFailRestrictions(TestCase testcase) throws Exception {
 		
-		testcase.setIgnoreTcSpecificData(cbIgnoreWarningRestrictions.isSelected());
-
 		//Execute tests and show result
 		testcase.executeTest(TestCaseEnum.XMLElementFailOWLClassRestrictions);	
 		Map<Element,Set<FailedOWLClassRestriction>> elementsFailedRestrictions = testcase.getResultsXmlNodesFailOWLRestrictions();
 
 		// Build Tree to show results
+		TreeItem<BPMNElement> rootItem;
 		if (!elementsFailedRestrictions.isEmpty()) {
-			TreeItem<BPMNElementV2> rootItem = new TreeItem<BPMNElementV2>(new BPMNElementV2("Failures"));
-
+			rootItem = new TreeItem<BPMNElement>(new BPMNElement("Failures"));
 			rootItem.setExpanded(true);
+			
 			for (Element elem: elementsFailedRestrictions.keySet()) {
 				String guiDisplayName = elem.getTagName().substring(elem.getTagName().indexOf(":")+1) + "(Err: "
 							+ elementsFailedRestrictions.get(elem).size() + ")";
 
-				BPMNElementV2 ev2 = new BPMNElementV2(elem,elementsFailedRestrictions.get(elem),guiDisplayName);
+				BPMNElement bpmnElement = new BPMNElement(elem,elementsFailedRestrictions.get(elem),guiDisplayName);
 				
-				TreeItem<BPMNElementV2> treeItem = new TreeItem<BPMNElementV2>(ev2);
+				TreeItem<BPMNElement> treeItem = new TreeItem<BPMNElement>(bpmnElement);
 				rootItem.getChildren().add(treeItem);
 			}
-			treeBPMNfailedRestrictions.setRoot(rootItem);
-			treeBPMNfailedRestrictions.refresh();
+		} else {
+			rootItem = new TreeItem<BPMNElement>(new BPMNElement("No issues found!"));
 		}
+		
+		treeBPMNfailedRestrictions.setRoot(rootItem);
+		treeBPMNfailedRestrictions.refresh();
+
+		
 	}
 }

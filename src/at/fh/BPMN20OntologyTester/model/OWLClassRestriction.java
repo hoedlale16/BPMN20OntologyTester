@@ -158,6 +158,9 @@ public class OWLClassRestriction {
 		case "xsd:integer":
 		case "http://www.w3.org/2001/XMLSchema#integer":
 			return OWLRestrictionDataRangeEnum.DataRangeInteger;
+		case "xsd:double":
+		case "http://www.w3.org/2001/XMLSchema#double":
+			return OWLRestrictionDataRangeEnum.DataRangeDouble;
 		default:
 			return OWLRestrictionDataRangeEnum.Unkown;
 		}
@@ -193,11 +196,15 @@ public class OWLClassRestriction {
 	public String toFormattedToString() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("OWLClassRestriction fulfilled by XMl-Attribute <")
-				.append(this.fulfilledbyXMLAttribute).append("> [")
-				.append("onProperty=").append(onProperty.getIRI().getShortForm()).append(", ")
-				.append("cardinality=").append(cardinality).append(", ").append("cardinalityType=")
-				.append(cardinalityType);
+		sb.append("OWLClassRestriction musst fulfilled by ");
+		if(this.fulfilledbyXMLAttribute) {
+			sb.append("XML-Attribute").append(" [");
+		} else {
+			sb.append("XML-Element").append(" [");
+		}
+		sb.append("onProperty=").append(onProperty.getIRI().getShortForm()).append(", ")
+		  .append("cardinality=").append(cardinality).append(", ").append("cardinalityType=")
+		  .append(cardinalityType);
 
 		if (onDataRange != OWLRestrictionDataRangeEnum.Unkown) {
 			sb.append(", onDataRage=").append(onDataRange);

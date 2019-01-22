@@ -9,13 +9,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FilenameUtils;
-import org.camunda.bpm.model.bpmn.instance.Process;
 import org.w3c.dom.Element;
 
 import at.fh.BPMN20OntologyTester.BPMN20OntologyTester;
 import at.fh.BPMN20OntologyTester.controller.BPMNModelHandler;
 import at.fh.BPMN20OntologyTester.controller.FxController;
-import at.fh.BPMN20OntologyTester.model.BPMNElement;
 import at.fh.BPMN20OntologyTester.model.TestCase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -143,11 +141,15 @@ public class OwlTestSuiteTabFxController implements FxController {
 			public Map<TestCase, Tab> call() throws Exception {
 				Map<TestCase, Tab> testResultTabs = new HashMap<TestCase, Tab>();
 				for (File f : testCases) {
-					this.updateMessage("Test <" + f.getName() + ">");
-					// Create Tab which triggers the execution of the test
-					TestCase testcase = new TestCase(BPMNModelHandler.readModelFromFile(f));
-					Tab tab = BPMN20OntologyTester.getTestSuiteTestResultTab(testcase);
-					testResultTabs.put(testcase, tab);
+					try {
+						this.updateMessage("Test <" + f.getName() + ">");
+						// Create Tab which triggers the execution of the test
+						TestCase testcase = new TestCase(BPMNModelHandler.readModelFromFile(f));
+						Tab tab = BPMN20OntologyTester.getTestSuiteTestResultTab(testcase);
+						testResultTabs.put(testcase, tab);
+					} catch (Exception e) {
+						appendLog("Error while testing <" + f.getName() + ">");
+					}
 				}
 				return testResultTabs;
 			}

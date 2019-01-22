@@ -1,0 +1,42 @@
+Testreport ob Ontology
+
+General OWL Data:
+ - OWL-Classes: 268
+ - OWL-DataProperties: 69
+ - OWL-ObjectProperties: 175
+
+General OWL Issues:
+ - Processmodel Conformance Class: Unkown
+ - Number of XML-Nodes without OWL-Class: 0
+ - Number of XML-Attributes without OWL-Propertiy: 0
+ - Number of XML-Nodes which failed the OWL-Class Restriction: 12
+
+Detailed List of XML-Nodes without OWL-Classes:
+
+Detailed List of XML-Attributes without OWL-Property
+
+Detailed List of XML-Nodes which failed OWL-Class Restriction:
+ - dataInputRefs
+   - [OWL-Class: InputSet] - ERR: Restriction expected XML-Child-Element <inputSet> at Element <dataInputRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+ - dataInputRefs
+   - [OWL-Class: InputSet] - ERR: Restriction expected XML-Child-Element <inputSet> at Element <dataInputRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+ - dataInput
+   - [OWL-Class: InputSet] - ERR: Restriction expected XML-Child-Element <inputSet> at Element <dataInput> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+ - dataInput
+   - [OWL-Class: InputSet] - ERR: Restriction expected XML-Child-Element <inputSet> at Element <dataInput> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+ - process
+   - [OWL-Class: InputOutputSpecification] - ERR: Restriction expected XML-Child-Element <ioSpecification> at Element <process> <1> times with Matchtype <MaxCardinality> but element occured in BPMN <3> times.
+ - dataInput
+   - [OWL-Class: InputSet] - ERR: Restriction expected XML-Child-Element <inputSet> at Element <dataInput> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+ - dataInputRefs
+   - [OWL-Class: InputSet] - ERR: Restriction expected XML-Child-Element <inputSet> at Element <dataInputRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+ - dataInput
+   - [OWL-Class: InputSet] - ERR: Restriction expected XML-Child-Element <inputSet> at Element <dataInput> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+ - dataInputRefs
+   - [OWL-Class: InputSet] - ERR: Restriction expected XML-Child-Element <inputSet> at Element <dataInputRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+ - dataInputRefs
+   - [OWL-Class: InputSet] - ERR: Restriction expected XML-Child-Element <inputSet> at Element <dataInputRefs> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.
+ - process
+   - [OWL-Class: InputOutputSpecification] - ERR: Restriction expected XML-Child-Element <ioSpecification> at Element <process> <1> times with Matchtype <MaxCardinality> but element occured in BPMN <2> times.
+ - dataInput
+   - [OWL-Class: InputSet] - ERR: Restriction expected XML-Child-Element <inputSet> at Element <dataInput> <1> times with Matchtype <MinCardinality> but element occured in BPMN <0> times.

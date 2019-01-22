@@ -1,0 +1,37 @@
+Testreport ob Ontology
+
+General OWL Data:
+ - OWL-Classes: 268
+ - OWL-DataProperties: 69
+ - OWL-ObjectProperties: 175
+
+General OWL Issues:
+ - Processmodel Conformance Class: Unkown
+ - Number of XML-Nodes without OWL-Class: 3
+ - Number of XML-Attributes without OWL-Propertiy: 2
+ - Number of XML-Nodes which failed the OWL-Class Restriction: 7
+
+Detailed List of XML-Nodes without OWL-Classes:
+ - VerticalRuler
+ - Grid
+ - HorizontalRuler
+
+Detailed List of XML-Attributes without OWL-Property
+ - spacing
+ - color
+
+Detailed List of XML-Nodes which failed OWL-Class Restriction:
+ - messageFlow
+   - [OWL-Property: name] - ERR: Restriction expected XML-Attribute <name> at Element <messageFlow> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+ - lane
+   - [OWL-Property: name] - ERR: Restriction expected XML-Attribute <name> at Element <lane> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+ - messageFlow
+   - [OWL-Property: name] - ERR: Restriction expected XML-Attribute <name> at Element <messageFlow> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+ - messageFlow
+   - [OWL-Property: name] - ERR: Restriction expected XML-Attribute <name> at Element <messageFlow> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+ - collaboration
+   - [OWL-Property: name] - ERR: Restriction expected XML-Attribute <name> at Element <collaboration> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+ - messageFlow
+   - [OWL-Property: name] - ERR: Restriction expected XML-Attribute <name> at Element <messageFlow> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.
+ - messageFlow
+   - [OWL-Property: name] - ERR: Restriction expected XML-Attribute <name> at Element <messageFlow> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.

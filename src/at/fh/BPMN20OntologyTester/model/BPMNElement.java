@@ -6,9 +6,7 @@ package at.fh.BPMN20OntologyTester.model;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import org.camunda.bpm.model.xml.instance.DomElement;
 import org.w3c.dom.Element;
 
 /**
@@ -21,47 +19,54 @@ import org.w3c.dom.Element;
  */
 public class BPMNElement {
 	
-	private final DomElement bpmnDomElement;
+	private final Element bpmnElement;
 	private final Set<FailedOWLClassRestriction> failedRestrictions;
 	private String guiDisplayName;
 	
 	/**
-	 * @param bpmnDomElement
+	 * @param bpmnElement
 	 * @param failedRestrictions
 	 */
-	public BPMNElement(DomElement bpmnDomElement, Set<FailedOWLClassRestriction> failedRestrictions, String guiDisplayName) {
+	public BPMNElement(Element bpmnElement, Set<FailedOWLClassRestriction> failedRestrictions, String guiDisplayName) {
 		super();
-		this.bpmnDomElement = bpmnDomElement;
+		this.bpmnElement = bpmnElement;
 		this.failedRestrictions = failedRestrictions;
 		this.guiDisplayName = guiDisplayName;
 	}
-	public BPMNElement(DomElement bpmnDomElement, Set<FailedOWLClassRestriction> failedRestrictions) {
+	public BPMNElement(Element bpmnElement, Set<FailedOWLClassRestriction> failedRestrictions) {
 		super();
-		this.bpmnDomElement = bpmnDomElement;
+		this.bpmnElement = bpmnElement;
 		this.failedRestrictions = failedRestrictions;
-		this.guiDisplayName = bpmnDomElement.getLocalName();
+		this.guiDisplayName = bpmnElement.getTagName().substring(bpmnElement.getTagName().indexOf(":")+1);
 
 	}
 
 	
 	
-	public BPMNElement(DomElement bpmnDomElement,String guiDisplayName) {
+	public BPMNElement(Element bpmnElement,String guiDisplayName) {
 		super();
-		this.bpmnDomElement = bpmnDomElement;
+		this.bpmnElement = bpmnElement;
 		this.failedRestrictions = new HashSet<FailedOWLClassRestriction>();
 		this.guiDisplayName = guiDisplayName;
 	}
 	
-	public BPMNElement(DomElement bpmnDomElement) {
+	public BPMNElement(Element bpmnElement) {
 		super();
-		this.bpmnDomElement = bpmnDomElement;
+		this.bpmnElement = bpmnElement;
 		this.failedRestrictions = new HashSet<FailedOWLClassRestriction>();
-		this.guiDisplayName = bpmnDomElement.getLocalName();
+		this.guiDisplayName = bpmnElement.getTagName().substring(bpmnElement.getTagName().indexOf(":")+1);
+	}
+	
+	public BPMNElement(String guiDisplayName) {
+		this.bpmnElement = null;
+		this.failedRestrictions = new HashSet<FailedOWLClassRestriction>();;
+		this.guiDisplayName = guiDisplayName;
+
 	}
 	
 	
-	public DomElement getBpmnDomElement() {
-		return bpmnDomElement;
+	public Element getBpmnElement() {
+		return bpmnElement;
 	}
 	
 	/**
@@ -70,21 +75,7 @@ public class BPMNElement {
 	 */
 	public Set<FailedOWLClassRestriction> getFailedRestrictions() {
 		return failedRestrictions;
-	}
-	
-	/**
-	 * Returns FailedRestrictions with or without filtering warnings
-	 * @param ignoreWarnings
-	 * @return
-	 */
-	public Set<FailedOWLClassRestriction> getFailedRestrictions(boolean ignoreWarnings) {
-		if (ignoreWarnings)
-			return failedRestrictions.stream().filter(r -> r.isErrorFailure()).collect(Collectors.toSet());
-		
-		return failedRestrictions;
-			
-	}
-	
+	}	
 	
 	public Optional<FailedOWLClassRestriction> getFailedRestrictionWithErrorText(String errText) {
 		for(FailedOWLClassRestriction fr : failedRestrictions) {
@@ -105,7 +96,7 @@ public class BPMNElement {
 	}
 	
 	public String getDomLocalName() {
-		return bpmnDomElement.getLocalName();
+		return bpmnElement.getLocalName();
 	}
 	
 	public void addFailedRestriction(FailedOWLClassRestriction r) {
@@ -125,8 +116,8 @@ public class BPMNElement {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		//To compare two BPMNElements for us at bpmnDomElement just the localname is important
-		result = prime * result + ((bpmnDomElement == null) ? 0 : bpmnDomElement.getLocalName().hashCode());
+		//To compare two BPMNElements for us at bpmnElement just the localname is important
+		result = prime * result + ((bpmnElement == null) ? 0 : bpmnElement.getLocalName().hashCode());
 		result = prime * result + ((failedRestrictions == null) ? 0 : failedRestrictions.hashCode());
 		result = prime * result + ((guiDisplayName == null) ? 0 : guiDisplayName.hashCode());
 		return result;
@@ -140,10 +131,10 @@ public class BPMNElement {
 		if (getClass() != obj.getClass())
 			return false;
 		BPMNElement other = (BPMNElement) obj;
-		if (bpmnDomElement == null) {
-			if (other.bpmnDomElement != null)
+		if (bpmnElement == null) {
+			if (other.bpmnElement != null)
 				return false;
-		} else if (!bpmnDomElement.getLocalName().equals(other.bpmnDomElement.getLocalName()))
+		} else if (!bpmnElement.getLocalName().equals(other.bpmnElement.getLocalName()))
 			return false;
 		if (failedRestrictions == null) {
 			if (other.failedRestrictions != null)

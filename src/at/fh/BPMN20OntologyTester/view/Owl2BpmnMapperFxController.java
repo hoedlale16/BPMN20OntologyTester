@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.Properties;
 
 import at.fh.BPMN20OntologyTester.controller.FxController;
-import at.fh.BPMN20OntologyTester.controller.Owl2BpmnNamingMapper;
+import at.fh.BPMN20OntologyTester.controller.XmlElement2OWLClassesMapper;
 import at.fh.BPMN20OntologyTester.view.dto.Owl2BpmnTableData;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -76,7 +76,7 @@ public class Owl2BpmnMapperFxController implements FxController {
 	public Owl2BpmnMapperFxController() {
 
 		// COnvert Data from Mapper to List for GUI and changes
-		prepareData(Owl2BpmnNamingMapper.getInstance().getLoadedMapping());
+		prepareData(XmlElement2OWLClassesMapper.getInstance().getLoadedMapping());
 	}
 
 	private void prepareData(Properties propMappings) {
@@ -97,7 +97,7 @@ public class Owl2BpmnMapperFxController implements FxController {
 	private boolean containsModifiedData() {
 		
 		//Check for added or deleted entries
-		if(data.size() != Owl2BpmnNamingMapper.getInstance().getLoadedMapping().size())
+		if(data.size() != XmlElement2OWLClassesMapper.getInstance().getLoadedMapping().size())
 			return true;
 		
 		//Check for real modifikations
@@ -334,7 +334,7 @@ public class Owl2BpmnMapperFxController implements FxController {
 				alert.showAndWait();
 			} else {
 				//Apply changes and close
-				Owl2BpmnNamingMapper.getInstance().replaceMapping(getNewMappings());
+				XmlElement2OWLClassesMapper.getInstance().replaceMapping(getNewMappings());
 				((Node)(event.getSource())).getScene().getWindow().hide();
 			}
 			

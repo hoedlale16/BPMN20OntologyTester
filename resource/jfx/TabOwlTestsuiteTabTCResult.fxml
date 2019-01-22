@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
@@ -52,9 +51,6 @@
                <top>
                   <Label alignment="TOP_LEFT" styleClass="lb_boxHeader" text="XML-Nodes with failed OWL-Restrictions" BorderPane.alignment="TOP_LEFT" />
                </top>
-               <bottom>
-                  <CheckBox fx:id="cbIgnoreWarningRestrictions" mnemonicParsing="false" onAction="#onUpdateTestCaseResults" selected="true" text="Ignore Warning Restrictions" BorderPane.alignment="TOP_LEFT" />
-               </bottom>
                <center>
                   <TreeView fx:id="treeBPMNfailedRestrictions" minWidth="150.0" onMouseClicked="#onHandleClickedOnElementFailedRestrictions" showRoot="false" BorderPane.alignment="CENTER">
                      <BorderPane.margin>

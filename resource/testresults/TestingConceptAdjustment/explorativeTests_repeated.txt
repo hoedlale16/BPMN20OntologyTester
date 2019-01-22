@@ -1,0 +1,15 @@
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\ExampleProcessModel1.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <2> XML-Nodes which failed defined OWL-Restrictions <2>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\ExampleProcessModel2.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <2> XML-Nodes which failed defined OWL-Restrictions <2>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\ExampleProcessModel3.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <1> XML-Nodes which failed defined OWL-Restrictions <1>
+----------------------------

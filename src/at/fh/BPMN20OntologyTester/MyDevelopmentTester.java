@@ -7,13 +7,10 @@ import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.Optional;
-
-import org.semanticweb.owlapi.model.OWLClass;
 
 import at.fh.BPMN20OntologyTester.controller.BPMNModelHandler;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
-import at.fh.BPMN20OntologyTester.controller.Owl2BpmnNamingMapper;
+import at.fh.BPMN20OntologyTester.controller.XmlElement2OWLClassesMapper;
 import at.fh.BPMN20OntologyTester.controller.OwlConformanceClassHandler;
 import at.fh.BPMN20OntologyTester.model.BPMNModel;
 import at.fh.BPMN20OntologyTester.model.OWLModel;
@@ -46,7 +43,7 @@ public class MyDevelopmentTester {
 	}
 	
 	private static void initAdditionalAppData() throws Exception {
-		Owl2BpmnNamingMapper owl2xmlMapper = Owl2BpmnNamingMapper.getInstance();
+		XmlElement2OWLClassesMapper owl2xmlMapper = XmlElement2OWLClassesMapper.getInstance();
 		owl2xmlMapper.loadMappingFromStream(
 				MyDevelopmentTester.class.getResourceAsStream("/resource/owl/OWL2BPMNmapping.properties"));
 
@@ -71,8 +68,10 @@ public class MyDevelopmentTester {
 			BPMNModel model = createBPMNModel("/resource/bpmn/ExampleProcessModel1.bpmn");
 			
 			//-- RUN developer tests here!-Optional<T>ystem.out.println("Run some Tests");
-			Optional<OWLClass> owlClass = ontology.getOWLClassByShortNameIgnoreCase("LaneSet");
-			ontology.getAllOWLClassRestrictionOfOWLClass(owlClass.get());
+			//Optional<OWLClass> owlClass = ontology.getOWLClassByShortNameIgnoreCase("LaneSet");
+			//ontology.getAllOWLClassRestrictionOfOWLClass(owlClass.get());
+			
+			model.getAllElementsOfModel();
 			
 			
 		

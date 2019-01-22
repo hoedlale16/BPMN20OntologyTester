@@ -6,8 +6,9 @@ import com.sun.javafx.application.LauncherImpl;
 
 import at.fh.BPMN20OntologyTester.controller.FxController;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
-import at.fh.BPMN20OntologyTester.controller.Owl2BpmnNamingMapper;
+import at.fh.BPMN20OntologyTester.controller.XmlElement2OWLClassesMapper;
 import at.fh.BPMN20OntologyTester.controller.OwlConformanceClassHandler;
+import at.fh.BPMN20OntologyTester.controller.XmlAttribute2OWLPropertyMapper;
 import at.fh.BPMN20OntologyTester.model.TestCase;
 import at.fh.BPMN20OntologyTester.view.OwlTestSuiteTabTcResultFxController;
 import javafx.application.Application;
@@ -97,8 +98,9 @@ public class BPMN20OntologyTester extends Application {
 		try {
 			// Read and initialize Ontology - If an error occurred here just continue
 			// building the GUI
-			intitalizeAppData("/resource/owl/BPMN20_v1.0.1.owl", 
-							  "/resource/owl/OWL2BPMNmapping.properties",
+			intitalizeAppData("/resource/owl/BPMN20_v1.0.2.owl", 
+							  "/resource/owl/XmlAttributes2OWLPropertiesMapping.properties",
+							  "/resource/owl/XmlElements2OWLClassesMapping.properties",
 							  "/resource/owl/OWLconformanceClasses.properties");
 
 			// Load GUI- Scenes for from FXML, create a new tabs and add to tabPane of
@@ -118,7 +120,9 @@ public class BPMN20OntologyTester extends Application {
 		}
 	}
 
-	private void intitalizeAppData(String ontologyResourcePath, String owl2xmlMappingPath, String conformanceClassMappingPath) {
+	private void intitalizeAppData(String ontologyResourcePath, 
+								  String xmlAttribute2owlPropertiesMappingPath,
+								  String xmlElements2owlClassesMappingPath, String conformanceClassMappingPath) {
 		try {
 			// Load Ontology from given resourcePath
 			OntologyHandler owlHandler = OntologyHandler.getInstance();
@@ -126,23 +130,32 @@ public class BPMN20OntologyTester extends Application {
 			if (!owlHandler.getLoadedOntology().isPresent())
 				throw new Exception("Error! - Unable to read Ontology from <" + ontologyResourcePath + ">");
 
-			// Load OWL2XML Mapping file from given resourcePath
-			Owl2BpmnNamingMapper owl2xmlMapper = Owl2BpmnNamingMapper.getInstance();
-			owl2xmlMapper.loadMappingFromStream(getClass().getResourceAsStream(owl2xmlMappingPath));
-			if (!owl2xmlMapper.hasMappings())
+			// Load OWL2XML Mapping files from given resourcePath
+			XmlElement2OWLClassesMapper xmlElem2owlClassMapper = XmlElement2OWLClassesMapper.getInstance();
+			XmlAttribute2OWLPropertyMapper xmlAttr2owlPropMapper = XmlAttribute2OWLPropertyMapper.getInstance();
+			
+			xmlElem2owlClassMapper.loadMappingFromStream(getClass().getResourceAsStream(xmlElements2owlClassesMappingPath));
+			xmlAttr2owlPropMapper.loadMappingFromStream(getClass().getResourceAsStream(xmlAttribute2owlPropertiesMappingPath));
+
+			if (!xmlElem2owlClassMapper.hasMappings())
 				throw new Exception(
-						"Warning! - Unable to read OWL2BPMN Mapping file from <" + owl2xmlMappingPath + ">");
+						 "Warning! - xmlElement2owlClass Mapping from file<" + xmlElements2owlClassesMappingPath + "> has no content");
+			if (!xmlAttr2owlPropMapper.hasMappings())
+			throw new Exception(
+			  "Warning! - xmlAttriubte2owlProperty Mapping from file<" + xmlAttribute2owlPropertiesMappingPath + "> has no content");
+						
 			
 			//Load Conformance Class mapping
 			OwlConformanceClassHandler confClassMapper = OwlConformanceClassHandler.getInstance();
 			confClassMapper.load(getClass().getResourceAsStream(conformanceClassMappingPath));
 			if (!confClassMapper.hasMappings())
 				throw new Exception(
-						"Warning! - Unable to read conformance Classes Mapping file from <" + owl2xmlMappingPath + ">");
+						"Warning! - Unable to read conformance Classes Mapping file from <" + xmlElements2owlClassesMappingPath + ">");
 
 		} catch (Exception e) {
 			// Just continue, and print message to console.
 			System.out.println("Error while initializing AppData:" +e.getMessage());
+			e.printStackTrace();
 		}
 	}
 

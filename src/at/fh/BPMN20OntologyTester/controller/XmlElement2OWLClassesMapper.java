@@ -27,20 +27,20 @@ import at.fh.BPMN20OntologyTester.model.OWLModel;
  *         applied Sciences FH JOANNEUM
  *
  */
-public class Owl2BpmnNamingMapper {
+public class XmlElement2OWLClassesMapper {
 
 	private final Properties owl2xmlMapping;
 
-	private static Owl2BpmnNamingMapper theInstance;
+	private static XmlElement2OWLClassesMapper theInstance;
 
-	public static Owl2BpmnNamingMapper getInstance() {
+	public static XmlElement2OWLClassesMapper getInstance() {
 		if (theInstance == null)
-			theInstance = new Owl2BpmnNamingMapper();
+			theInstance = new XmlElement2OWLClassesMapper();
 
 		return theInstance;
 	}
 
-	private Owl2BpmnNamingMapper() {
+	private XmlElement2OWLClassesMapper() {
 		// Initialize property mappings. Muss filled via load-Methods
 		this.owl2xmlMapping = new Properties();
 	}

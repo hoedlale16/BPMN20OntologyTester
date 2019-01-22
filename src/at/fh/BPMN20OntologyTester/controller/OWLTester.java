@@ -11,12 +11,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import org.camunda.bpm.model.bpmn.instance.Process;
-import org.camunda.bpm.model.xml.instance.DomElement;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import at.fh.BPMN20OntologyTester.model.BPMNElement;
 import at.fh.BPMN20OntologyTester.model.BPMNModel;
@@ -45,24 +41,22 @@ public class OWLTester {
 	 *            - Ontology to test
 	 * @param model
 	 *            - Process modell to test against ontolgy
-	 * @param owl2bpmnMapper
+	 * @param mapper
 	 *            - Mapper to map use correct names of each part for mapping
 	 * @param ignoreExtensionElements
 	 *            - flag if elements in exteionElements should be ignored. These
 	 *            elements are customized element according the BPMN-2.0 Standard
 	 * @return
 	 */
-	public static Set<BPMNElement> testXMLNodesExsistAsOWLClasses(OWLModel ontology, BPMNModel model,
-			Owl2BpmnNamingMapper owl2bpmnMapper) {
+	public static Set<BPMNElement> testXMLElementsExistsAsOWLClasses(OWLModel ontology, BPMNModel model,
+			XmlElement2OWLClassesMapper mapper) {
 		Set<BPMNElement> notFoundInOWL = new HashSet<BPMNElement>();
 
 		// Each XML-Node must exist as OWL-Class in the Ontology.
 		// Each Attribute of an XML-Test must exist as OWL-Property in the Ontology
-		Set<DomElement> elements = model.getAllElementsOfModel();
-		for (DomElement element : elements) {
-
-			String mappedOWLname = owl2bpmnMapper.getMappedNameFor(element.getLocalName(), true);
-
+		Set<Element> elements = model.getAllElementsOfModel();
+		for (Element element : elements) {
+			String mappedOWLname = mapper.getMappedNameFor(element.getLocalName(), true);
 			if (!ontology.existsOWLClassWithName(mappedOWLname)) {
 				notFoundInOWL.add(new BPMNElement(element));
 			}
@@ -80,7 +74,7 @@ public class OWLTester {
 	 *            - Ontology to test
 	 * @param model
 	 *            - Process modell to test against ontolgy
-	 * @param owl2bpmnMapper
+	 * @param mapper
 	 *            - Mapper to map use correct names of each part for mapping
 	 * @param ignoreExtensionElements
 	 *            - flag if elements in exteionElements should be ignored. These
@@ -88,11 +82,11 @@ public class OWLTester {
 	 * @return
 	 */
 	public static Set<String> testXMLAttributesExsistAsOWLProperties(OWLModel ontology, BPMNModel model,
-			Owl2BpmnNamingMapper owl2bpmnMapper) {
+			XmlAttribute2OWLPropertyMapper mapper) {
 		Set<String> notFoundInOWL = new HashSet<String>();
 
 		for (String xmlAttr : model.getAllAttributesOfModel()) {
-			String mappedOWLname = owl2bpmnMapper.getMappedNameFor(xmlAttr, true);
+			String mappedOWLname = mapper.getMappedNameFor(xmlAttr, true);
 			if (!ontology.existsOWLPropertyWithName(mappedOWLname)) {
 				notFoundInOWL.add(xmlAttr);
 			}
@@ -108,41 +102,33 @@ public class OWLTester {
 	 * 
 	 * @param ontology
 	 * @param model
-	 * @param owl2bpmnMapper
+	 * @param xmlElem2owlClassMapper
 	 * @param ignoreWarningRestrictions
 	 * @return
 	 * @throws Exception
 	 */
 	@SuppressWarnings("static-access")
-	public static Map<Element, Set<FailedOWLClassRestriction>> testXMLNodesMeedOWLClassRestrictions(OWLModel ontology,
-			BPMNModel model, Owl2BpmnNamingMapper owl2bpmnMapper, boolean ignoreWarningRestrictions) throws Exception {
+	public static Map<Element, Set<FailedOWLClassRestriction>> testXMLElementsMeetOWLClassRestrictions(OWLModel ontology,
+			BPMNModel model, XmlElement2OWLClassesMapper xmlElem2owlClassMapper,
+			XmlAttribute2OWLPropertyMapper xmlAttr2owlPropMapper) throws Exception {
 
 		Map<Element, Set<FailedOWLClassRestriction>> failedNodes = new HashMap<Element, Set<FailedOWLClassRestriction>>();
 
-		//Return a List of all Elements from the document
-		NodeList nodeList = model.getRawDOMDocument().getElementsByTagName("*");
-		
-		for (int i = 0; i < nodeList.getLength(); i++) {
-			Node node = nodeList.item(i);
-			if (node.getNodeType() == node.ELEMENT_NODE) {
-				Element element = (Element) node;
-				// Get mapped OWL name for XML-Node
-				String elementName = element.getTagName().substring(element.getTagName().indexOf(":") + 1);
-				
-				String mappedOWLname = owl2bpmnMapper.getMappedNameFor(elementName, true);
-				Optional<OWLClass> owlClass = ontology.getOWLClassByShortNameIgnoreCase(mappedOWLname);
-				if (owlClass.isPresent()) {
-					Set<OWLClassRestriction> restrictions = ontology
-							.getAllOWLClassRestrictionOfOWLClass(owlClass.get());
+		for(Element element: model.getAllElementsOfModel()) {			
+			// Get mapped OWL name for XML-Node
+			String mappedOWLname = xmlElem2owlClassMapper.getMappedNameFor(element.getLocalName(), true);
+			Optional<OWLClass> owlClass = ontology.getOWLClassByShortNameIgnoreCase(mappedOWLname);
+			if (owlClass.isPresent()) {
+				Set<OWLClassRestriction> restrictions = ontology
+						.getAllOWLClassRestrictionOfOWLClass(owlClass.get());
 
-					Set<FailedOWLClassRestriction> elementFailedRestrictions = testXMLElement(element, restrictions,
-							owl2bpmnMapper);
-					if (!elementFailedRestrictions.isEmpty()) {
-						failedNodes.put(element, elementFailedRestrictions);
-					}
-				} else {
-					System.out.println("No OWL-Class found for XML-Element <" +elementName + ">");
+				Set<FailedOWLClassRestriction> elementFailedRestrictions = testXMLElementRestrictions(element, restrictions,
+						xmlElem2owlClassMapper, xmlAttr2owlPropMapper);
+				if (!elementFailedRestrictions.isEmpty()) {
+					failedNodes.put(element, elementFailedRestrictions);
 				}
+			} else {
+				//Can ignored because already shown at "testXMLElementsExistsAsOWLClasses"
 			}
 		}
 		return failedNodes;
@@ -152,20 +138,22 @@ public class OWLTester {
 	 * Helper method to test a single XML Element
 	 * @param element
 	 * @param restrictions
-	 * @param owl2bpmnMapper
+	 * @param mapper
 	 * @return
 	 */
-	private static Set<FailedOWLClassRestriction> testXMLElement(Element element,
-			Set<OWLClassRestriction> restrictions, Owl2BpmnNamingMapper owl2bpmnMapper) {
+	private static Set<FailedOWLClassRestriction> testXMLElementRestrictions(Element element,
+			Set<OWLClassRestriction> restrictions, 
+			XmlElement2OWLClassesMapper xmlElem2owlClassMapper,
+			XmlAttribute2OWLPropertyMapper xmlAttr2owlPropMapper) {
 
 		Set<FailedOWLClassRestriction> failedRestrictions = new HashSet<FailedOWLClassRestriction>();
 		
 		Optional<FailedOWLClassRestriction> optFCR;
 		for(OWLClassRestriction restriction: restrictions) {
 			if(restriction.isFulfilledByAttribute()) {
-				optFCR = testXMLAttributeRestrictions(element, restriction, owl2bpmnMapper);
+				optFCR = testXMLAttributeRestrictions(element, restriction, xmlAttr2owlPropMapper);
 			} else {
-				optFCR = testXMLChildRestrictions(element, restriction, owl2bpmnMapper);
+				optFCR = testXMLChildRestrictions(element, restriction, xmlElem2owlClassMapper);
 			}
 			
 			if(optFCR.isPresent()) {
@@ -183,14 +171,14 @@ public class OWLTester {
 	 * 
 	 * @param element
 	 * @param attributeRestrictions
-	 * @param owl2bpmnMapper
+	 * @param mapper
 	 * @return
 	 */
 	private static Optional<FailedOWLClassRestriction> testXMLAttributeRestrictions(Element element,
-			OWLClassRestriction attRestriction, Owl2BpmnNamingMapper owl2bpmnMapper) {
+			OWLClassRestriction attRestriction, XmlAttribute2OWLPropertyMapper mapper) {
 
 		String originalOWLPropertyName = attRestriction.getOnProperty().getIRI().getShortForm();
-		String affectedXMLAttribute = owl2bpmnMapper.getMappedNameFor(originalOWLPropertyName, false);
+		String affectedXMLAttribute = mapper.getMappedNameFor(originalOWLPropertyName, false);
 
 		// Attribute just can appear 0 or 1...
 		int bpmnOccurance = element.hasAttribute(affectedXMLAttribute) ? 1 : 0;
@@ -211,7 +199,7 @@ public class OWLTester {
 			if ( ! isRestrictionDataTypeMet(rawValue,attRestriction) ) {
 				String errMsg = "Restriction expected XML-Attribute <" + affectedXMLAttribute + "> at Element <" 
 						+ element.getTagName().substring(element.getTagName().indexOf(":")+1) + "> with datatype <"
-						+ attRestriction.getCardinalityType() + "but element found raw value <"
+						+ attRestriction.getOnDataRange() + "> but element found raw value <"
 						+ rawValue + ">";
 
 			return Optional.of(
@@ -232,13 +220,16 @@ public class OWLTester {
 	 * @return
 	 */
 	private static Optional<FailedOWLClassRestriction> testXMLChildRestrictions(Element element,
-			OWLClassRestriction childRestriction, Owl2BpmnNamingMapper owl2bpmnMapper) {
+			OWLClassRestriction childRestriction, XmlElement2OWLClassesMapper owl2bpmnMapper) {
 	
-		String originalOWLPropertyName = childRestriction.getOnProperty().getIRI().getShortForm();
+		String originalOWLPropertyName = childRestriction.getOnClass().get().getIRI().getShortForm();
 		String affectedXMLElement = owl2bpmnMapper.getMappedNameFor(originalOWLPropertyName, false);
 
-		// Calculate amount of appeared XMl-Childs with name
-		int bpmnOccurance = element.getElementsByTagName(affectedXMLElement).getLength();
+		
+		// Calculate amount of appeared XMl-Childs with name. 
+		int bpmnOccurance = element.getElementsByTagNameNS("*", affectedXMLElement).getLength();
+		
+		//Test restriction
 		if (!isRestrictionCardinaltyMet(bpmnOccurance, childRestriction)) {
 			String errMsg = "Restriction expected XML-Child-Element <" + affectedXMLElement + "> at Element <" 
 					+  element.getTagName().substring(element.getTagName().indexOf(":")+1) + "> <"
@@ -261,29 +252,28 @@ public class OWLTester {
 	 * @return
 	 */
 	public static Map<OWLConformanceClassEnum, List<BPMNElement>> getConformanceClassOfElements(OWLModel ontology,
-			BPMNModel model, Owl2BpmnNamingMapper owl2bpmnMapper) {
+			BPMNModel model, XmlElement2OWLClassesMapper owl2bpmnMapper) {
 
 		Map<OWLConformanceClassEnum, List<BPMNElement>> conformanceClasses = new HashMap<OWLConformanceClassEnum, List<BPMNElement>>();
 
 		// Collect all conformance Classes of model
-		for (Process proc : model.getProcesses()) {
-			for (DomElement elem : model.getProcessElementsAsDomElements(proc)) {
-				String mappedOWLname = owl2bpmnMapper.getMappedNameFor(elem.getLocalName(), true);
-				Optional<OWLClass> owlClass = ontology.getOWLClassByShortNameIgnoreCase(mappedOWLname);
-				if (owlClass.isPresent()) {
+		for (Element elem : model.getAllElementsOfModel()) {
+			String mappedOWLname = owl2bpmnMapper.getMappedNameFor(elem.getLocalName(), true);
+			Optional<OWLClass> owlClass = ontology.getOWLClassByShortNameIgnoreCase(mappedOWLname);
+			if (owlClass.isPresent()) {
 
-					OWLConformanceClassEnum conformanceClass = ontology.getConformanceClassOfOWLClass(owlClass.get());
+				OWLConformanceClassEnum conformanceClass = ontology.getConformanceClassOfOWLClass(owlClass.get());
 
-					if (conformanceClasses.containsKey(conformanceClass)) {
-						conformanceClasses.get(conformanceClass).add(new BPMNElement(elem));
-					} else {
-						ArrayList<BPMNElement> hs = new ArrayList<BPMNElement>();
-						hs.add(new BPMNElement(elem));
-						conformanceClasses.put(conformanceClass, hs);
-					}
+				if (conformanceClasses.containsKey(conformanceClass)) {
+					conformanceClasses.get(conformanceClass).add(new BPMNElement(elem));
+				} else {
+					ArrayList<BPMNElement> hs = new ArrayList<BPMNElement>();
+					hs.add(new BPMNElement(elem));
+					conformanceClasses.put(conformanceClass, hs);
 				}
 			}
 		}
+
 
 		return conformanceClasses;
 		// Determine the highest one
@@ -315,6 +305,14 @@ public class OWLTester {
 		case DataRangeInteger: {
 			try {
 				Integer.parseInt(bpmnRawValue);
+				return true;
+			} catch (NumberFormatException e) {
+				return false;
+			}
+		}
+		case DataRangeDouble: {
+			try {
+				Double.parseDouble(bpmnRawValue);
 				return true;
 			} catch (NumberFormatException e) {
 				return false;

@@ -3,17 +3,13 @@ package at.fh.BPMN20OntologyTester.view;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import org.camunda.bpm.model.bpmn.instance.Process;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLProperty;
 import org.w3c.dom.Element;
-
-import com.github.andrewoma.dexx.collection.HashSet;
 
 import at.fh.BPMN20OntologyTester.BPMN20OntologyTester;
 import at.fh.BPMN20OntologyTester.controller.BPMNModelHandler;
@@ -25,7 +21,6 @@ import at.fh.BPMN20OntologyTester.model.FailedOWLClassRestriction;
 import at.fh.BPMN20OntologyTester.model.OWLModel;
 import at.fh.BPMN20OntologyTester.model.TestCase;
 import at.fh.BPMN20OntologyTester.model.enums.TestCaseEnum;
-import at.fh.BPMN20OntologyTester.view.dto.BPMNElementV2;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -34,7 +29,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -66,10 +60,7 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 	@FXML
 	private TreeView<String> treeBPMN20OWL;
 	@FXML
-	private TreeView<BPMNElementV2> treeBPMNfailedRestrictions;
-
-	@FXML
-	private CheckBox cbIgnoreWarningRestrictions;
+	private TreeView<BPMNElement> treeBPMNfailedRestrictions;
 
 	@FXML
 	private Button btLoadBPMN, btGenerateReport, btConvertToOWL;
@@ -162,6 +153,15 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 			
 			// Hide Loadingscreen and set overview log
 			loadingScreen.hide();
+			
+			//Fix hack: autogen report to repeat tests while OWL-Adjustments
+			/*try {
+				String fileName = testcase.getFileNameOfProcessMOdelCreatedOf();
+				File file = new File(System.getProperty("user.home") + "/" + fileName.substring(0, fileName.lastIndexOf(".")) + ".txt");
+				writeReportToFile(file);
+			} catch(Exception x) {
+				x.printStackTrace();
+			}*/
 		});
 		
 		ontologyTestsTask.setOnFailed( e -> {
@@ -232,17 +232,16 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 				String fileName = testcase.getFileNameOfProcessMOdelCreatedOf();
 				fileName = fileName.substring(0, fileName.lastIndexOf("."));
 				chooser.setInitialFileName(fileName);
+				
+				File dir = new File("C:/Users/Alexander/FH_Informationsmanagement/5. Semester/BAC2 - Bachelorarbeit2/BPMN20OntologyTester/resource/testresults/TestingConceptAdjustment/structuredTests_detailed");
+				chooser.setInitialDirectory(dir);
 	
 				// Handle selected file
 				File selectedFile = chooser.showSaveDialog(null);
 	
 				if (selectedFile != null) {	
-					FileWriter writer = new FileWriter(selectedFile);
-					writer.write(testcase.getTestResultReport());
-					writer.flush();
-					writer.close();
+					writeReportToFile(selectedFile);
 					
-					appendLog("Created Testaces report <" + selectedFile.getAbsolutePath() + ">");
 				}
 			} catch (Exception e) {
 				appendLog("Error - Failed to create testcase report <" + e.getMessage() + ">");
@@ -252,8 +251,20 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 				alert.setHeaderText("Error creating testcase report");
 				alert.setContentText("ERROR - Failed to write to File <" + e.getMessage() + ">");
 				alert.showAndWait();
+				
+				e.printStackTrace();
 			} 
 		}
+	}
+	
+	private void writeReportToFile(File file) throws Exception {
+	
+		FileWriter writer = new FileWriter(file);	
+		writer.write(testcase.getTestResultReport());
+		writer.flush();
+		writer.close();
+		appendLog("Created Testaces report <" + file.getAbsolutePath() + ">");
+		
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -263,12 +274,11 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 		// Accept clicks only on node cells, and not on empty spaces of the TreeView
 		if (node instanceof Text || (node instanceof TreeCell && ((TreeCell) node).getText() != null)) {
 
-			BPMNElementV2 selectedNode = treeBPMNfailedRestrictions.getSelectionModel().getSelectedItem().getValue();
+			BPMNElement selectedNode = treeBPMNfailedRestrictions.getSelectionModel().getSelectedItem().getValue();
 
 			// Show failed restrictions for selectedNode
 			failedRestrictionsOfXmlNode.clear();
-			for (FailedOWLClassRestriction r : selectedNode
-					.getFailedRestrictions(cbIgnoreWarningRestrictions.isSelected())) {
+			for (FailedOWLClassRestriction r : selectedNode.getFailedRestrictions()) {
 				failedRestrictionsOfXmlNode.add(r.getFormattedFailingReason());
 			}
 		}
@@ -278,7 +288,7 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 	@FXML
 	private void onHandleClickedOnFailedRestriction(MouseEvent event) {
 
-		TreeItem<BPMNElementV2> curSelElementFailedRestriction = treeBPMNfailedRestrictions.getSelectionModel()
+		TreeItem<BPMNElement> curSelElementFailedRestriction = treeBPMNfailedRestrictions.getSelectionModel()
 				.getSelectedItem();
 
 		// Get selected Error-Test of faild Restriction
@@ -287,14 +297,14 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 		if (curSelElementFailedRestriction != null && selItem != null) {
 
 			// Get selected BPMN-Element of tree with failed restrictions
-			BPMNElementV2 selectedBPMNElement = curSelElementFailedRestriction.getValue();
+			BPMNElement selectedBPMNElement = curSelElementFailedRestriction.getValue();
 			// Get FailedRestriction Object with error text. Assume the error text is
 			// unique!
 			Optional<FailedOWLClassRestriction> rest = selectedBPMNElement.getFailedRestrictionWithErrorText(selItem);
 			if (rest.isPresent()) {
 				OWLProperty affectedProperty = rest.get().getRestriction().getOnProperty();
 
-				// We know here that the onoltogy must present.
+				// We know here that the ontology must present.
 				OWLModel ontology = OntologyHandler.getInstance().getLoadedOntology().get();
 
 				taRestrictionDescription.setText(ontology.getCommentOfEntity(affectedProperty));
@@ -404,8 +414,6 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 
 	private void testXmlNodesFailRestrictions(TestCase testcase) throws Exception {
 		
-		testcase.setIgnoreTcSpecificData(cbIgnoreWarningRestrictions.isSelected());
-
 		//Execute tests and show result
 		testcase.executeTest(TestCaseEnum.XMLElementFailOWLClassRestrictions);	
 		Map<Element,Set<FailedOWLClassRestriction>> elementsFailedRestrictions = testcase.getResultsXmlNodesFailOWLRestrictions();
@@ -413,24 +421,29 @@ public class CompareBpmn2OwlTabFxController implements FxController {
 
 
 		// Build Tree to show results
+		TreeItem<BPMNElement> rootItem;
 		if (!elementsFailedRestrictions.isEmpty()) {
-			TreeItem<BPMNElementV2> rootItem = new TreeItem<BPMNElementV2>(new BPMNElementV2("Failures"));
+			rootItem = new TreeItem<BPMNElement>(new BPMNElement("Failures"));
 			rootItem.setExpanded(true);
 
 			for (Element elem: elementsFailedRestrictions.keySet()) {
 				String guiDisplayName = elem.getTagName().substring(elem.getTagName().indexOf(":")+1) + "(Err: "
 							+ elementsFailedRestrictions.get(elem).size() + ")";
 
-				BPMNElementV2 ev2 = new BPMNElementV2(elem,elementsFailedRestrictions.get(elem),guiDisplayName);
+				BPMNElement bpmnElement = new BPMNElement(elem,elementsFailedRestrictions.get(elem),guiDisplayName);
 				
-				TreeItem<BPMNElementV2> treeItem = new TreeItem<BPMNElementV2>(ev2);
+				TreeItem<BPMNElement> treeItem = new TreeItem<BPMNElement>(bpmnElement);
 				rootItem.getChildren().add(treeItem);
 				totalFailedElements++;
 
 			}
-			treeBPMNfailedRestrictions.setRoot(rootItem);
-			treeBPMNfailedRestrictions.refresh();
+			
+		} else {
+			rootItem = new TreeItem<BPMNElement>(new BPMNElement("No issues found!"));
 		}
+		
+		treeBPMNfailedRestrictions.setRoot(rootItem);
+		treeBPMNfailedRestrictions.refresh();
 
 		// Give some Feedback in log
 		appendLog("Warning - Found <" + totalFailedElements

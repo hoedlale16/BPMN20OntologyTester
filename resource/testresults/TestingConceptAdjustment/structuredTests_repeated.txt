@@ -1,0 +1,65 @@
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\A.1.0.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <0> XML-Nodes which failed defined OWL-Restrictions <0>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\A.2.0.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <0> XML-Nodes which failed defined OWL-Restrictions <0>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\A.2.1.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <0> XML-Nodes which failed defined OWL-Restrictions <0>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\A.3.0.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <0> XML-Nodes which failed defined OWL-Restrictions <0>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\A.4.0.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <3> XML-Nodes which failed defined OWL-Restrictions <3>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\A.4.1.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <1> XML-Nodes which failed defined OWL-Restrictions <1>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\B.1.0.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <7> XML-Nodes which failed defined OWL-Restrictions <7>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\B.2.0.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <11> XML-Nodes which failed defined OWL-Restrictions <11>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\C.1.0.bpmn>
+  <3> XML-Nodes wihtout OWL-Class
+  <2> XML-Attribut without OWL-Property
+  <7> XML-Nodes which failed defined OWL-Restrictions <7>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\C.1.1.bpmn>
+  <3> XML-Nodes wihtout OWL-Class
+  <2> XML-Attribut without OWL-Property
+  <1> XML-Nodes which failed defined OWL-Restrictions <1>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\C.2.0.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <10> XML-Nodes which failed defined OWL-Restrictions <10>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\C.3.0.bpmn>
+  <4> XML-Nodes wihtout OWL-Class
+  <3> XML-Attribut without OWL-Property
+  <0> XML-Nodes which failed defined OWL-Restrictions <0>
+----------------------------
+Test file <C:\Users\Alexander\FH_Informationsmanagement\5. Semester\BAC2 - Bachelorarbeit2\BPMN20OntologyTester\resource\bpmn\bpmn-miwg-test-suite\Reference\C.4.0.bpmn>
+  <0> XML-Nodes wihtout OWL-Class
+  <0> XML-Attribut without OWL-Property
+  <12> XML-Nodes which failed defined OWL-Restrictions <12>
+----------------------------

@@ -1,0 +1,25 @@
+Testreport ob Ontology
+
+General OWL Data:
+ - OWL-Classes: 268
+ - OWL-DataProperties: 69
+ - OWL-ObjectProperties: 175
+
+General OWL Issues:
+ - Processmodel Conformance Class: Unkown
+ - Number of XML-Nodes without OWL-Class: 3
+ - Number of XML-Attributes without OWL-Propertiy: 2
+ - Number of XML-Nodes which failed the OWL-Class Restriction: 1
+
+Detailed List of XML-Nodes without OWL-Classes:
+ - VerticalRuler
+ - Grid
+ - HorizontalRuler
+
+Detailed List of XML-Attributes without OWL-Property
+ - spacing
+ - color
+
+Detailed List of XML-Nodes which failed OWL-Class Restriction:
+ - process
+   - [OWL-Class: InputOutputSpecification] - ERR: Restriction expected XML-Child-Element <ioSpecification> at Element <process> <1> times with Matchtype <MaxCardinality> but element occured in BPMN <3> times.

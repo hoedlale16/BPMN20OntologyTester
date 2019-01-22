@@ -10,5 +10,5 @@ package at.fh.BPMN20OntologyTester.model.enums;
  *
  */
 public enum OWLRestrictionDataRangeEnum {
-	DataRangeString, DataRangeBoolean, DataRangeInteger, Unkown
+	DataRangeString, DataRangeBoolean, DataRangeInteger, DataRangeDouble, Unkown
 }

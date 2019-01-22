@@ -8,8 +8,9 @@ import org.semanticweb.owlapi.model.OWLEntity;
 
 import at.fh.BPMN20OntologyTester.BPMN20OntologyTester;
 import at.fh.BPMN20OntologyTester.controller.FxController;
-import at.fh.BPMN20OntologyTester.controller.Owl2BpmnNamingMapper;
+import at.fh.BPMN20OntologyTester.controller.XmlElement2OWLClassesMapper;
 import at.fh.BPMN20OntologyTester.controller.OntologyHandler;
+import at.fh.BPMN20OntologyTester.controller.XmlAttribute2OWLPropertyMapper;
 import at.fh.BPMN20OntologyTester.model.OWLClassRestriction;
 import at.fh.BPMN20OntologyTester.model.OWLModel;
 import javafx.collections.FXCollections;
@@ -82,10 +83,10 @@ public class OntologyTabFxController implements FxController {
 		}
 
 		// Init local owl2bpmn varaibel
-		if (!Owl2BpmnNamingMapper.getInstance().hasMappings())
+		if (!XmlElement2OWLClassesMapper.getInstance().hasMappings())
 			appendLog("Found no mappings for OWL2BPMN convertion");
 		else
-			appendLog("Loaded <" + Owl2BpmnNamingMapper.getInstance().getLoadedMapping().size()
+			appendLog("Loaded <" + XmlElement2OWLClassesMapper.getInstance().getLoadedMapping().size()
 					+ "> OWL2BPMN mapping entries");
 
 	}
@@ -188,18 +189,24 @@ public class OntologyTabFxController implements FxController {
 	}
 
 	@FXML
-	private void onShowOwl2BPMNMapping() {
+	private void onShowXmlElements2OwlClassesMapping() {
 
 		try {
 			Stage dialog = BPMN20OntologyTester.getOWL2BPMNMappingDialog();
 			dialog.showAndWait();
-			appendLog("Applied changes for mapping OWL2BPMN. Mapping contains now <"
-					+ Owl2BpmnNamingMapper.getInstance().getLoadedMapping().size() + "> entries");
+			appendLog("Applied changes for mapping XmlElements2OWLClasses - Mapping contains now <"
+					+ XmlElement2OWLClassesMapper.getInstance().getLoadedMapping().size() + "> entries");
 
 		} catch (Exception e) {
 			appendLog("Error while open mapping dialog: " + e.getMessage());
 		}
 	}
+	
+	@FXML
+	private void onShowXmlAttribute2OwlPropertiesMapping() {
+		//TODO
+	}
+	
 
 	private void appendLog(String text) {
 		MainSceneFxController.getInstance().appendLog(text);

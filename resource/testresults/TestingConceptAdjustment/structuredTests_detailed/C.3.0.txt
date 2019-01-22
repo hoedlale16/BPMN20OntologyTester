@@ -1,0 +1,25 @@
+Testreport ob Ontology
+
+General OWL Data:
+ - OWL-Classes: 268
+ - OWL-DataProperties: 69
+ - OWL-ObjectProperties: 175
+
+General OWL Issues:
+ - Processmodel Conformance Class: Unkown
+ - Number of XML-Nodes without OWL-Class: 4
+ - Number of XML-Attributes without OWL-Propertiy: 3
+ - Number of XML-Nodes which failed the OWL-Class Restriction: 0
+
+Detailed List of XML-Nodes without OWL-Classes:
+ - VerticalRuler
+ - attribute
+ - Grid
+ - HorizontalRuler
+
+Detailed List of XML-Attributes without OWL-Property
+ - spacing
+ - color
+ - format
+
+Detailed List of XML-Nodes which failed OWL-Class Restriction:

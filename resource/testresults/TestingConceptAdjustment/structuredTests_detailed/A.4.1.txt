@@ -1,0 +1,20 @@
+Testreport ob Ontology
+
+General OWL Data:
+ - OWL-Classes: 268
+ - OWL-DataProperties: 69
+ - OWL-ObjectProperties: 175
+
+General OWL Issues:
+ - Processmodel Conformance Class: Unkown
+ - Number of XML-Nodes without OWL-Class: 0
+ - Number of XML-Attributes without OWL-Propertiy: 0
+ - Number of XML-Nodes which failed the OWL-Class Restriction: 1
+
+Detailed List of XML-Nodes without OWL-Classes:
+
+Detailed List of XML-Attributes without OWL-Property
+
+Detailed List of XML-Nodes which failed OWL-Class Restriction:
+ - collaboration
+   - [OWL-Property: name] - ERR: Restriction expected XML-Attribute <name> at Element <collaboration> <1> times with Matchtype <ExactCardinality> but element occured in BPMN <0> times.

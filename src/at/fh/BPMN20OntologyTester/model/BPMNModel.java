@@ -2,7 +2,6 @@ package at.fh.BPMN20OntologyTester.model;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -20,7 +19,6 @@ import org.camunda.bpm.model.bpmn.instance.EndEvent;
 import org.camunda.bpm.model.bpmn.instance.Process;
 import org.camunda.bpm.model.bpmn.instance.StartEvent;
 import org.camunda.bpm.model.bpmn.instance.bpmndi.BpmnDiagram;
-import org.camunda.bpm.model.xml.instance.DomDocument;
 import org.camunda.bpm.model.xml.instance.DomElement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -57,7 +55,9 @@ public class BPMNModel {
 			this.rawDOMDocument = praseXMlFile(file);
 			this.allowedElementNamespacesForBPMN20 = Arrays.asList(
 											 "http://www.omg.org/spec/BPMN/20100524/MODEL", 
-			                                 "http://www.omg.org/spec/BPMN/20100524/DI");
+			                                 "http://www.omg.org/spec/BPMN/20100524/DI"
+			                                 //"http://www.omg.org/spec/DD/20100524/DC"
+											 );
 		}catch (Exception e) {
 			throw new Exception ("unable to parse raw XML Doucment for model!");
 		}
@@ -78,9 +78,11 @@ public class BPMNModel {
 	 */
 	private Document praseXMlFile(File file) throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder = factory.newDocumentBuilder();
+		factory.setNamespaceAware(true);
 
+		DocumentBuilder builder = factory.newDocumentBuilder();
 		Document doc = builder.parse(file);
+		doc.getDocumentElement().normalize();	
 		return doc;
 	}
 	
@@ -127,14 +129,14 @@ public class BPMNModel {
 	 * @param name
 	 * @return
 	 */
-	public Process getProcessByName(String name) {
+	/*public Process getProcessByName(String name) {
 		for (Process p : getProcesses()) {
 			if (p.getName().equals(name)) {
 				return p;
 			}
 		}
 		return null;
-	}
+	}*/
 	
 
 	/**
@@ -142,12 +144,12 @@ public class BPMNModel {
 	 * @param p
 	 * @return
 	 */
-	public List<DomElement> getProcessElementsAsDomElements(Process p) {
+	/*public List<DomElement> getProcessElementsAsDomElements(Process p) {
 		List<DomElement> domElements = new ArrayList<DomElement>();
 		domElements.addAll(p.getDomElement().getChildElements());
 		
 		return domElements;
-	}
+	}*/
 	
 
 	/**
@@ -225,12 +227,20 @@ public class BPMNModel {
 	 * 
 	 * @return
 	 */
-	public Set<DomElement> getAllElementsOfModel() {
-		Set<DomElement> elements = new HashSet<DomElement>();
+	public Set<Element> getAllElementsOfModel() {
+		Set<Element> elements = new HashSet<Element>();
 
-		DomDocument doc = model.getDocument();
+		Document doc = getRawDOMDocument();
+		
 		for(String nsURI: getAllowedNameSpaceURisForBPMN20()) {
-			elements.addAll(doc.getElementsByNameNs(nsURI, "*"));
+			
+			NodeList nl = doc.getDocumentElement().getElementsByTagNameNS(nsURI, "*");
+			for(int i = 0; i < nl.getLength(); i++) {
+				Node node = nl.item(i);
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+					elements.add((Element)node);
+				}
+			}
 		}		
 		return elements;
 	}
@@ -263,7 +273,18 @@ public class BPMNModel {
 			NamedNodeMap attributes = element.getAttributes();
 			for (int i = 0; i < attributes.getLength(); i++) {
 				Node attribute = attributes.item(i);
-				attributeSet.add(attribute.getNodeName());
+				String namespaceURI = attribute.getNamespaceURI();
+				if(namespaceURI != null) {
+					if(getAllowedNameSpaceURisForBPMN20().contains(namespaceURI)) {
+						attributeSet.add(attribute.getNodeName());
+					}
+				} else {
+					attributeSet.add(attribute.getNodeName());
+				}
+				
+				//Ignore namespace attributes...
+				//if( ! (attribute.getNodeName().startsWith("xmlns") || attribute.getNodeName().startsWith("xsi") ))				
+				//	attributeSet.add(attribute.getNodeName());
 			}
 		}
 
