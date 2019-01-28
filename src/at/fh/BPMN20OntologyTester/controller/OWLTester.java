@@ -262,14 +262,20 @@ public class OWLTester {
 			Optional<OWLClass> owlClass = ontology.getOWLClassByShortNameIgnoreCase(mappedOWLname);
 			if (owlClass.isPresent()) {
 
-				OWLConformanceClassEnum conformanceClass = ontology.getConformanceClassOfOWLClass(owlClass.get());
+				Set<OWLConformanceClassEnum> conformanceClassesSet = ontology.getConformanceClassOfOWLClass(owlClass.get());
 
-				if (conformanceClasses.containsKey(conformanceClass)) {
-					conformanceClasses.get(conformanceClass).add(new BPMNElement(elem));
-				} else {
-					ArrayList<BPMNElement> hs = new ArrayList<BPMNElement>();
-					hs.add(new BPMNElement(elem));
-					conformanceClasses.put(conformanceClass, hs);
+				
+				if(! conformanceClassesSet.isEmpty()) {
+					//System.out.println("OWL-Class <" +owlClass.get().getIRI().getShortForm() + "> has conformanceClasses: " + conformanceClassesSet);					
+					
+					OWLConformanceClassEnum conformanceClass = ontology.getHighestConformanceClass(conformanceClassesSet);
+					if (conformanceClasses.containsKey(conformanceClass)) {
+						conformanceClasses.get(conformanceClass).add(new BPMNElement(elem));
+					} else {
+						ArrayList<BPMNElement> hs = new ArrayList<BPMNElement>();
+						hs.add(new BPMNElement(elem));
+						conformanceClasses.put(conformanceClass, hs);
+					}
 				}
 			}
 		}

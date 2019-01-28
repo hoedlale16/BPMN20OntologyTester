@@ -90,10 +90,10 @@ public class OwlConformanceClassHandler {
 	 */
 	public int getOWLClassConformancePriorioty(OWLConformanceClassEnum conformance) {
 		switch(conformance) {
-			case FullConformance: return 1;
-			case ExecutiveConformance: return 2;
+			case FullConformance: return 1; /**Contains all elements */
+			case ExecutiveConformance: return 4;
 			case AnalyticConformance: return 3;
-			case DescriptiveConformance: return 4;			
+			case DescriptiveConformance: return 2;			
 			default: return 0;
 		}
 	}
@@ -127,6 +127,18 @@ public class OwlConformanceClassHandler {
 			return currConfClass;
 		
 	}
+	
+	public OWLConformanceClassEnum getHigherConfClass(OWLConformanceClassEnum currentHighestConfClass, 
+													  OWLConformanceClassEnum toTestConfClass) {	
+		int currHighestConfClassPrio = getOWLClassConformancePriorioty(currentHighestConfClass);
+		int toTestConfClassPrio = getOWLClassConformancePriorioty(toTestConfClass);
+		if(currHighestConfClassPrio > toTestConfClassPrio) 
+			return currentHighestConfClass;
+		else 
+			return toTestConfClass;
+	}
+	
+	
 	
 	public OWLConformanceClassEnum getHighestConformanceClass(Map<OWLConformanceClassEnum, List<BPMNElement>> conformanceClasses) {
 		OWLConformanceClassEnum highestConfClass = OWLConformanceClassEnum.Unkown;

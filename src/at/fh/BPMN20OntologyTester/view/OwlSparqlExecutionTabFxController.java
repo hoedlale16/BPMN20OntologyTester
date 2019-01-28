@@ -147,6 +147,7 @@ public class OwlSparqlExecutionTabFxController implements FxController {
 	
 				
 				taResults.setText("Error in Query!");
+				executionTask.getException().printStackTrace();
 				
 				// Hide Loadingscreen and set overview log
 				loadingScreen.hide();

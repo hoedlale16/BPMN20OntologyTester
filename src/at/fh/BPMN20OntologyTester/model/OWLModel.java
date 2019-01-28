@@ -358,9 +358,9 @@ public class OWLModel {
 		return restrictions;
 	}
 
-	public OWLConformanceClassEnum getConformanceClassOfOWLClass(OWLClass owlClass) {
+	public Set<OWLConformanceClassEnum> getConformanceClassOfOWLClass(OWLClass owlClass) {
 
-		Set<OWLClass> conformanceClasses = new HashSet<OWLClass>();
+		Set<OWLConformanceClassEnum> conformanceClasses = new HashSet<OWLConformanceClassEnum>();
 		Set<OWLClass> inheritedClasses = new HashSet<OWLClass>();
 
 		OwlConformanceClassHandler ccHandler = OwlConformanceClassHandler.getInstance();
@@ -371,13 +371,23 @@ public class OWLModel {
 		// 2. Filter for conformance Classes
 		inheritedClasses.stream().
 			filter(oc -> ccHandler.isOWLClassConformanceClass(oc)).
+			  map(c -> ccHandler.getMappedEnumForOWLConformanceClass(c)).
 				forEach(conformanceClasses::add);
 
+		return conformanceClasses;
+		
+	}
+	
+	public OWLConformanceClassEnum getHighestConformanceClass(Set<OWLConformanceClassEnum> conformanceClasses) {
+		OwlConformanceClassHandler ccHandler = OwlConformanceClassHandler.getInstance();
+		
 		OWLConformanceClassEnum confClass = OWLConformanceClassEnum.Unkown;
-		for(OWLClass c: conformanceClasses) {
+		for(OWLConformanceClassEnum c: conformanceClasses) {
 			confClass = ccHandler.getHigherConfClass(confClass,c);
 		}
+
 		return confClass;
+
 	}
 
 	/**
